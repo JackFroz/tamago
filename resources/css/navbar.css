@@ -1,0 +1,462 @@
+.container .logo {
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.container .row h1{
+    font-weight: 700;
+    font-size: 46px;
+    font-family: 'Poppins', sans-serif;
+    color: #323575;
+}
+
+.container .row p {
+    font-weight: 50;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.container .navbar-nav {
+    margin-left: 650px;
+}
+
+.btn-tamago {
+    margin-right: 10px;
+    width: 178px;
+    height: 44px;
+    background: #31A2A4;
+    border-radius: 10px;
+    border-width: 0px;
+}
+
+
+.btn-tamago p {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 4%;
+    font-weight: 500;
+    font-size: 20px;
+    color: #FFFFFF !important;
+    text-align: center;
+}
+
+.btn-tamago:hover {
+    background-color: #147475;
+}
+
+.btn-tamago-1 {
+    margin-right: 30px;
+    min-width: 150px;
+    max-height: 50px;
+    background: #31A2A4;
+    border-radius: 20px;
+    border-width: 0px;
+}
+
+.btn-tamago-1 p {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 7%;
+    font-weight: 500;
+    font-size: 20px;
+    color: #FFFFFF !important;
+    text-align: center;
+}
+
+.btn-tamago-1:hover {
+    background-color: #147475;
+}
+
+section {
+    padding-top: 70px;
+}
+
+.section-top img {
+    position: absolute;
+    width: 750px;
+    top: -170px;
+    left: -70px;
+    
+}
+
+.section-mid img {
+    width: 400px;
+}
+
+.section-mid .container .row .title {
+    padding-top: 20%;
+    color: #921E5E;
+}
+
+.section-bot {
+    background: #EAFDFE;
+}
+
+.section-bot img {
+    min-height: 165px;
+    max-width: 165px;
+}
+
+.section-bot p {
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 36px;
+
+    color: #2A3D5B;
+}
+
+.container-login {
+    margin-top: 2%;
+    margin-bottom: 10%;
+    margin-right: 35%;
+    margin-left: 35%;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #C4C4C4;
+    box-shadow: 4px 4px 10px 4px rgba(0, 0, 0, 0.25);
+}
+
+
+.container-login .form-login h1 {
+    text-align: center;
+    font-family: 'Poppins', sans-serif ;
+    color: #31A2A4;
+    font-weight: 500px;
+    
+}
+
+.container-login .form-login h2 {
+    text-align: center;
+    font-family: 'Poppins', sans-serif ;
+    margin-bottom: 30px;
+}
+
+.container-login .form-login .form-group {
+    font-family: 'Poppins', sans-serif ;
+    margin-top: 10px;
+}
+
+.centre-login {
+    margin-left: 30%;
+}
+
+.sidenav {
+    height: 100%;
+    width: 226px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    padding-top: 20px;
+    border-right: 1px solid #c4c4c4;
+}
+
+.sidenav a {
+    padding-left: 75px;
+    padding-top: 15px;
+    padding-bottom: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    color: #000000;
+    display: block;
+}
+
+.sidenav .navbar-brand {
+    padding-top: 0px;
+    padding-bottom: 40px;
+    padding-left: 0px;
+    margin-left: 20px;
+}
+
+.sidenav img {
+    max-height: 200px;
+    max-width: 200px;
+}
+
+.sidenav i {
+    margin-right: 15px;
+}
+
+.sidenav a:hover {
+    color: #D0853F;
+}
+
+.sidenav button:hover {
+    color: red;
+}
+
+.main {
+    margin-left: 226px;
+    /* Same as the width of the sidenav */
+    font-size: 28px;
+    /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+
+.fixed-top {
+    margin-left: 226px !important;
+}
+
+.judul-page {
+    height: 65px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #c4c4c4;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.judul-page a {
+    color: #31A2A4;
+    text-decoration: none;
+    padding-top: 50px;
+    padding-left: 27px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    line-height: 65px;
+    font-weight: 500px;
+}
+
+.content-home-bg {
+    margin-top: 65px;
+    margin-left: -10px;
+    width: 1300px;
+    height: 1000px;
+    padding: inherit;
+    background: #DFF3F3;
+}
+
+.content-home-bg .content-home {
+    padding-top: 23px;
+    margin-left: 18px;
+
+}
+
+.content-home .title-home {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.home-menu .btn-tamago {
+    margin-right: 10px;
+    width: 198px;
+    height: 39px;
+    background: #921E5E;
+    border-radius: 8px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+
+.home-menu .btn-tamago p {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #FFFFFF !important;
+    text-align: center;
+}
+
+.home-menu .btn-tamago:hover {
+    background-color: #770d47;
+}
+
+.home-menu .btn-tamago2 {
+    margin-right: 10px;
+    position: absolute;
+    width: 198px;
+    height: 39px;
+    left: 480px;
+    top: 142px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+
+.home-menu .btn-tamago2 p {
+    padding-top: 5px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #000000 !important;
+    text-align: center;
+}
+
+.nav-text {
+    padding-top: 17px;
+    padding-right: 10px;
+    font-size: 20;
+    color: #828282;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-nav-signup {
+    margin-right: 10px;
+    width: 127px;
+    height: 44px;
+    background: #31A2A4;
+    border-radius: 10px;
+    border-width: 0px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+
+.btn-nav-signup p {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 4%;
+    font-weight: 500;
+    font-size: 20px;
+    color: #FFFFFF !important;
+    text-align: center;
+}
+
+.btn-nav-signup:hover {
+    background-color: #147475;
+}
+
+.btn-nav-login {
+    margin-right: 10px;
+    width: 127px;
+    height: 44px;
+    background: rgba(81, 207, 209, 0.58);
+    border-radius: 10px;
+    border-width: 0px;
+}
+
+
+.btn-nav-login p {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 4%;
+    font-weight: 500;
+    font-size: 20px;
+    color: #FFFFFF !important;
+    text-align: center;
+}
+
+.btn-nav-login:hover {
+    background-color: #147475;
+}
+
+.top-bar {
+    position: absolute;
+    width: 61px;
+    height: 30px;
+    left: 30px;
+    top: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 30px;
+    color: #31A2A4 !important;
+}
+
+.form-login .link p {
+    color: #31A2A4;
+}
+
+.active {
+    background: #31A2A4;
+    border-radius: 8px;
+}
+
+.content-profile {
+    position: absolute;
+    width: 713px;
+    height: 780px;
+    left: 253px;
+    top: 92px;
+
+    background: #FFFFFF;
+    border: 1px solid rgba(175, 175, 175, 0.5);
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
+    border-radius: 5px;
+}
+
+.content-profile .name-foto {
+    position: absolute;
+    width: 196px;
+    height: 247px;
+    left: 30px;
+    top: 30px;
+
+    background: #FFFFFF;
+    border: 2px solid rgba(175, 175, 175, 0.5);
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
+    border-radius: 5px;
+}
+
+.content-profile .name-foto p {
+    position: absolute;
+    width: 111px;
+    height: 54px;
+    left: 40px;
+    top: 20px;
+
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    text-align: center;
+
+    color: #000000;
+}
+
+.name-foto .rounded-circle {
+    height: 126px;
+    width: 126px;
+    border: 1px;
+    padding-top: 50%;
+}
+
+.content-profile .form-profile {
+    position: absolute;
+    width: 420px;
+    height: 650px;
+    left: 250px;
+    top: 10px;
+    padding: 20px;
+}
+.content-profile .form-profile .form-group {
+    margin-top: 0px;
+}
+.content-profile .form-profile p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+}
+
+.content-profile .form-login h4 {
+    margin-top: 30px;
+}
+
+.content-profile .form-login .btn-profile {
+    position:absolute;
+    left: 60%;
+    width: 150px;
+    height: 44px;
+    background: #A77590;
+    border-radius: 10px;
+    border-width: 0px;
+    margin-top: 10px;
+}
+
+.btn-profile p {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 4%;
+    font-weight: 500;
+    font-size: 20px;
+    color: #FFFFFF !important;
+    text-align: center;
+}
+
+.background img {
+    position: absolute;
+    width: 1440px;
+    height: 558px;
+    top: 210px;
+}
