@@ -21,12 +21,15 @@ Route::post('register', 'Api\UserController@register');
 Route::middleware('auth:sanctum')->group(function () {
     //authentication endpoints
     Route::get('/logout', 'Api\UserController@logout');
-    Route::get('/change-password', 'Api\UserController@changePassword');
+    Route::post('/change-password', 'Api\UserController@changePassword');
+    Route::post('/change-first-name', 'Api\UserController@changeFirstName');
+    Route::post('/change-last-name', 'Api\UserController@changeLastName');
 
     //user endpoints
-    Route::get('/user', 'Api\UserController@profile');
     Route::get('/user/{user}/projects', 'Api\UserController@projects');
-    Route::get('/user/{user}/project-members', 'Api\UserController@projects');
+    Route::get('/user', 'Api\UserController@profile');
+    
+    // Route::get('/user/{user}/project-members', 'Api\UserController@projects');
 
     //project endpoints
     Route::resource('/project', 'Api\ProjectController');

@@ -15,7 +15,7 @@ class UserController extends Controller
         $user = $request->user();
         return response()->json(['user' => $user], 200);
     }
-    
+
     public function login(Request $request)
     {
         $request->validate([
@@ -27,18 +27,18 @@ class UserController extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password))
             return response(['success' => false], 403);
-        
+
         $token = $user->createToken('ApiToken')->plainTextToken;
 
         return response()->json([
-            'success'=> true,
+            'success' => true,
             'user' => $user,
             'token' => $token,
         ], 201);
     }
 
     public function logout(Request $request)
-    {        
+    {
         $user = $request->user();
         $user->currentAccessToken()->delete();
 
@@ -55,7 +55,7 @@ class UserController extends Controller
             'username' => 'required|unique:users',
             'first_name' => 'required|string|max:25',
             'last_name' => 'required|string|max:25',
-            'password' => 'required|min:8|strong_password',
+            'password' => 'required|min:8',
         ]);
 
         $user = User::create([
@@ -79,29 +79,76 @@ class UserController extends Controller
     public function changePassword(Request $request)
     {
         $changePasswordInfo = $request->validate([
-            'old_password' => 'required|min:8|strong_password',
-            'new_password' => 'required|min:8|strong_password',
+            'old_password' => 'required|min:8',
+            'new_password' => 'required|min:8',
             'repeat_new_password' => 'required|same:new_password',
         ]);
 
         $user = $request->user();
-        
-        if(!Hash::check($changePasswordInfo['old_password'], $user->password))
+
+        if (!Hash::check($changePasswordInfo['old_password'], $user->password))
             return response(['success' => false], 403);
 
         $success = DB::table('users')
-                    ->where('email', $request->email)
-                    ->update(['password' => Hash::make($changePasswordInfo['new_password'])]);
-        
+            ->where('email', $user->email)
+            ->update(['password' => Hash::make($changePasswordInfo['new_password'])]);
+
         return response()->json([
             'success' => $success,
             'message' => $success ? 'Password changed' : 'Error changing password',
         ]);
     }
 
+    public function changeFirstName(Request $request)
+    {
+        $changeFirstName = $request->validate([
+            'first_name' => 'string|min:1|max:25',
+        ]);
+
+        $user = $request->user();
+
+        $success = DB::table('users')
+            ->where('email', $user->email)
+            ->update([
+                'first_name' => $changeFirstName['first_name'],
+            ]);
+
+        return response()->json([
+            'success' => $success,
+            'message' => $success ? 'First name changed' : 'Error changing first name',
+        ]);
+    }
+
+    public function changeLastName(Request $request)
+    {
+        $changeLastName = $request->validate([
+            'last_name' => 'string|min:1|max:25',
+        ]);
+
+        $user = $request->user();
+
+        $success = DB::table('users')
+            ->where('email', $user->email)
+            ->update([
+                'last_name' => $changeLastName['last_name'],
+            ]);
+
+        return response()->json([
+            'success' => $success,
+            'message' => $success ? 'Last name changed' : 'Error changing last name',
+        ]);
+    }
+
     public function projects(User $user)
     {
-        return response()->json($user->projects()->orderBy('project_name'));
+        $success = DB::table('projects')
+            ->leftJoin('project_members', 'projects.owner_email', '=', 'project_members.member_email')
+            ->where('project_members.member_email', $user->email)
+            ->orWhere('projects.owner_email', $user->email)
+            ->select('projects.*')
+            ->get();
+
+        return response()->json(['projects' => $success]);
     }
 
     public function projectMembers(User $user)

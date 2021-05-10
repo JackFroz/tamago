@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ProjectMember;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProjectMemberController extends Controller
@@ -37,17 +38,43 @@ class ProjectMemberController extends Controller
      */
     public function store(Request $request)
     {
-        $projectMember = ProjectMember::create([
-            'division_id' => Str::random(12),
-            'member_email' => $request->member_email,
-            'division_name' => $request->division_name,
-            'division_desc'=> $request->division_desc,
-        ]);
+        $checkOwnership = DB::table('projects')
+            ->where('project_id', $request->project_id)
+            ->first();
 
-        return response()->json([
-            'status' => $projectMember,
-            'message' => $projectMember ? 'Project member added' : 'Error adding project member',
-        ]);
+        if ($checkOwnership->owner_email === $request->user()->email) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This project is belong to you!',
+            ]);
+        }
+
+        $checkMembership = DB::table('project_members')
+            ->where('project_id', $request->project_id)
+            ->where('member_email', $request->user()->email)
+            ->first();
+
+        if (!$checkMembership) {
+            $projectMember = ProjectMember::create([
+                'member_id' => Str::random(12),
+                'project_id' => $request->project_id,
+                'division_id' => null,
+                'member_email' => $request->user()->email,
+                'permission' => null,
+            ]);
+
+            return response()->json([
+                'status' => $projectMember,
+                'message' => $projectMember ? 'Project member added' : 'Error adding project member',
+            ]);
+        }
+
+        if ($checkMembership->member_email === $request->user()->email) {
+            return response()->json([
+                'status' => false,
+                'message' => 'You are already member of this project!',
+            ]);
+        }
     }
 
     /**

@@ -33,4 +33,9 @@ class Project extends Model
     {
         return $this->hasMany(ProjectMember::class);
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }
