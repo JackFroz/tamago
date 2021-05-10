@@ -22,10 +22,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
           <button class="btn-nav-login" style="z-index:1">
-            <p>Login</p>
+            <router-link :to="{ name: 'login' }" class="nav-link">Login</router-link>
           </button>
           <button class="btn-nav-signup" style="z-index:1">
-            <p>Sign up</p>
+            <router-link :to="{ name: 'register' }" class="nav-link">Sign up</router-link>
           </button>
           
         </ul>
@@ -36,9 +36,7 @@
 </template>
 
 <script>
-export default {
-  name: "Navbar",
-};
+export default {};
 </script>
 
 <style lang="css">
