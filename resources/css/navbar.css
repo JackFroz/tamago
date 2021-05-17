@@ -187,11 +187,10 @@ section {
 }
 
 .main {
-    margin-left: 226px;
+    margin-left: 216px;
     /* Same as the width of the sidenav */
     font-size: 28px;
     /* Increased text to enable scrolling */
-    padding: 0px 10px;
 }
 
 .fixed-top {
@@ -219,17 +218,13 @@ section {
 
 .content-home-bg {
     margin-top: 65px;
-    margin-left: -10px;
-    width: 1300px;
     height: 1000px;
-    padding: inherit;
     background: #DFF3F3;
 }
 
 .content-home-bg .content-home {
     padding-top: 23px;
-    margin-left: 18px;
-
+    margin-left: 40px;
 }
 
 .content-home .title-home {
@@ -247,7 +242,6 @@ section {
     border-radius: 8px;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
-
 
 .home-menu .btn-tamago p {
     font-family: 'Poppins', sans-serif;
@@ -793,16 +787,15 @@ section {
 
 .detail-project {
     margin-top: 65px;
-    margin-left: -10px;
     width: 230px;
-    min-height: 696px;
-    padding: inherit;
+    height: fit-content;
     background: #31A2A4;
+    padding-bottom: 30px;
 }
 
 .content-detail-project {
     padding-top: 23px;
-    margin-left: 18px;
+    margin-left: 20px;
 }
 
 .content-detail-project p {
@@ -812,24 +805,25 @@ section {
 }
 
 .content-detail-project .id-project {
-    width: 100px;
-    height: 30px;
+    padding-left: 10px;
+    padding-top: 10px;
+    width: 194px;
+    height: fit-content;
     background: #FFFFFF;
     border: 1px solid #C4C4C4;
-    
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
 }
 
 .content-detail-project .id-project p {
-    position: absolute;
-    left: 260px;
     font-family: 'Poppins', sans-serif;
     font-size: 18px;
     color: #31A2A4;
 }
 
 .content-detail-project .desc-project {
+    padding-left: 10px;
+    padding-top: 10px;
     width: 194px;
     height: fit-content;
     background: #FFFFFF;
@@ -854,7 +848,6 @@ section {
 }
 
 .project-card-container .project-card {
-    padding-top: 20px;
     height: fit-content;
     background: #ffffff;
     border: 1px solid rgba(175, 175, 175, 0.5);
@@ -867,7 +860,6 @@ section {
     font-family: 'Poppins', sans-serif;
     padding-left: 20px;
     padding-right: 10px;
-    padding-top: 40px;
     font-size: 14px;
     font-weight: 600;
     color: #921E5E;
@@ -875,14 +867,80 @@ section {
 }
 
 .project-card-container .project-card-top   {
-    position: absolute;
-    top: 0px;
-    width: 280px;
     background: #921E5E;
     border-radius: 8px 8px 0px 0px;
 }
 
 .project-card-container .project-card-top p  {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: #ffffff;
+    text-align: center;
+}
+
+.content-detail-project .btn-create-div {
+    width: 194px;
+    height: 45px;
+    background: #FFFFFF;
+    border: 1px solid #C4C4C4;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+}
+
+.content-detail-project .btn-create-div p {
+    font-family: 'Poppins', sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    color: #31A2A4;
+}
+
+.divisi-card-container {
+    position: absolute;
+    width: 67%;
+    height: 700px;
+    left: 480px;
+    top:90px;
+    
+}
+
+.divisi-card-container .project-card-div {
+    padding-top: 20px;
+    height: fit-content;
+    background: #ffffff;
+    border: 1px solid rgba(175, 175, 175, 0.5);
+    box-sizing: border-box;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+}
+
+.divisi-card-container .project-card-div  p  {
+    font-family: 'Poppins', sans-serif;
+    padding-left: 20px;
+    padding-right: 10px;
+    padding-top: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #921E5E;
+    
+}
+
+.divisi-card-container .project-card-div  img {
+    padding-top: 30px;
+    padding-left: 32px;
+}
+
+.divisi-card-container .project-card-div-top   {
+    position: absolute;
+    top: 0px;
+    width: 230px;
+    background: #921E5E;
+    border-radius: 8px 8px 0px 0px;
+}
+
+.divisi-card-container .project-card-div-top p  {
     font-family: 'Poppins', sans-serif;
     padding-top: 10px;
     font-size: 17px;
@@ -890,3 +948,265 @@ section {
     color: #ffffff;
     text-align: center;
 }
+
+.create-div .content-create {
+    position: absolute;
+    width: 680px;
+    height: 250px;
+    left: 500px;
+    top: 80px;
+
+    background: #FFFFFF;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.create-div .content-create .create-logo {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    left: 5%;
+    top: 10%;
+}
+
+.create-div .content-create .create-logo img {
+    width: 200px;
+    height: 200px;
+}
+
+.create-div .content-create .form-create {
+    position: absolute;
+    width: 420px;
+    height: 650px;
+    left: 250px;
+    top: 10px;
+    padding: 20px;
+}
+
+.create-div .content-create .form-create p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #921E5E;
+}
+
+.create-div .content-create .form-create h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #921E5E;
+}
+
+.create-div .content-create .form-group {
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+.task-board-container {
+        margin-left: 40px;
+        margin-right: 40px;
+}
+
+.task-board-container .task-board-top {
+    margin-top: 30px;
+    background: #921E5E;
+    border-radius: 8px 8px 8px 8px;
+}
+
+.task-board-container .task-board-top p {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: #ffffff;
+    text-align: left;
+}
+
+.task-board-container .task-board-top i {
+    padding-top: 2%;
+}
+
+.task-card-container {
+    position: absolute;
+    width: 620px;
+    height: fit-content;
+    left: 255px;
+    top: 170px;
+    background: #FFFFFF;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.task-board-container .task-card-top   {
+    background: #921E5E;
+    border-radius: 8px 8px 0px 0px;
+}
+
+.task-board-container .task-card-top p  {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: #ffffff;
+    text-align: left;
+}
+
+.task-board-container .task-card {
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-right: 30px;
+}
+
+.task-board-container .task-card h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;   
+    font-size: 16px;
+    line-height: 24px;
+    
+    color: #921E5E;
+}
+
+.task-board-container .addition {
+    width: 80%;
+} 
+
+.task-board-container .btn-submit {
+    margin-left: 100%;
+    width: 150px;
+    height: 44px;
+    background: #921E5E;
+    border-radius: 10px;
+    border-width: 0px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.task-board-container .btn-submit p {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 5%;
+    font-weight: 400;
+    font-size: 20px;
+    color: #FFFFFF !important;
+    text-align: center;
+    
+}
+
+.task-board-container .addition .addition-button {
+    background: #921E5E;
+    border-radius: 8px 8px 8px 8px;
+}
+
+.task-board-container .addition .addition-button p {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+
+    color: #ffffff;
+    text-align: left;
+}
+
+.content-edit-project {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    left: 480px;
+    top: 90px;
+    padding-right: 30px;
+
+    background: #FFFFFF;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.content-edit-project .edit-logo {
+    position: absolute;
+    width: 200px;
+    left: 5%;
+    top: 20%;
+}
+
+.content-edit-project .edit-logo img {
+    margin-top: 50px;
+    margin-left: 50px;
+    width: 200px;
+    height: 200px;
+}
+
+.content-edit-project .form-create {
+    width: 420px;
+    height: fit-content;
+    margin-left: 230px;
+    padding: 20px;
+}
+
+.content-edit-project .form-create p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #921E5E;
+}
+
+.content-edit-project .form-create h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #921E5E;
+}
+
+.content-edit-project .form-group {
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+.content-edit-project .btn-profile {
+    
+    margin-left: 230px;
+    width: 150px;
+    height: 44px;
+    background: #A77590;
+    border-radius: 10px;
+    border-width: 0px;
+    margin-top: 10px;
+}
+
+.assign-role .col-7 {
+    padding-top: 10px;
+}
+.assign-role select {
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    color: #921E5E;
+}
+
+.divtask-card-container {
+    height: fit-content;
+    background: #FFFFFF;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.divtask-card-container p {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+}
+
+.task-card-footer i {
+    padding-left: 10px;
+    color: #921E5E;
+    padding-bottom: 10px;
+}
+

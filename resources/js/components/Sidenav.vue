@@ -10,12 +10,11 @@
           <img class="navbar-brand" src="images/logo-tamago.png" alt="" />
         </div>
       </div>
-      <a @click="openHome" class="nav-link"
-        ><i class="fa fa-home"></i>Home</a
-      >
+      <a @click="openHome" class="nav-link"><i class="fa fa-home"></i>Home</a>
       <a @click="openProfile" class="nav-link"
         ><i class="fa fa-user"></i>Profile</a
       >
+      <a @click="logout" class="nav-link"><i class="fa fa-sign-out"></i>Log Out</a>
     </div>
     <!-- End Sidebar -->
   </div>
@@ -37,6 +36,15 @@ export default {
     openProfile() {
       this.showVar.showProfile = true;
       this.showVar.showHome = false;
+    },
+    logout() {
+      axios
+        .get("api/logout", {
+          headers: { Authorization: "Bearer " + this.token },
+        })
+        .then((response) => {
+          this.$router.push("login");
+        });
     },
   },
 };

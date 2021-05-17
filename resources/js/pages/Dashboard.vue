@@ -1,7 +1,10 @@
 <template>
   <div>
     <Sidenav v-bind:showVar="showVar" />
-    <Home v-if="showVar.showHome" v-bind:projects="projects"/>
+    <Home
+      v-if="showVar.showHome"
+      v-bind:projects="projects"
+    />
     <Profile
       v-if="showVar.showProfile"
       v-bind:firstNameData="firstNameData"

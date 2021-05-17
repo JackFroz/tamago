@@ -26,10 +26,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/change-last-name', 'Api\UserController@changeLastName');
 
     //user endpoints
-    Route::get('/user/{user}/projects', 'Api\UserController@projects');
     Route::get('/user', 'Api\UserController@profile');
-    
-    // Route::get('/user/{user}/project-members', 'Api\UserController@projects');
+    Route::get('/user/{user}/projects', 'Api\UserController@projects');
+    Route::get('/user/{user}/project-members', 'Api\UserController@projects');
 
     //project endpoints
     Route::resource('/project', 'Api\ProjectController');
@@ -39,15 +38,16 @@ Route::middleware('auth:sanctum')->group(function () {
     //project-division endpoints
     Route::resource('/project-division', 'Api\ProjectDivisionController');
     Route::get('/project-division/{project-division}/project-members', 'Api\ProjectDivisionController@projectMembers');
-    Route::get('/project-division/{project-division}/progress-lists', 'Api\ProjectDivisionController@progressLists');
+    Route::get('/project-division/{projectDivision}/progress-lists', 'Api\ProjectDivisionController@progressLists');
     
     //project-member endpoints
     Route::resource('/project-member', 'Api\ProjectMemberController');
     Route::get('/project-member/{project-member}/card-members', 'Api\ProjectMemberController@cardMembers');
 
     //progress-list endpoints
-    Route::resource('/progress-list', 'Api\ProgressListController');
-    Route::get('/progress-list/{progress-list}/cards', 'Api\ProgressListController@cards');
+    Route::resource('/progresslist', 'Api\ProgressListController');
+    Route::get('/progress-list/{progressList}/cards', 'Api\ProgressListController@cards');
+
 
     //card endpoints
     Route::resource('/card', 'Api\CardController');

@@ -15,7 +15,6 @@
               <router-link
                 :to="{ name: 'register' }"
                 class="nav-link"
-                v-if="!isLoggedIn"
                 >Sign up</router-link
               >
             </button>

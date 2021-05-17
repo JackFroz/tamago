@@ -6,30 +6,42 @@
         Home
       </p>
     </div>
-    <!--iterasi-->
-    <!-- <ul>
-      <li v-for="item in projects" :key="item.project_id">
-        {{ item.project_name }}
-      </li>
-    </ul> -->
-    <!--iterasi-->
-    <Project v-bind:projects="projects"/>
+    <Project
+      :selectedProject="selectedProject"
+      @updateSelectedProject="updateSelectedProject"
+      v-if="!isProjectSelected"
+      v-bind:projects="projects"
+    />
+    <ProjectBoard
+      v-if="isProjectSelected"
+      v-bind:selectedProject="selectedProject"
+    />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Project from "./Project.vue";
+import ProjectBoard from "./ProjectBoard.vue";
 
 export default {
   components: {
     Project,
+    ProjectBoard,
   },
   props: ["projects"],
   data() {
     return {
       token: localStorage.getItem("token"),
+      selectedProject: [],
+      isProjectSelected: false,
     };
+  },
+  methods: {
+    updateSelectedProject(project) {
+      this.selectedProject = project;
+      this.isProjectSelected = true;
+    },
   },
 };
 </script>
