@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Card;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class CardController extends Controller
@@ -37,9 +38,15 @@ class CardController extends Controller
      */
     public function store(Request $request)
     {
+        $listId = DB::table('progress_lists')
+            ->where('list_name', $request->list_name)
+            ->where('division_id', $request->division_id) 
+            ->first()
+            ->list_id;
+
         $card = Card::create([
             'card_id' => Str::random(12),
-            'list_id' => $request->list_id,
+            'list_id' => $listId,
             'card_name' => $request->card_name,
             'card_desc' => $request->card_desc,
             'card_deadline' => $request->card_deadline,

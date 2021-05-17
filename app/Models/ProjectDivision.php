@@ -16,6 +16,7 @@ class ProjectDivision extends Model
         'owner_email',
         'division_name',
         'division_desc',
+        'project_id',
     ];
 
     protected $primaryKey = 'division_id';

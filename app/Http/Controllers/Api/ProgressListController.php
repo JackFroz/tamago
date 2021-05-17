@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ProgressList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProgressListController extends Controller
@@ -80,9 +81,13 @@ class ProgressListController extends Controller
         return response()->json($progressList);
     }
 
-    public function cards(ProgressList $progressList)
+    public function cards($progressList)
     {
-        return response()->json($progressList->cards()->orderBy('order'));
+        $success = DB::table('cards')
+            ->where('list_id', $progressList)
+            ->get();
+
+        return response()->json(['cards' => $success]);
     }
 
     /**

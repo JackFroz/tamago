@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -64,7 +65,11 @@ class ProjectController extends Controller
 
     public function projectDivisions(Project $project)
     {
-        return response()->json($project->projectDivisions()->orderBy('division_name'));
+        $success = DB::table('project_divisions')
+            ->where('project_id', $project->project_id)
+            ->get();
+
+        return response()->json(['projectDivisions' => $success]);
     }
 
     public function projectMembers(Project $project)

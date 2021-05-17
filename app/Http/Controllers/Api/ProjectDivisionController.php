@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProgressList;
 use App\Models\ProjectDivision;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProjectDivisionController extends Controller
@@ -26,7 +28,7 @@ class ProjectDivisionController extends Controller
      */
     public function create(Request $request)
     {
-       //
+        //
     }
 
     /**
@@ -37,16 +39,48 @@ class ProjectDivisionController extends Controller
      */
     public function store(Request $request)
     {
+        $divisionId = Str::random(12);
         $projectDivision = ProjectDivision::create([
-            'division_id' => Str::random(12),
-            'project_id' => $request->user()->email,
+            'project_id' => $request->project_id,
+            'division_id' => $divisionId,
             'division_name' => $request->division_name,
-            'division_desc'=> $request->division_desc,
+            'division_desc' => $request->division_desc,
+
         ]);
 
+        $toDo = ProgressList::create([
+            'list_id' => Str::random(12),
+            'division_id' => $divisionId,
+            'list_name' => 'TO DO',
+            'order' => 0,
+        ]);
+
+        $inProgress = ProgressList::create([
+            'list_id' => Str::random(12),
+            'division_id' => $divisionId,
+            'list_name' => 'In Progress',
+            'order' => 0,
+        ]);
+
+        $ready = ProgressList::create([
+            'list_id' => Str::random(12),
+            'division_id' => $divisionId,
+            'list_name' => 'Ready',
+            'order' => 0,
+        ]);
+
+        $complete = ProgressList::create([
+            'list_id' => Str::random(12),
+            'division_id' => $divisionId,
+            'list_name' => 'Complete',
+            'order' => 0,
+        ]);
+
+        $status = $toDo && $inProgress && $ready && $complete && $projectDivision;
+
         return response()->json([
-            'status' => $projectDivision,
-            'message' => $projectDivision ? 'Project division created' : 'Error creating project division',
+            'status' => $status,
+            'message' => $status ? 'Progress lists created' : 'Error creating progress lists',
         ]);
     }
 
@@ -58,7 +92,11 @@ class ProjectDivisionController extends Controller
      */
     public function show(ProjectDivision $projectDivision)
     {
-        return response()->json($projectDivision);
+        $success = DB::table('progress_lists')
+            ->where('division_id', $projectDivision->division_id)
+            ->get();
+
+        return response()->json(['progressLists' => $success]);
     }
 
     /**
@@ -108,9 +146,36 @@ class ProjectDivisionController extends Controller
         ]);
     }
 
-    public function progressLists(ProjectDivision $projectDivision)
+    public function progressLists($projectDivision)
     {
-        return response()->json($projectDivision->progressLists()->orderBy('order'));
+        $todo = DB::table('progress_lists')
+            ->where('division_id', $projectDivision)
+            ->where('list_name', 'TO DO')
+            ->first();
+
+        $inProgress = DB::table('progress_lists')
+            ->where('division_id', $projectDivision)
+            ->where('list_name', 'In Progress')
+            ->first();
+
+        $ready = DB::table('progress_lists')
+            ->where('division_id', $projectDivision)
+            ->where('list_name', 'Ready')
+            ->first();
+
+        $complete = DB::table('progress_lists')
+            ->where('division_id', $projectDivision)
+            ->where('list_name', 'Complete')
+            ->first();
+
+        return response()->json([
+            'progressLists' => [
+                'todo' => $todo,
+                'inProgress' => $inProgress,
+                'ready' => $ready,
+                'complete' => $complete,
+            ]
+        ]);
     }
 
     public function projectMembers(ProjectDivision $projectDivision)
