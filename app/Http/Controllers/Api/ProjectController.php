@@ -38,18 +38,18 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $projectId = Str::uuid();
         $project = Project::create([
-            'project_id' => Str::uuid(), 
-            'project_name' => $request->project_name, 
-            'project_desc' => $request->project_desc, 
-            'owner_email' => $request->user()->email,
-            ]);
+            'project_id' => $projectId,
+            'project_name' => $request->project_name,
+            'project_desc' => $request->project_desc,
+            'username' => $request->user()->username,
+        ]);
 
         return response()->json([
-            'status' => (bool)$project,
-            'message' => $project ? 'Project created' : 'Error creating project',
-            ]);
-        
+            'status' => $project,
+            'projectId' => $projectId,
+        ]);
     }
 
     /**
@@ -61,20 +61,6 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         return response()->json($project);
-    }
-
-    public function projectDivisions(Project $project)
-    {
-        $success = DB::table('project_divisions')
-            ->where('project_id', $project->project_id)
-            ->get();
-
-        return response()->json(['projectDivisions' => $success]);
-    }
-
-    public function projectMembers(Project $project)
-    {
-        return response()->json($project->projectMembers()->orderBy('division_name'));
     }
 
     /**
@@ -98,10 +84,10 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $status = $project->update($request->only([
-            'project_name', 
+            'project_name',
             'project_desc'
-            ]));
-        
+        ]));
+
         return response()->json([
             'status' => $status,
             'message' => $status ? 'Project updated' : 'Error updating project',
@@ -117,5 +103,15 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+    public function projectDivisions(Project $project)
+    {
+        return response()->json($project->projectDivisions()->get());
+    }
+
+    public function projectMembers(Project $project)
+    {
+        return response()->json($project->projectMembers()->get());
     }
 }

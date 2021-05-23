@@ -37,15 +37,17 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //project-division endpoints
     Route::resource('/project-division', 'Api\ProjectDivisionController');
-    Route::get('/project-division/{project-division}/project-members', 'Api\ProjectDivisionController@projectMembers');
+    Route::get('/project-division/{projectDivision}/project', 'Api\ProjectDivisionController@project');
+    Route::get('/project-division/{projectDivision}/project-members', 'Api\ProjectDivisionController@projectMembers');
     Route::get('/project-division/{projectDivision}/progress-lists', 'Api\ProjectDivisionController@progressLists');
-    
+
+
     //project-member endpoints
     Route::resource('/project-member', 'Api\ProjectMemberController');
-    Route::get('/project-member/{project-member}/card-members', 'Api\ProjectMemberController@cardMembers');
+    Route::get('/project-member/{projectMember}/card-members', 'Api\ProjectMemberController@cardMembers');
 
     //progress-list endpoints
-    Route::resource('/progresslist', 'Api\ProgressListController');
+    Route::resource('/progress-list', 'Api\ProgressListController');
     Route::get('/progress-list/{progressList}/cards', 'Api\ProgressListController@cards');
 
 
@@ -56,4 +58,3 @@ Route::middleware('auth:sanctum')->group(function () {
     //card-member endpoint
     Route::resource('/card-member', 'Api\CardMemberController');
 });
-

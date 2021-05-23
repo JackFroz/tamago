@@ -38,43 +38,37 @@ class ProjectMemberController extends Controller
      */
     public function store(Request $request)
     {
-        $checkOwnership = DB::table('projects')
-            ->where('project_id', $request->project_id)
-            ->first();
+        $projectId = $request->project_id;
+        $username = $request->user()->username;
 
-        if ($checkOwnership->owner_email === $request->user()->email) {
-            return response()->json([
-                'status' => false,
-                'message' => 'This project is belong to you!',
-            ]);
-        }
+        $checkProjectOwnership = $this->checkProjectOwnership($projectId, $username);
+        $checkProjectMembership = $this->checkProjectMembership($projectId, $username);
+        $status = !$checkProjectOwnership && !$checkProjectMembership;
+        $projectMember = null;
 
-        $checkMembership = DB::table('project_members')
-            ->where('project_id', $request->project_id)
-            ->where('member_email', $request->user()->email)
-            ->first();
-
-        if (!$checkMembership) {
+        if ($status) {
             $projectMember = ProjectMember::create([
                 'member_id' => Str::random(12),
                 'project_id' => $request->project_id,
                 'division_id' => null,
-                'member_email' => $request->user()->email,
+                'username' => $request->user()->username,
                 'permission' => null,
             ]);
 
             return response()->json([
-                'status' => $projectMember,
-                'message' => $projectMember ? 'Project member added' : 'Error adding project member',
+                'status' => (bool)$projectMember,
+                'projectId' => $projectId,
             ]);
         }
 
-        if ($checkMembership->member_email === $request->user()->email) {
+        else {
             return response()->json([
-                'status' => false,
-                'message' => 'You are already member of this project!',
-            ]);
+                'status' => (bool)$projectMember,
+                'projectId' => $projectId,
+            ], 403);
         }
+
+        
     }
 
     /**
@@ -86,11 +80,6 @@ class ProjectMemberController extends Controller
     public function show(ProjectMember $projectMember)
     {
         return response()->json($projectMember);
-    }
-
-    public function cardMembers(ProjectMember $projectMember)
-    {
-        return response()->json($projectMember->cardMembers());
     }
 
     /**
@@ -115,11 +104,10 @@ class ProjectMemberController extends Controller
     {
         $status = $projectMember->update($request->only([
             'division_id',
-            'permission',
         ]));
 
         return response()->json([
-            'status' => $status,
+            'status' => (bool)$status,
             'message' => $status ? 'Project member updated' : 'Error updating project member',
         ]);
     }
@@ -137,5 +125,30 @@ class ProjectMemberController extends Controller
             'status' => $status,
             'message' => $status ? 'Project member deleted' : 'Error deleting project member',
         ]);
+    }
+
+    public function checkProjectOwnership($projectId, $username)
+    {
+        $check = DB::table('projects')
+            ->where('project_id', $projectId)
+            ->where('username', $username)
+            ->first();
+
+        return $check;
+    }
+
+    public function checkProjectMembership($projectId, $username)
+    {
+        $check = DB::table('project_members')
+            ->where('project_id', $projectId)
+            ->where('username', $username)
+            ->first();
+
+        return $check;
+    }
+
+    public function cardMembers(ProjectMember $projectMember)
+    {
+        return response()->json($projectMember->cardMembers()->get());
     }
 }

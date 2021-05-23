@@ -38,15 +38,10 @@ class CardController extends Controller
      */
     public function store(Request $request)
     {
-        $listId = DB::table('progress_lists')
-            ->where('list_name', $request->list_name)
-            ->where('division_id', $request->division_id) 
-            ->first()
-            ->list_id;
-
+        $cardId = Str::random(12);
         $card = Card::create([
-            'card_id' => Str::random(12),
-            'list_id' => $listId,
+            'card_id' => $cardId,
+            'list_id' => $request->list_id,
             'card_name' => $request->card_name,
             'card_desc' => $request->card_desc,
             'card_deadline' => $request->card_deadline,
@@ -54,8 +49,7 @@ class CardController extends Controller
         ]);
 
         return response()->json([
-            'status' => $card,
-            'message' => $card ? 'Card created' : 'Error creating card',
+            'status' => (bool)$card,
         ]);
     }
 
@@ -68,11 +62,6 @@ class CardController extends Controller
     public function show(Card $card)
     {
         return response()->json($card);
-    }
-
-    public function cardMembers(Card $card)
-    {
-        return response()->json($card->cardMembers());
     }
 
     /**
@@ -100,6 +89,7 @@ class CardController extends Controller
             'card_desc',
             'card_deadline',
             'order',
+            'list_id',
         ]));
 
         return response()->json([
@@ -122,5 +112,10 @@ class CardController extends Controller
             'card' => $card,
             'message' => $card ? 'Card deleted' : 'Error deleting card',
         ]);
+    }
+
+    public function cardMembers(Card $card)
+    {
+        return response()->json($card->cardMembers()->get());
     }
 }

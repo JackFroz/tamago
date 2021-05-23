@@ -38,35 +38,17 @@ class ProgressListController extends Controller
      */
     public function store(Request $request)
     {
-        $toDo = ProgressList::create([
-            'list_id' => Str::random(12),
+        $listId = Str::random(12);
+        $progressList = ProgressList::create([
+            'list_id' => $listId,
             'division_id' => $request->division_id,
-            'list_name' => 'TO DO',
+            'list_name' => $request->list_name,
+            'order' => $request->order,
         ]);
-
-        $inProgress = ProgressList::create([
-            'list_id' => Str::random(12),
-            'division_id' => $request->division_id,
-            'list_name' => 'In Progress',
-        ]);
-
-        $ready = ProgressList::create([
-            'list_id' => Str::random(12),
-            'division_id' => $request->division_id,
-            'list_name' => 'Ready',
-        ]);
-
-        $complete = ProgressList::create([
-            'list_id' => Str::random(12),
-            'division_id' => $request->division_id,
-            'list_name' => 'Complete',
-        ]);
-
-        $status = $toDo && $inProgress && $ready && $complete;
 
         return response()->json([
-            'status' => $status,
-            'message' => $status ? 'Progress lists created' : 'Error creating progress lists',
+            'status' => $progressList,
+            'listId' => $listId,
         ]);
     }
 
@@ -79,15 +61,6 @@ class ProgressListController extends Controller
     public function show(ProgressList $progressList)
     {
         return response()->json($progressList);
-    }
-
-    public function cards($progressList)
-    {
-        $success = DB::table('cards')
-            ->where('list_id', $progressList)
-            ->get();
-
-        return response()->json(['cards' => $success]);
     }
 
     /**
@@ -127,5 +100,10 @@ class ProgressListController extends Controller
             'status' => $status,
             'message' => $status ? 'Progress list deleted' : 'Error deleting progress list',
         ]);
+    }
+
+    public function cards(ProgressList $progressList)
+    {
+        return response()->json($progressList->cards()->orderBy('order')->get());
     }
 }

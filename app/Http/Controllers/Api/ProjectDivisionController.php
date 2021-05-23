@@ -40,6 +40,7 @@ class ProjectDivisionController extends Controller
     public function store(Request $request)
     {
         $divisionId = Str::random(12);
+
         $projectDivision = ProjectDivision::create([
             'project_id' => $request->project_id,
             'division_id' => $divisionId,
@@ -48,39 +49,9 @@ class ProjectDivisionController extends Controller
 
         ]);
 
-        $toDo = ProgressList::create([
-            'list_id' => Str::random(12),
-            'division_id' => $divisionId,
-            'list_name' => 'TO DO',
-            'order' => 0,
-        ]);
-
-        $inProgress = ProgressList::create([
-            'list_id' => Str::random(12),
-            'division_id' => $divisionId,
-            'list_name' => 'In Progress',
-            'order' => 0,
-        ]);
-
-        $ready = ProgressList::create([
-            'list_id' => Str::random(12),
-            'division_id' => $divisionId,
-            'list_name' => 'Ready',
-            'order' => 0,
-        ]);
-
-        $complete = ProgressList::create([
-            'list_id' => Str::random(12),
-            'division_id' => $divisionId,
-            'list_name' => 'Complete',
-            'order' => 0,
-        ]);
-
-        $status = $toDo && $inProgress && $ready && $complete && $projectDivision;
-
         return response()->json([
-            'status' => $status,
-            'message' => $status ? 'Progress lists created' : 'Error creating progress lists',
+            'status' => (bool)$projectDivision,
+            'divisionId' => $divisionId,
         ]);
     }
 
@@ -92,11 +63,7 @@ class ProjectDivisionController extends Controller
      */
     public function show(ProjectDivision $projectDivision)
     {
-        $success = DB::table('progress_lists')
-            ->where('division_id', $projectDivision->division_id)
-            ->get();
-
-        return response()->json(['progressLists' => $success]);
+        return response()->json($projectDivision);
     }
 
     /**
@@ -146,40 +113,18 @@ class ProjectDivisionController extends Controller
         ]);
     }
 
-    public function progressLists($projectDivision)
+    public function progressLists(ProjectDivision $projectDivision)
     {
-        $todo = DB::table('progress_lists')
-            ->where('division_id', $projectDivision)
-            ->where('list_name', 'TO DO')
-            ->first();
-
-        $inProgress = DB::table('progress_lists')
-            ->where('division_id', $projectDivision)
-            ->where('list_name', 'In Progress')
-            ->first();
-
-        $ready = DB::table('progress_lists')
-            ->where('division_id', $projectDivision)
-            ->where('list_name', 'Ready')
-            ->first();
-
-        $complete = DB::table('progress_lists')
-            ->where('division_id', $projectDivision)
-            ->where('list_name', 'Complete')
-            ->first();
-
-        return response()->json([
-            'progressLists' => [
-                'todo' => $todo,
-                'inProgress' => $inProgress,
-                'ready' => $ready,
-                'complete' => $complete,
-            ]
-        ]);
+        return response()->json($projectDivision->progressLists()->orderBy('order')->get());
     }
 
     public function projectMembers(ProjectDivision $projectDivision)
     {
-        return response()->json($projectDivision->projectMembers());
+        return response()->json($projectDivision->projectMembers()->get());
+    }
+
+    public function project(ProjectDivision $projectDivision)
+    {
+        return response()->json($projectDivision->project()->first());
     }
 }

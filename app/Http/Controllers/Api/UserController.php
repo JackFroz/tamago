@@ -13,7 +13,7 @@ class UserController extends Controller
     public function profile(Request $request)
     {
         $user = $request->user();
-        return response()->json(['user' => $user], 200);
+        return response()->json(['user' => $user]);
     }
 
     public function login(Request $request)
@@ -31,7 +31,6 @@ class UserController extends Controller
         $token = $user->createToken('ApiToken')->plainTextToken;
 
         return response()->json([
-            'success' => true,
             'user' => $user,
             'token' => $token,
         ], 201);
@@ -43,9 +42,8 @@ class UserController extends Controller
         $user->currentAccessToken()->delete();
 
         return response()->json([
-            'message' => 'Logout succeeded!',
             'success' => true,
-        ], 200);
+        ]);
     }
 
     public function register(Request $request)
@@ -64,16 +62,11 @@ class UserController extends Controller
             'first_name' => $registerInfo['first_name'],
             'last_name' => $registerInfo['last_name'],
             'password' => Hash::make($registerInfo['password']),
-            'role' => false,
         ]);
-
-        $token = $user->createToken('ApiToken')->plainTextToken;
 
         return response()->json([
             'success' => true,
-            'user' => $user,
-            'token' => $token,
-        ], 200);
+        ]);
     }
 
     public function changePassword(Request $request)
@@ -95,7 +88,6 @@ class UserController extends Controller
 
         return response()->json([
             'success' => $success,
-            'message' => $success ? 'Password changed' : 'Error changing password',
         ]);
     }
 
@@ -115,7 +107,6 @@ class UserController extends Controller
 
         return response()->json([
             'success' => $success,
-            'message' => $success ? 'First name changed' : 'Error changing first name',
         ]);
     }
 
@@ -134,25 +125,27 @@ class UserController extends Controller
             ]);
 
         return response()->json([
-            'success' => $success,
-            'message' => $success ? 'Last name changed' : 'Error changing last name',
+            'success' => (bool)$success,
         ]);
     }
 
     public function projects(User $user)
     {
-        $success = DB::table('projects')
-            ->leftJoin('project_members', 'projects.owner_email', '=', 'project_members.member_email')
-            ->where('project_members.member_email', $user->email)
-            ->orWhere('projects.owner_email', $user->email)
+        $owned = $user->projects()->orderBy('project_name')->get();
+        $guest = DB::table('projects')
+            ->leftJoin('project_members', 'projects.username', '=', 'project_members.username')
+            ->where('project_members.username', $user->username)
             ->select('projects.*')
             ->get();
 
-        return response()->json(['projects' => $success]);
+        return response()->json([
+            'owned' => $owned,
+            'guest' => $guest,
+        ]);
     }
 
     public function projectMembers(User $user)
     {
-        return response()->json($user->projectMembers()->orderBy('project_name'));
+        return response()->json($user->projectMembers()->get());
     }
 }
