@@ -15,7 +15,7 @@ class ProjectMember extends Model
         'member_id',
         'project_id',
         'division_id',
-        'member_email',
+        'username',
         'permission',
     ];
 
@@ -23,8 +23,23 @@ class ProjectMember extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'username', 'username');
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
+    }
+
+    public function projectDivision()
+    {
+        return $this->belongsTo(ProjectDivision::class, 'division_id');
+    }
+
     public function cardMembers()
     {
-        return $this->hasMany(CardMember::class);
+        return $this->hasMany(CardMember::class, 'member_id');
     }
 }

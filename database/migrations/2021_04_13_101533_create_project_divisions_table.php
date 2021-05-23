@@ -17,8 +17,8 @@ class CreateProjectDivisionsTable extends Migration
             $table->string('division_id', 12)->unique();
             $table->uuid('project_id');
             $table->foreign('project_id')->references('project_id')->on('projects');
-            $table->string('division_name', 50);
-            $table->string('division_desc', 1000)->nullable();
+            $table->string('division_name', 25);
+            $table->string('division_desc', 300)->nullable();
             $table->timestamps();
         });
     }

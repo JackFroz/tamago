@@ -4,9 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class Project extends Model
 {
@@ -17,25 +15,25 @@ class Project extends Model
         'project_id',
         'project_name',
         'project_desc',
-        'owner_email',
+        'username',
     ];
 
     protected $primaryKey = 'project_id';
     public $incrementing = false;
     protected $keyType = 'string';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'username', 'username');
+    }
     
     public function projectDivisions()
     {
-        return $this->hasMany(ProjectDivision::class);
+        return $this->hasMany(ProjectDivision::class, 'project_id');
     }
 
     public function projectMembers()
     {
-        return $this->hasMany(ProjectMember::class);
-    }
-
-    public function user()
-    {
-        return $this->hasOne(User::class);
+        return $this->hasMany(ProjectMember::class, 'project_id');
     }
 }

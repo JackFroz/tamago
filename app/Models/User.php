@@ -23,7 +23,6 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'password',
-        'role',
     ];
 
     /**
@@ -33,7 +32,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'role',
         'remember_token',
     ];
 
@@ -48,11 +46,11 @@ class User extends Authenticatable
 
     public function projects()
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class, 'username', 'username');
     }
 
     public function projectMembers()
     {
-        return $this->hasMany(ProjectMember::class);
+        return $this->hasMany(ProjectMember::class, 'username', 'username');
     }
 }

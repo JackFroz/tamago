@@ -16,9 +16,9 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->uuid('project_id')->unique();
             $table->string('project_name', 50);
-            $table->string('project_desc', 1000)->nullable();
-            $table->string('owner_email', 320);
-            $table->foreign('owner_email')->references('email')->on('users');
+            $table->string('project_desc', 300)->nullable();
+            $table->string('username', 16);
+            $table->foreign('username')->references('username')->on('users');
             $table->timestamps();
         });
     }

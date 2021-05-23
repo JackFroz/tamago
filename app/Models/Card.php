@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 class Card extends Model
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable;
 
     protected $table = 'cards';
 
@@ -26,8 +25,13 @@ class Card extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    public function progressList()
+    {
+        return $this->belongsTo(ProgressList::class, 'list_id');
+    }
+
     public function cardMembers()
     {
-        return $this->hasMany(CardMember::class);
+        return $this->hasMany(CardMember::class, 'card_id');
     }
 }

@@ -21,7 +21,6 @@ class UserTableSeeder extends Seeder
             'first_name' => 'Muhammad',
             'last_name' => 'Fadilah',
             'password' => Hash::make('12345678'),
-            'role' => true,
         ]);
     }
 }

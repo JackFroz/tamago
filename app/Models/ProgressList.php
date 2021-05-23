@@ -22,4 +22,14 @@ class ProgressList extends Model
     protected $primaryKey = 'list_id';
     public $incrementing = false;
     protected $keyType = 'string';
+
+    public function projectDivision()
+    {
+        return $this->belongsTo(ProjectDivision::class, 'division_id');
+    }
+
+    public function cards()
+    {
+        return $this->hasMany(Card::class, 'list_id');
+    }
 }

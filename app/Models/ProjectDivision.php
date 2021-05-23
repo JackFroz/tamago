@@ -13,7 +13,6 @@ class ProjectDivision extends Model
     protected $table = 'project_divisions';
     protected $fillable = [
         'division_id',
-        'owner_email',
         'division_name',
         'division_desc',
         'project_id',
@@ -23,13 +22,18 @@ class ProjectDivision extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    public function project() 
+    {
+        return $this->belongsTo(Project::class, 'project_id', 'project_id');
+    }
+
     public function progressLists()
     {
-        return $this->hasMany(ProgressList::class);
+        return $this->hasMany(ProgressList::class, 'division_id');
     }
 
     public function projectMembers()
     {
-        return $this->hasMany(ProjectMember::class);
+        return $this->hasMany(ProjectMember::class, 'division_id');
     }
 }

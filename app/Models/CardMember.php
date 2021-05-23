@@ -22,4 +22,14 @@ class CardMember extends Model
     protected $primaryKey = 'card_member_id';
     public $incrementing = false;
     protected $keyType = 'string';
+
+    public function card()
+    {
+        return $this->belongsTo(Card::class, 'card_id');
+    }
+
+    public function projectMember()
+    {
+        return $this->belongsTo(ProjectMember::class, 'member_id');
+    }
 }

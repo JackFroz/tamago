@@ -18,7 +18,7 @@ class CreateCardsTable extends Migration
             $table->string('list_id', 12);
             $table->foreign('list_id')->references('list_id')->on('progress_lists');
             $table->string('card_name', 50);
-            $table->string('card_desc', 1000)->nullable();
+            $table->string('card_desc', 300)->nullable();
             $table->dateTime('card_deadline')->nullable();
             $table->integer('order');
             $table->timestamps();

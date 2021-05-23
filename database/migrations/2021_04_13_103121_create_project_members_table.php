@@ -19,8 +19,8 @@ class CreateProjectMembersTable extends Migration
             $table->foreign('project_id')->references('project_id')->on('projects');
             $table->string('division_id', 12)->nullable();
             $table->foreign('division_id')->references('division_id')->on('project_divisions');
-            $table->string('member_email', 320);
-            $table->foreign('member_email')->references('email')->on('users');
+            $table->string('username', 16);
+            $table->foreign('username')->references('username')->on('users');
             $table->tinyInteger('permission')->nullable();
             $table->timestamps();
         });
