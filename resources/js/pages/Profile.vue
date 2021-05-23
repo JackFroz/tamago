@@ -175,5 +175,5 @@ export default {
 </script>
 
 <style lang="css">
-@import "../../css/navbar.css";
+@import "../../css/app.css";
 </style>

@@ -10,11 +10,15 @@
           <img class="navbar-brand" src="images/logo-tamago.png" alt="" />
         </div>
       </div>
-      <a @click="openHome" class="nav-link"><i class="fa fa-home"></i>Home</a>
-      <a @click="openProfile" class="nav-link"
-        ><i class="fa fa-user"></i>Profile</a
+      <router-link :to="{ name: 'home' }" class="nav-link"
+        ><i class="fa fa-home"></i>Home</router-link
       >
-      <a @click="logout" class="nav-link"><i class="fa fa-sign-out"></i>Log Out</a>
+      <router-link :to="{ name: 'profile' }" class="nav-link"
+        ><i class="fa fa-user"></i>Profile</router-link
+      >
+      <a @click="logout" class="nav-link"
+        ><i class="fa fa-sign-out"></i>Log Out</a
+      >
     </div>
     <!-- End Sidebar -->
   </div>
@@ -27,15 +31,13 @@ export default {
       token: localStorage.getItem("token"),
     };
   },
-  props: ["showVar"],
+  props: ["showComponentDashboard"],
   methods: {
-    openHome() {
-      this.showVar.showHome = true;
-      this.showVar.showProfile = false;
+    showHome() {
+      this.$emit("updateComponentDashboard", "home");
     },
-    openProfile() {
-      this.showVar.showProfile = true;
-      this.showVar.showHome = false;
+    showProfile() {
+      this.$emit("updateComponentDashboard", "profile");
     },
     logout() {
       axios
@@ -51,5 +53,5 @@ export default {
 </script>
 
 <style lang="css">
-@import "../../css/navbar.css";
+@import "../../css/app.css";
 </style>

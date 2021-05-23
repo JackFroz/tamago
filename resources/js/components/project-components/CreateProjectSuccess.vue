@@ -8,7 +8,7 @@
       <form action="#" @submit.prevent="done" class="form-create">
         <h4>Project Successfully Created!</h4>
         <div class="form-group-success">
-          <p>Project ID : 123456</p>
+          <p>Project ID : {{ projectId }}</p>
           <div class="form-group-success-top">
             <p>Nama Project</p>
           </div>
@@ -23,14 +23,15 @@
 
 <script>
 export default {
+  props: ["projectId"],
   methods: {
     done() {
-      this.$router.push("dashboard");
+      this.$router.go();
     },
   },
 };
 </script>
 
 <style lang="css">
-@import "../../css/navbar.css";
+@import "../../../css/app.css";
 </style>

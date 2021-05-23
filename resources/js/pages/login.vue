@@ -12,9 +12,7 @@
           <div class="navbar-nav ml-auto">
             <p>Don't have any account?</p>
             <button class="btn-tamago">
-              <router-link
-                :to="{ name: 'register' }"
-                class="nav-link"
+              <router-link :to="{ name: 'register' }" class="nav-link"
                 >Sign up</router-link
               >
             </button>
@@ -24,7 +22,7 @@
     </div>
 
     <div class="container-login">
-      <form action="#" @submit.prevent="handleLogin" class="form-login">
+      <form action="#" @submit.prevent="login" class="form-login">
         <h1>Welcome Back!</h1>
         <h2>to Tamago</h2>
         <div class="form-group">
@@ -34,7 +32,7 @@
             class="form-control"
             id="emailaddress"
             placeholder="Enter your email address"
-            v-model="formData.email"
+            v-model="loginForm.email"
           />
         </div>
         <div class="form-group">
@@ -44,7 +42,7 @@
             class="form-control"
             id="password"
             placeholder="Enter your password"
-            v-model="formData.password"
+            v-model="loginForm.password"
           />
         </div>
         <a href="">
@@ -62,22 +60,22 @@
 export default {
   data() {
     return {
-      formData: {
+      loginForm: {
         email: "",
         password: "",
       },
     };
   },
   methods: {
-    handleLogin() {
+    login() {
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
-          .post("/api/login", this.formData)
+          .post("api/login", this.loginForm)
           .then((response) => {
             localStorage.setItem("token", response.data.token);
-            this.$router.push("dashboard");
+            this.$router.push("home");
           })
-          .catch((error) => console.log(error)); // credentials didn't match
+          .catch((error) => console.log(error));
       });
     },
   },
@@ -85,5 +83,5 @@ export default {
 </script>
 
 <style lang="css">
-@import "../../css/navbar.css";
+@import "../../css/app.css";
 </style>

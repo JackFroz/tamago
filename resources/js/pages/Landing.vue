@@ -72,7 +72,8 @@
     <br />
 
     <section class="section-bot">
-      <h1 class="title text-center">MEET OUR TEAM</h1><br>
+      <h1 class="title text-center">MEET OUR TEAM</h1>
+      <br />
       <div class="title text-center">
         <div class="row">
           <div class="col-12">
@@ -93,7 +94,7 @@
           </div>
           <div class="col-4">
             <img style="float: center" src="images/orang-2.png" alt="" />
-            <p >Sitti Ufairoh A</p>
+            <p>Sitti Ufairoh A</p>
             <p>UI/UX Developer</p>
           </div>
           <div class="col-4">
@@ -119,5 +120,5 @@ export default {
 </script>
 
 <style lang="css">
-@import "../../css/navbar.css";
+@import "../../css/app.css";
 </style>

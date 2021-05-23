@@ -5,21 +5,21 @@
       <div class="content-detail-project">
         <p>Project ID</p>
         <div class="id-project">
-          <p class="title text-center">{{ selectedProject.project_id }}</p>
+          <p class="title text-center">{{ project.project_id }}</p>
         </div>
 
         <br />
         <p>Project Description</p>
         <div class="desc-project">
-          <p>{{ selectedProject.project_desc }}</p>
+          <p>{{ project.project_desc }}</p>
         </div>
         <br />
-        <button @click="openCreateDivision" class="btn-create-div">
+        <button v-if="ownership" @click="showCreateDivision" class="btn-create-div">
           <p><i class="fa fa-plus" aria-hidden="true"></i>  Create a New Division Board</p>    
         </button>
 
         <br />
-        <button @click="openEditProject" class="btn-create-div">
+        <button v-if="ownership" @click="showEditProject" class="btn-create-div">
           <p><i class="fa fa-plus" aria-hidden="true"></i>  Edit Project and Assign Role</p>
         </button>
       </div>
@@ -30,19 +30,18 @@
 
 <script>
 export default {
-  props: ["selectedProject", "showProjectBoard"],
+  props: ["project", "ownership"],
   methods: {
-    openCreateDivision() {
-      this.showProjectBoard.showCreateDivision = !this.showProjectBoard.showCreateDivision;
-      this.showProjectBoard.showDivisionCard = !this.showProjectBoard.showDivisionCard;
+    showCreateDivision() {
+      this.$emit("updateShowComponentProjectBoard", "create-division")
     },
-    openEditProject() {
-
+    showEditProject() {
+      this.$emit("updateShowComponentProjectBoard", "edit-project")
     }
   }
 };
 </script>
 
 <style lang="css">
-@import "../../css/navbar.css";
+@import "../../../css/app.css";
 </style>

@@ -8,19 +8,22 @@
       <h4>Join Project</h4>
       <div class="form-group">
         <p for="join-project">Project ID</p>
+        <p for="join-project">{{ message }}</p>
         <input
           type="text"
           class="form-control"
           id="joinID"
           placeholder="input ID Project"
-          v-model="projectMemberData.project_id"
+          v-model="projectMemberForm.project_id"
         />
-        <p for="join-project">{{ message }}</p>
       </div>
 
       <button type="submit" class="btn-join">
         <p>Join</p>
       </button>
+      <!-- <button @click="backToHome" type="button" class="btn-create">
+        <p>Cancel</p>
+      </button> -->
     </form>
   </div>
 </template>
@@ -30,29 +33,28 @@ export default {
   data() {
     return {
       message: "",
-      projectMemberData: {
+      projectMemberForm: {
         project_id: "",
       },
       token: localStorage.getItem("token"),
     };
   },
-  props: ["showJoinProjectComponent"],
   methods: {
+    backToHome() {
+      this.$router.go();
+    },
     joinProject() {
       axios
-        .post("/api/project-member", this.projectMemberData, {
+        .post("api/project-member", this.projectMemberForm, {
           headers: { Authorization: "Bearer " + this.token },
         })
         .then((response) => {
-          if (!response.data.status) {
-            this.message = response.data.message;
-          } else {
-            this.showJoinProjectComponent.JoinProjectForm = false;
-            this.showJoinProjectComponent.JoinProjectSuccess = true;
-          }
+          let projectId = response.data.projectId;
+          this.$emit("updateProjectId", projectId);
+          this.$emit("updateShowComponentJoinProject", "join-project-success");
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+          this.message = "Failed to add you to this project!";
         });
     },
   },
@@ -60,5 +62,5 @@ export default {
 </script>
 
 <style lang="css">
-@import "../../css/navbar.css";
+@import "../../../css/app.css";
 </style>

@@ -8,7 +8,7 @@
     <div class="form-join-success">
       <h4>Successfully Joined The Project</h4>
       <div class="form-group-success">
-        <p>Project ID : 987654</p>
+        <p>Project ID : {{ projectId }}</p>
         <div class="form-group-success-top">
           <p>Nama project</p>
         </div>
@@ -23,10 +23,10 @@
 
 <script>
 export default {
-  name: "Joinsuccess",
+  props: ["projectId"]
 };
 </script>
 
 <style lang="css">
-@import "../../css/navbar.css";
+@import "../../../css/app.css";
 </style>

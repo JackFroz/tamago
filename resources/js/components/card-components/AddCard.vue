@@ -1,7 +1,7 @@
 <template>
   <div class="task-card-container">
     <div class="task-card-top">
-      <p>Add New Task ({{ cardData.division_id }})</p>
+      <p>Add New Task ({{ clickedList.list_name }})</p>
     </div>
     <div class="task-card">
       <h4>Project Task</h4>
@@ -11,7 +11,7 @@
           class="form-control"
           id="task-title"
           placeholder="input Task Title"
-          v-model="cardData.card_name"
+          v-model="cardForm.card_name"
         />
       </div>
       <div class="form-group">
@@ -20,7 +20,7 @@
           class="form-control"
           id="task-title"
           placeholder="Input Description of Project Task"
-          v-model="cardData.card_desc"
+          v-model="cardForm.card_desc"
         />
       </div>
       <br />
@@ -33,9 +33,7 @@
             </div>
           </div>
           <div class="col-4" style="float: center">
-            <div class="addition-button" type="button">
-              <p>Due Date</p>
-            </div>
+            <input type="date" v-model="cardForm.card_deadline">
           </div>
           <div class="col-4" style="float: center">
             <div class="addition-button" type="button">
@@ -45,13 +43,21 @@
         </div>
       </div>
       <button
-        @click="addTask"
+        @click="addCard"
         type="submit"
         class="btn-submit"
         style="float: right"
       >
         <p>Create</p>
       </button>
+      <!-- <button
+        @click="backToLists"
+        type="submit"
+        class="btn-submit"
+        style="float: right"
+      >
+        <p>Close</p>
+      </button> -->
     </div>
   </div>
 </template>
@@ -60,27 +66,28 @@
 export default {
   data() {
     return {
-      token: localStorage.getItem("token"),
-      cardData: {
-        list_name: this.listName,
-        division_id: this.divisionId, 
-        card_name: "",
-        card_desc: "",
+      cardForm: {
+        card_name: null,
+        card_desc: null,
         card_deadline: null,
-        order: 0,
+        list_id: this.clickedList.list_id,
+        order: this.clickedList.cards.length,
       },
+      token: localStorage.getItem("token"),
     };
   },
-  props: ["listName", "showAddTaskCard", "divisionId"],
+  props: ["clickedList"],
   methods: {
-    addTask() {
+    backToLists() {
+      this.$emit("updateShowComponentCardManagement", "card");
+    },
+    addCard() {
       axios
-        .post("/api/card", this.cardData, {
+        .post("api/card", this.cardForm, {
           headers: { Authorization: "Bearer " + this.token },
         })
-        .then((response) => {
-          this.showAddTaskCard = !this.showAddTaskCard;
-          console.log(response.data);
+        .then(() => {
+          this.$router.go();
         });
     },
   },
@@ -88,5 +95,5 @@ export default {
 </script>
 
 <style lang="css">
-@import "../../css/navbar.css";
+@import "../../../css/app.css";
 </style>

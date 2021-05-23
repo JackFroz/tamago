@@ -13,7 +13,7 @@
           class="form-control"
           id="projectName"
           placeholder="input Project Name"
-          v-model="projectData.project_name"
+          v-model="projectForm.project_name"
         />
       </div>
       <div class="form-group">
@@ -23,12 +23,15 @@
           class="form-control"
           id="projectDesc"
           placeholder="input Description Project"
-          v-model="projectData.project_desc"
+          v-model="projectForm.project_desc"
         />
       </div>
       <button type="submit" class="btn-create">
         <p>Create</p>
       </button>
+      <!-- <button @click="backToHome" type="button" class="btn-create">
+        <p>Cancel</p>
+      </button> -->
     </form>
   </div>
 </template>
@@ -37,28 +40,32 @@
 export default {
   data() {
     return {
-      projectData: {
+      projectForm: {
         project_name: "",
         project_desc: "",
       },
-      message: "",
       token: localStorage.getItem("token"),
     };
   },
-  props: ["showProjectComponent"],
+  props: ["projectId"],
   methods: {
+    backToHome() {
+      this.$router.go();
+    },
     createProject() {
       axios
-        .post("/api/project", this.projectData, {
+        .post("api/project", this.projectForm, {
           headers: { Authorization: "Bearer " + this.token },
         })
         .then((response) => {
-          this.message = response.data.message;
-          this.showProjectComponent.showProjectForm = false;
-          this.showProjectComponent.showProjectSuccess = true;
-        })
-        .catch((error) => {
-          console.log(error);
+          console.log(response.data);
+          let projectId = response.data.projectId;
+
+          this.$emit("updateProjectId", projectId);
+          this.$emit(
+            "updateShowComponentCreateProject",
+            "create-project-success"
+          );
         });
     },
   },
@@ -66,5 +73,5 @@ export default {
 </script>
 
 <style lang="css">
-@import "../../css/navbar.css";
+@import "../../../css/app.css";
 </style>

@@ -35,7 +35,7 @@
             class="form-control"
             id="firstname"
             placeholder="Enter your first name"
-            v-model="formData.first_name"
+            v-model="registerForm.first_name"
           />
         </div>
         <div class="form-group">
@@ -45,7 +45,7 @@
             class="form-control"
             id="lastname"
             placeholder="Enter your last name"
-            v-model="formData.last_name"
+            v-model="registerForm.last_name"
           />
         </div>
         <div class="form-group">
@@ -55,7 +55,7 @@
             class="form-control"
             id="emailaddress"
             placeholder="Enter your email address"
-            v-model="formData.email"
+            v-model="registerForm.email"
           />
         </div>
         <div class="form-group">
@@ -65,7 +65,7 @@
             class="form-control"
             id="username"
             placeholder="Enter your username"
-            v-model="formData.username"
+            v-model="registerForm.username"
           />
         </div>
         <div class="form-group">
@@ -75,7 +75,7 @@
             class="form-control"
             id="password"
             placeholder="Enter your password"
-            v-model="formData.password"
+            v-model="registerForm.password"
           />
         </div>
         <div class="form-group">
@@ -101,7 +101,7 @@
 export default {
   data() {
     return {
-      formData: {
+      registerForm: {
         email: "",
         username: "",
         password: "",
@@ -114,16 +114,16 @@ export default {
   methods: {
     handleRegister() {
       axios
-        .post("/api/register", this.formData)
-        .then((response) => {
+        .post("api/register", this.registerForm)
+        .then(() => {
           this.$router.push("login");
         })
-        .catch((error) => console.log(error)); // credentials didn't match
+        .catch((error) => console.log(error));
     },
   },
 };
 </script>
 
 <style lang="css">
-@import "../../css/navbar.css";
+@import "../../css/app.css";
 </style>
