@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-1">
         <div class="edit-logo">
-          <img src="images/Group 254.png" alt="" style="float: center" />
+          <img :src="RocketImg" alt="" style="float: center" />
         </div>
       </div>
       <div class="col-4">
@@ -41,11 +41,7 @@
           >
             <p>Exit</p>
           </button>
-          <button
-            @click="deleteDivision"
-            type="button"
-            class="btn-profile"
-          >
+          <button @click="deleteDivision" type="button" class="btn-profile">
             <p>Delete</p>
           </button>
         </div>
@@ -55,9 +51,12 @@
 </template>
 
 <script>
+import RocketImg from "../../../images/rocket.png";
+
 export default {
   data() {
     return {
+      RocketImg: RocketImg,
       message: "",
       divisionForm: {
         division_name: this.division.division_name,
@@ -74,25 +73,32 @@ export default {
     },
     updateDivisionDetail() {
       axios
-        .patch(`api/project-division/${this.division.division_id}`, this.divisionForm, {
-          headers: { Authorization: "Bearer " + this.token },
-        })
+        .patch(
+          `api/project-division/${this.division.division_id}`,
+          this.divisionForm,
+          {
+            headers: { Authorization: "Bearer " + this.token },
+          }
+        )
         .then((response) => {
           if (!response.data.status) this.message = "Failed to edit division!";
           else this.$router.go();
         });
     },
     deleteDivision() {
-      axios.delete(
-        `api/project-division/${this.division.division_id}`,
-        { _method: "delete" },
-        {
-          headers: { Authorization: "Bearer " + this.token },
-        }.then((response) => {
-          if (!response.data.status) this.message = "Failed to delete division!"
+      axios
+        .post(
+          `api/project-division/${this.division.division_id}`,
+          { _method: "delete" },
+          {
+            headers: { Authorization: "Bearer " + this.token },
+          }
+        )
+        .then((response) => {
+          if (!response.data.status)
+            this.message = "Failed to delete division!";
           else this.$router.go();
-        })
-      );
+        });
     },
   },
 };

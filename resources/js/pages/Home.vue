@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Sidenav/>
+    <Sidenav />
     <div class="main">
       <!--Header-->
       <div class="fixed-top judul-page">
@@ -8,7 +8,7 @@
           Home
         </p>
       </div>
-      <ProjectManagement v-bind:projects="projects" />
+      <ProjectManagement v-bind:projects="projects" @updateProjects="updateProjects" />
     </div>
   </div>
 </template>
@@ -46,9 +46,12 @@ export default {
           headers: { Authorization: "Bearer " + this.token },
         })
         .then((response) => {
-          this.projects = response.data;
+          this.projects = response.data.projects;
         });
     },
+  },
+  updateProjects() {
+    this.getProjects();
   },
   created() {
     this.requestProjects();

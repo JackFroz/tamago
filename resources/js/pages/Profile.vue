@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Sidenav />
     <div class="main">
       <!--Header-->
       <div class="fixed-top judul-page">
@@ -11,7 +12,7 @@
       <div class="content-home-bg">
         <div class="content-profile">
           <div class="name-foto">
-            <p>{{ firstNameData.first_name }} {{ lastNameData.last_name }}</p>
+            <p>{{ user.first_name }} {{ user.last_name }}</p>
             <img class="mx-auto d-block rounded-circle" src="" alt="" />
           </div>
           <div class="form-profile">
@@ -23,7 +24,7 @@
                   type="text"
                   class="form-control"
                   id="firstname"
-                  v-model="profileData.first_name"
+                  v-model="profileForm.first_name"
                 />
               </div>
               <div class="form-group">
@@ -32,7 +33,7 @@
                   type="text"
                   class="form-control"
                   id="lastname"
-                  v-model="profileData.last_name"
+                  v-model="profileForm.last_name"
                 />
               </div>
               <div class="form-group">
@@ -42,7 +43,7 @@
                   class="form-control"
                   id="userid"
                   readonly
-                  v-model="profileData.username"
+                  v-model="user.username"
                 />
               </div>
               <h4>Change Password</h4>
@@ -52,7 +53,7 @@
                   type="password"
                   class="form-control"
                   id="oldpassword"
-                  v-model="passwordData.old_password"
+                  v-model="passwordForm.old_password"
                 />
               </div>
               <div class="form-group">
@@ -61,7 +62,7 @@
                   type="password"
                   class="form-control"
                   id="newpassword"
-                  v-model="passwordData.new_password"
+                  v-model="passwordForm.new_password"
                 />
               </div>
               <div class="form-group">
@@ -70,7 +71,7 @@
                   type="password"
                   class="form-control"
                   id="confirmpass"
-                  v-model="passwordData.repeat_new_password"
+                  v-model="passwordForm.repeat_new_password"
                 />
               </div>
               <button v-if="isDisabled" type="submit" class="btn-profile">
@@ -85,30 +86,33 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import Sidenav from "../components/Sidenav.vue";
 
 export default {
+  components: {
+    Sidenav,
+  },
+
   data() {
     return {
       message: "",
+      user: [],
+      profileForm: {
+        first_name: "",
+        last_name: "",
+      },
+      passwordForm: {
+        old_password: "",
+        new_password: "",
+        repeat_new_password: "",
+      },
       token: localStorage.getItem("token"),
     };
   },
-  props: ["firstNameData", "lastNameData", "passwordData", "profileData"],
+  props: [],
   computed: {
     isDisabled() {
-      if (this.firstNameData.first_name !== this.profileData.first_name)
-        return true;
-
-      if (this.lastNameData.last_name !== this.profileData.last_name)
-        return true;
-
-      if (
-        this.passwordData.new_password !== "" &&
-        this.passwordData.old_password !== "" &&
-        this.passwordData.repeat_new_password !== "" &&
-        this.passwordData.new_password === this.passwordData.repeat_new_password
-      )
+      if (this.isNameColumnsChanged() || this.isPasswordColumnsChanged())
         return true;
 
       return false;
@@ -116,60 +120,66 @@ export default {
   },
 
   methods: {
-    saveChanges() {
-      if (this.firstNameData.first_name !== this.profileData.first_name) {
-        this.firstNameData.first_name = this.profileData.first_name;
-        axios
-          .post("/api/change-first-name", this.firstNameData, {
-            headers: { Authorization: "Bearer " + this.token },
-          })
-          .then((response) => {
-            this.message = "Profile updated!";
-          })
-          .catch((error) => {
-            if (!error.response.data.success) {
-              this.message = "Please check your input again!";
-            }
-          }); // credentials didn't match
-      }
-
-      if (this.lastNameData.last_name !== this.profileData.last_name) {
-        this.lastNameData.last_name = this.profileData.last_name;
-        axios
-          .post("/api/change-last-name", this.lastNameData, {
-            headers: { Authorization: "Bearer " + this.token },
-          })
-          .then((response) => {
-            this.message = response.data.message;
-          })
-          .catch((error) => {
-            if (!error.response.data.success) {
-              this.message = error.response.data.message;
-            }
-          }); // credentials didn't match
-      }
-
-      if (
-        this.passwordData.new_password !== "" &&
-        this.passwordData.old_password !== "" &&
-        this.passwordData.repeat_new_password !== "" &&
-        this.passwordData.new_password === this.passwordData.repeat_new_password
-      ) {
-        axios
-          .post("/api/change-password", this.passwordData, {
-            headers: { Authorization: "Bearer " + this.token },
-          })
-          .then((response) => {
-            this.message = "Profile updated!";
-          })
-          .catch((error) => {
-            if (!error.response.data.success) {
-              this.message =
-                "Failed updating profile! Please check your input!";
-            }
-          });
-      }
+    getUser() {
+      axios
+        .get("api/user", {
+          headers: { Authorization: "Bearer " + this.token },
+        })
+        .then((response) => {
+          this.user = response.data.user;
+          this.profileForm.first_name = this.user.first_name;
+          this.profileForm.last_name = this.user.last_name;
+        });
     },
+    isNameColumnsChanged() {
+      let isNameColumnsChanged =
+        this.user.first_name !== this.profileForm.first_name ||
+        this.user.last_name !== this.profileForm.last_name;
+
+      return isNameColumnsChanged;
+    },
+    isPasswordColumnsChanged() {
+      let isPasswordColumnsChanged =
+        this.passwordForm.new_password !== "" &&
+        this.passwordForm.old_password !== "" &&
+        this.passwordForm.repeat_new_password !== "" &&
+        this.passwordForm.new_password ===
+          this.passwordForm.repeat_new_password;
+
+      return isPasswordColumnsChanged;
+    },
+    changeName() {
+      axios
+        .post("api/change-name", this.profileForm, {
+          headers: { Authorization: "Bearer " + this.token },
+        })
+        .then((response) => {
+          this.message = response.data.success
+            ? "Profile updated!"
+            : "Failed updating profile!";
+          this.user.first_name = this.profileForm.first_name;
+          this.user.last_name = this.profileForm.last_name;
+        });
+    },
+    changePassword() {
+      axios
+        .post("api/change-password", this.passwordForm, {
+          headers: { Authorization: "Bearer " + this.token },
+        })
+        .then((response) => {
+          this.message = response.data.success
+            ? "Profile updated!"
+            : "Failed updating profile!";
+        });
+    },
+    saveChanges() {
+      if (this.isNameColumnsChanged()) this.changeName();
+
+      if (this.isPasswordColumnsChanged()) this.changePassword();
+    },
+  },
+  created() {
+    this.getUser();
   },
 };
 </script>

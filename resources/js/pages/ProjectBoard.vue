@@ -33,6 +33,8 @@
           @updateShowComponentProjectBoard="updateShowComponentProjectBoard"
           v-if="showComponentProjectBoard === 'edit-project'"
           v-bind:project="project"
+          v-bind:divisions="divisions"
+          v-bind:members="members"
         />
         <EditDivision
           @updateShowComponentProjectBoard="updateShowComponentProjectBoard"

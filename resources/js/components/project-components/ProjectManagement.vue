@@ -1,19 +1,28 @@
 <template>
   <div class="content-home-bg">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <div class="content-home">
       <div class="title-home">
         <p>My Project</p>
       </div>
       <div class="home-menu">
         <button class="btn-tamago" @click="showJoinProject">
-          <p>Join Project</p>
+          <p><i class="fa fa-user-plus" aria-hidden="true"></i> Join Project</p>
         </button>
         <button class="btn-tamago2" @click="showCreateProject">
-          <p>Create New Project</p>
+          <p>
+            <i class="fa fa-plus" aria-hidden="true"></i> Create New Project
+          </p>
         </button>
       </div>
     </div>
-    <CreateProject v-if="showComponentProjectManagement === 'create-project'" />
+    <CreateProject
+      v-if="showComponentProjectManagement === 'create-project'"
+      @updateProjects="updateProjects"
+    />
     <JoinProject v-if="showComponentProjectManagement === 'join-project'" />
     <ProjectCard
       v-if="showComponentProjectManagement === 'project-card'"
@@ -54,6 +63,9 @@ export default {
         this.showComponentProjectManagement !== "join-project"
           ? "join-project"
           : "project-card";
+    },
+    updateProjects() {
+      this.$emit("updateProjects");
     },
   },
 };

@@ -36,3 +36,7 @@ export default {
   },
 };
 </script>
+
+<style lang="css">
+@import "../../../css/app.css";
+</style>

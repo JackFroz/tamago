@@ -25,23 +25,7 @@
       </div>
       <br />
       <h4>Add to Card</h4>
-      <div class="addition">
-        <div class="row">
-          <div class="col-4" style="float: center">
-            <div class="addition-button" type="button">
-              <p>Member</p>
-            </div>
-          </div>
-          <div class="col-4" style="float: center">
-            <input type="date" v-model="cardForm.card_deadline">
-          </div>
-          <div class="col-4" style="float: center">
-            <div class="addition-button" type="button">
-              <p>Attachment</p>
-            </div>
-          </div>
-        </div>
-      </div>
+
       <button
         @click="addCard"
         type="submit"

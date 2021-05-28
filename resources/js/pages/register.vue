@@ -6,16 +6,15 @@
           href="/home"
           class="logo"
           alt="tamago logo"
-          src="images/logo-tamago.png"
+          :src="LogoTamago"
         />
         <div class="collapse navbar-collapse" id="navbarText">
           <div class="navbar-nav ml-auto">
-            <p>Already with Tamago?</p>
-            <button class="btn-tamago">
+            <p class="nav-text">Already with Tamago?</p>
+            <button class="btn-nav-signup">
               <router-link
                 :to="{ name: 'login' }"
                 class="nav-link"
-                v-if="!isLoggedIn"
                 >Login</router-link
               >
             </button>
@@ -28,6 +27,7 @@
       <form action="#" @submit.prevent="handleRegister" class="form-login">
         <h1>Register</h1>
         <h2>your account Now!</h2>
+        <p> {{ message }} </p>
         <div class="form-group">
           <label for="fname">First Name</label>
           <input
@@ -85,7 +85,7 @@
             class="form-control"
             id="confirmpass"
             placeholder="Confirm your password"
-            v-model="confirm_password"
+            v-model="registerForm.confirm_password"
           />
         </div>
 
@@ -98,9 +98,13 @@
 </template>
 
 <script>
+import LogoTamago from "../../images/logo-tamago.png";
+
 export default {
   data() {
     return {
+      message: "",
+      LogoTamago: LogoTamago,
       registerForm: {
         email: "",
         username: "",
@@ -108,6 +112,7 @@ export default {
         first_name: "",
         last_name: "",
         password: "",
+        confirm_password: "",
       },
     };
   },
@@ -118,7 +123,9 @@ export default {
         .then(() => {
           this.$router.push("login");
         })
-        .catch((error) => console.log(error));
+        .catch(() => {
+          this.message = "Please check your input!";
+        });
     },
   },
 };

@@ -5,19 +5,24 @@
       <!--Header-->
       <div class="fixed-top judul-page">
         <p class="top-bar">
-          <router-link :to="{ name: 'home' }"> Home </router-link> >>
+          <router-link :to="{ name: 'home' }"> Home </router-link>
           <router-link
             :to="{
               name: 'project-board',
               params: { id: projectId },
             }"
           >
-            {{ project.project_name }}
+          >> {{ project.project_name }}
           </router-link>
           >> {{ division.division_name }}
         </p>
       </div>
-      <CardManagement v-bind:lists="lists" />
+      <CardManagement
+        v-bind:divisionMembers="divisionMembers"
+        v-bind:lists="lists"
+        v-bind:project="project"
+        @updateLists="updateLists"
+      />
     </div>
   </div>
 </template>
@@ -39,6 +44,8 @@ export default {
       project: [],
       division: [],
       lists: [],
+      divisionMembers: [],
+      projectOwner: [],
       token: localStorage.getItem("token"),
     };
   },
@@ -51,7 +58,7 @@ export default {
         .then((response) => {
           this.project = response.data;
           this.projectId = this.project.project_id;
-          console.log(this.project);
+          this.getProjectOwner();
         });
     },
     getDivision() {
@@ -92,12 +99,37 @@ export default {
           });
       });
     },
+    getDivisionMembers() {
+      axios
+        .get(`api/project-division/${this.divisionId}/project-members`, {
+          headers: { Authorization: "Bearer " + this.token },
+        })
+        .then((response) => {
+          response.data.forEach(member => {
+            this.divisionMembers.push(member);
+          });
+        });
+    },
+    getProjectOwner() {
+      axios
+        .get(`api/project/${this.projectId}/project-owner`, {
+          headers: { Authorization: "Bearer " + this.token },
+        })
+        .then((response) => {
+          this.divisionMembers.push(response.data);
+        });
+    },
+    updateLists() {
+      this.getLists();
+    },
   },
   created() {
     this.getProject();
     this.getDivision();
     this.getLists();
+    this.getDivisionMembers();
     console.log(this.lists.cards);
+    console.log(this.lists.divisionMembers);
     if (!this.division) this.$router.replace({ path: "home" });
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <div class="content-join">
     <div class="join-logo">
-      <img style="float: center" src="images/Group 254.png" alt="" />
+      <img style="float: center" :src="RocketImg" alt="" />
     </div>
 
     <form action="#" @submit.prevent="joinProject" class="form-join">
@@ -29,9 +29,12 @@
 </template>
 
 <script>
+import RocketImg from "../../../images/rocket.png";
+
 export default {
   data() {
     return {
+      RocketImg: RocketImg,
       message: "",
       projectMemberForm: {
         project_id: "",
@@ -51,6 +54,7 @@ export default {
         .then((response) => {
           let projectId = response.data.projectId;
           this.$emit("updateProjectId", projectId);
+          this.$emit("updateProjects");
           this.$emit("updateShowComponentJoinProject", "join-project-success");
         })
         .catch(() => {

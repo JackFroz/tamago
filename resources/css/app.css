@@ -105,6 +105,7 @@ section {
 }
 
 .container-login {
+    height: fit-content;
     margin-top: 2%;
     margin-bottom: 10%;
     margin-right: 35%;
@@ -333,16 +334,12 @@ section {
 }
 
 .top-bar {
-    position: absolute;
     width:fit-content;
     height: 30px;
-    left: 30px;
-    top: 18px;
     font-family: 'Poppins', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 20px;
-    line-height: 30px;
     color: #31A2A4 !important;
 }
 
@@ -549,23 +546,19 @@ section {
 }
 
 .content-join-success .form-group-success {
-    position: absolute;
     width: 220px;
-    height: 85px;
-    left: 30px;
-    top: 120px;
-    padding: 18px;
-
+    height: fit-content;
     background: #ffffff;
     border: 1px solid rgba(175, 175, 175, 0.5);
     box-sizing: border-box;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
+    padding-bottom: 10px;
 }
 
 .content-join-success .form-group-success p  {
     font-family: 'Poppins', sans-serif;
-    padding-top: 15%;
+    padding-top: 10%;
     font-size: 18px;
     font-weight: 600;
     color: #921E5E;
@@ -573,12 +566,8 @@ section {
 }
 
 .content-join-success .form-group-success-top  {
-    position: absolute;
     width: 219px;
     height: 40px;
-    left: 0px;
-    top: 0px;
-
     background: #921E5E;
     box-sizing: border-box;
     border-radius: 8px 8px 0px 0px;
@@ -686,11 +675,8 @@ section {
 }
 
 .content-create .form-create-success {
-    position: absolute;
     width: 420px;
     height: 650px;
-    left: 270px;
-    top: 40px;
     padding: 20px;
 }
 
@@ -702,17 +688,14 @@ section {
 }
 
 .content-create .form-group-success {
-    position: absolute;
     width: 220px;
-    height: 85px;
-    left: 20px;
-    top: 100px;
-
+    height: fit-content;
     background: #ffffff;
     border: 1px solid rgba(175, 175, 175, 0.5);
     box-sizing: border-box;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
+    padding-bottom: 10px;
 }
 
 .content-create .form-group-success p  {
@@ -725,12 +708,8 @@ section {
 }
 
 .content-create .form-group-success-top  {
-    position: absolute;
     width: 219px;
     height: 40px;
-    left: 0px;
-    top: 0px;
-
     background: #921E5E;
     box-sizing: border-box;
     border-radius: 8px 8px 0px 0px;
@@ -899,15 +878,14 @@ section {
 
 .divisi-card-container {
     position: absolute;
-    width: 67%;
-    height: 700px;
+    margin-right: 20px;
     left: 480px;
-    top:90px;
-    
+    top: 90px;
+    background: #D0853F;
+    width: 820px;
 }
 
 .divisi-card-container .project-card-div {
-    padding-top: 20px;
     height: fit-content;
     background: #ffffff;
     border: 1px solid rgba(175, 175, 175, 0.5);
@@ -916,26 +894,11 @@ section {
     border-radius: 8px;
 }
 
-.divisi-card-container .project-card-div  p  {
-    font-family: 'Poppins', sans-serif;
-    padding-left: 20px;
-    padding-right: 10px;
-    padding-top: 40px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #921E5E;
-    
-}
-
 .divisi-card-container .project-card-div  img {
-    padding-top: 30px;
     padding-left: 32px;
 }
 
 .divisi-card-container .project-card-div-top   {
-    position: absolute;
-    top: 0px;
-    width: 230px;
     background: #921E5E;
     border-radius: 8px 8px 0px 0px;
 }
@@ -1034,18 +997,18 @@ section {
     width: 620px;
     height: fit-content;
     left: 255px;
-    top: 170px;
+    top: 120px;
     background: #FFFFFF;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
 }
 
-.task-board-container .task-card-top   {
+.task-card-container .task-card-top   {
     background: #921E5E;
     border-radius: 8px 8px 0px 0px;
 }
 
-.task-board-container .task-card-top p  {
+.task-card-container .task-card-top p  {
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 20px;
@@ -1056,13 +1019,13 @@ section {
     text-align: left;
 }
 
-.task-board-container .task-card {
+.task-card-container .task-card {
     padding-left: 30px;
     padding-top: 10px;
     padding-right: 30px;
 }
 
-.task-board-container .task-card h4 {
+.task-card-container .task-card h4 {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;   
     font-size: 16px;
@@ -1071,11 +1034,11 @@ section {
     color: #921E5E;
 }
 
-.task-board-container .addition {
+.task-card-container .addition {
     width: 80%;
 } 
 
-.task-board-container .btn-submit {
+.task-card-container .btn-submit {
     margin-left: 100%;
     width: 150px;
     height: 44px;
@@ -1086,7 +1049,7 @@ section {
     margin-bottom: 20px;
 }
 
-.task-board-container .btn-submit p {
+.task-card-container .btn-submit p {
     font-family: 'Poppins', sans-serif;
     padding-top: 5%;
     font-weight: 400;
@@ -1096,12 +1059,12 @@ section {
     
 }
 
-.task-board-container .addition .addition-button {
+.task-card-container .addition .addition-button {
     background: #921E5E;
     border-radius: 8px 8px 8px 8px;
 }
 
-.task-board-container .addition .addition-button p {
+.task-card-container .addition .addition-button p {
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 20px;
@@ -1177,9 +1140,26 @@ section {
     margin-top: 10px;
 }
 
-.assign-role .col-7 {
+.assign-role .col-3 {
     padding-top: 10px;
 }
+
+.assign-role .col-4 .btn-edit {
+    width: 100px;
+    height: 30px;
+    background: #A77590;
+    border-radius: 10px;
+    border-width: 0px;
+}
+
+.assign-role .col-4 .btn-edit  p {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 4%;
+    font-size: 14px;
+    color: #FFFFFF !important;
+    text-align: center;
+}
+
 .assign-role select {
     font-size: 18px;
     font-family: 'Poppins', sans-serif;
@@ -1191,6 +1171,7 @@ section {
     background: #FFFFFF;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
+    margin-bottom: 20px;
 }
 
 .divtask-card-container p {

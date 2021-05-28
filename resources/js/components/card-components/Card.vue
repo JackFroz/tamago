@@ -7,7 +7,7 @@
     <div class="task-board-container">
       <div class="row">
         <div
-          v-for="list in reactiveLists"
+          v-for="(list, listIndex) in reactiveLists"
           :key="list.list_id"
           class="col-3"
           style="float: center"
@@ -31,14 +31,18 @@
           >
             <transition-group class="row" :id="list.list_id">
               <div
-                v-for="card in list.cards"
-                :key="card.list_id + ',' + card.order"
+                v-for="(card, cardIndex) in list.cards"
+                :key="card.card_id"
                 class="col-12"
                 style="float: center"
                 :id="card.card_id"
               >
                 <div class="divtask-card-container" type="button">
-                  <div class="task-card-content">
+                  <div
+                    @click="editCard(card)"
+                    class="task-card-content"
+                    type="button"
+                  >
                     <p>{{ card.card_name }}</p>
                   </div>
                   <div class="task-card-footer">
@@ -48,13 +52,13 @@
                       type="button"
                     ></i>
                     <i
-                      @click="editCard(card)"
+                      @click="addCardMember(card)"
                       class="fa fa-tags"
                       aria-hidden="true"
                       type="button"
                     ></i>
                     <i
-                      @click="deleteCard(card.card_id)"
+                      @click="deleteCard(card.card_id, cardIndex, listIndex)"
                       class="fa fa-trash"
                       aria-hidden="true"
                       type="button"
@@ -89,11 +93,16 @@ export default {
       this.$emit("updateClickedList", clickedList);
       this.$emit("updateShowComponentCardManagement", "add-card");
     },
+    addCardMember(clickedCard) {
+      this.$emit("updateClickedCard", clickedCard);
+      this.$emit("updateClickedCardMembers", clickedCard);
+      this.$emit("updateShowComponentCardManagement", "add-card-member");
+    },
     editCard(clickedCard) {
       this.$emit("updateClickedCard", clickedCard);
       this.$emit("updateShowComponentCardManagement", "edit-card");
     },
-    deleteCard(cardId) {
+    deleteCard(cardId, cardIndex, listIndex) {
       axios
         .post(
           `api/card/${cardId}`,
@@ -103,22 +112,22 @@ export default {
           }
         )
         .then(() => {
-          this.$router.go();
+          this.reactiveLists[listIndex].cards.splice(cardIndex, 1);
         });
     },
     changeOrder(data) {
       let toCard = data.to;
-      let fromCard = data.from;
       let card_id = data.item.id;
-      let list_id = fromCard.id == toCard.id ? null : toCard.id;
-      let order = data.newIndex == data.oldIndex ? false : data.newIndex;
+      let list_id = toCard.id;
+      let order = data.newIndex;
 
       console.log(card_id);
       console.log(order);
+      console.log(list_id);
 
       if (order !== false) {
         axios
-          .patch(
+          .post(
             `api/card/${card_id}`,
             { order: order, list_id: list_id, _method: "patch" },
             {

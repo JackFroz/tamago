@@ -7,7 +7,7 @@
     <div class="sidenav">
       <div class="row">
         <div class="col-12">
-          <img class="navbar-brand" src="images/logo-tamago.png" alt="" />
+          <img class="navbar-brand" :src="LogoTamago" alt="" />
         </div>
       </div>
       <router-link :to="{ name: 'home' }" class="nav-link"
@@ -25,9 +25,12 @@
 </template>
 
 <script>
+import LogoTamago from "../../images/logo-tamago.png";
+
 export default {
   data() {
     return {
+      LogoTamago: LogoTamago,
       token: localStorage.getItem("token"),
     };
   },

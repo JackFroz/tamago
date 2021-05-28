@@ -4,22 +4,28 @@
       <div
         v-for="item in divisions"
         :key="item.division_id"
-        class="col-3"
+        class="col-4"
         style="float: center"
       >
-        <div
-          @click="showDivision(item.division_id)"
-          class="project-card-div"
-          type="button"
-        >
-          <img src="images/folder 1.png" alt="" />
-          <div class="project-card-div-top">
-            <p>{{ item.division_name }}</p>
+        <div class="project-card-div">
+          <div class="row">
+            <div class="col-12">
+              <div
+                @click="showDivision(item.division_id)"
+                type="button"
+                class="project-card-div-top"
+              >
+                <p>{{ item.division_name }}</p>
+              </div>
+            </div>
+            <div class="col-12">
+              <img :src="FolderImg" alt="" style="float: center" />
+            </div>
           </div>
           <i
             v-if="ownership"
             @click="editDivision(item)"
-            class="fa fa-tags"
+            class="fa fa-pencil-square"
             aria-hidden="true"
             type="button"
           ></i>
@@ -31,9 +37,12 @@
 </template>
 
 <script>
+import FolderImg from "../../../images/folder.png";
+
 export default {
   data() {
     return {
+      FolderImg: FolderImg,
       token: localStorage.getItem("token"),
     };
   },

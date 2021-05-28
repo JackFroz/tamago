@@ -1,7 +1,7 @@
 <template>
   <div class="content-create">
     <div class="create-logo">
-      <img style="float: center" src="images/Group 254.png" alt="" />
+      <img style="float: center" :src="RocketImg" alt="" />
     </div>
 
     <form action="#" @submit.prevent="createProject" class="form-create">
@@ -37,9 +37,12 @@
 </template>
 
 <script>
+import RocketImg from "../../../images/rocket.png";
+
 export default {
   data() {
     return {
+      RocketImg: RocketImg,
       projectForm: {
         project_name: "",
         project_desc: "",
@@ -62,6 +65,7 @@ export default {
           let projectId = response.data.projectId;
 
           this.$emit("updateProjectId", projectId);
+          this.$emit("updateProjects");
           this.$emit(
             "updateShowComponentCreateProject",
             "create-project-success"

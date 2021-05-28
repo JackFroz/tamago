@@ -2,7 +2,7 @@
   <div class="create-div">
     <div class="content-create">
       <div class="create-logo">
-        <img style="float: center" src="images/folder 1.png" alt="" />
+        <img style="float: center" :src="FolderImg" alt="" />
       </div>
 
       <div class="form-create">
@@ -31,9 +31,12 @@
 </template>
 
 <script>
+import FolderImg from "../../../images/folder.png";
+
 export default {
   data() {
     return {
+      FolderImg: FolderImg,
       token: localStorage.getItem("token"),
       divisionForm: {
         project_id: this.project.project_id,

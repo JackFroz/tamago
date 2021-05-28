@@ -3,15 +3,14 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-light">
         <img
-          href="/home"
           class="logo"
           alt="tamago logo"
-          src="images/logo-tamago.png"
+          :src="LogoTamago"
         />
         <div class="collapse navbar-collapse" id="navbarText">
           <div class="navbar-nav ml-auto">
-            <p>Don't have any account?</p>
-            <button class="btn-tamago">
+            <p class="nav-text">Don't have any account?</p>
+            <button class="btn-nav-signup">
               <router-link :to="{ name: 'register' }" class="nav-link"
                 >Sign up</router-link
               >
@@ -25,6 +24,7 @@
       <form action="#" @submit.prevent="login" class="form-login">
         <h1>Welcome Back!</h1>
         <h2>to Tamago</h2>
+        <p> {{ message }} </p>
         <div class="form-group">
           <label for="email">Email Address</label>
           <input
@@ -57,9 +57,13 @@
 </template>
 
 <script>
+import LogoTamago from "../../images/logo-tamago.png";
+
 export default {
   data() {
     return {
+      message: "",
+      LogoTamago: LogoTamago,
       loginForm: {
         email: "",
         password: "",
@@ -75,7 +79,9 @@ export default {
             localStorage.setItem("token", response.data.token);
             this.$router.push("home");
           })
-          .catch((error) => console.log(error));
+          .catch(() => {
+            this.message = "Wrong email or password!";
+          });
       });
     },
   },

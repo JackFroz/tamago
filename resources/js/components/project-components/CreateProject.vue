@@ -4,6 +4,7 @@
       v-if="showComponentCreateProject === 'create-project-form'"
       @updateShowComponentCreateProject="updateShowComponentCreateProject"
       @updateProjectId="updateProjectId"
+      @updateProjects="updateProjects"
     />
     <CreateProjectSuccess
       v-if="showComponentCreateProject === 'create-project-success'"
@@ -34,6 +35,13 @@ export default {
       this.projectId = projectId;
       console.log(this.projectId);
     },
+    updateProjects() {
+      this.$emit("updateProjects");
+    },
   },
 };
 </script>
+
+<style lang="css">
+@import "../../../css/app.css";
+</style>
