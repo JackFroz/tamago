@@ -22,5 +22,12 @@ class UserTableSeeder extends Seeder
             'last_name' => 'Fadilah',
             'password' => Hash::make('12345678'),
         ]);
+        User::create([
+            'email' => 'reza@mail.unpad.ac.id',
+            'username' => 'reza123',
+            'first_name' => 'Reza',
+            'last_name' => 'Attariq',
+            'password' => Hash::make('12345678'),
+        ]);
     }
 }
