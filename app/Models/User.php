@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ProjectMember::class, 'username', 'username');
     }
+
+    public function cardMembers()
+    {
+        return $this->hasMany(CardMember::class, 'username', 'username');
+    }
 }
