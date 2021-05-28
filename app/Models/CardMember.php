@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 class CardMember extends Model
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable;
 
     protected $table = 'card_members';
 
     protected $fillable = [
         'card_member_id',
         'card_id',
+        'username',
         'member_id',
     ];
 
@@ -31,5 +31,10 @@ class CardMember extends Model
     public function projectMember()
     {
         return $this->belongsTo(ProjectMember::class, 'member_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'username', 'username');
     }
 }
