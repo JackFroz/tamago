@@ -22,8 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //authentication endpoints
     Route::get('/logout', 'Api\UserController@logout');
     Route::post('/change-password', 'Api\UserController@changePassword');
-    Route::post('/change-first-name', 'Api\UserController@changeFirstName');
-    Route::post('/change-last-name', 'Api\UserController@changeLastName');
+    Route::post('/change-name', 'Api\UserController@changeName');
 
     //user endpoints
     Route::get('/user', 'Api\UserController@profile');
@@ -34,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/project', 'Api\ProjectController');
     Route::get('/project/{project}/project-divisions', 'Api\ProjectController@projectDivisions');
     Route::get('/project/{project}/project-members', 'Api\ProjectController@projectMembers');
+    Route::get('/project/{project}/project-owner', 'Api\ProjectController@projectOwner');
 
     //project-division endpoints
     Route::resource('/project-division', 'Api\ProjectDivisionController');
@@ -57,4 +57,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //card-member endpoint
     Route::resource('/card-member', 'Api\CardMemberController');
+    Route::get('/card-member/{cardMember}/user', 'Api\CardMemberController@user');
 });
