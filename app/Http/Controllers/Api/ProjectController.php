@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\ProjectMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -46,8 +47,16 @@ class ProjectController extends Controller
             'username' => $request->user()->username,
         ]);
 
+        $projectMember = ProjectMember::create([
+            'member_id' => Str::random(12),
+            'project_id' => $projectId,
+            'division_id' => null,
+            'username' => $request->user()->username,
+            'permission' => null,
+        ]);
+
         return response()->json([
-            'status' => $project,
+            'status' => $project && $projectMember,
             'projectId' => $projectId,
         ]);
     }
@@ -113,5 +122,14 @@ class ProjectController extends Controller
     public function projectMembers(Project $project)
     {
         return response()->json($project->projectMembers()->get());
+    }
+
+    public function projectOwner(Project $project)
+    {
+        $owner = DB::table('project_members')
+            ->where('username', $project->username)
+            ->first();
+
+        return response()->json($owner);
     }
 }
