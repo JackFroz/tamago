@@ -41,9 +41,8 @@ class ProjectMemberController extends Controller
         $projectId = $request->project_id;
         $username = $request->user()->username;
 
-        $checkProjectOwnership = $this->checkProjectOwnership($projectId, $username);
         $checkProjectMembership = $this->checkProjectMembership($projectId, $username);
-        $status = !$checkProjectOwnership && !$checkProjectMembership;
+        $status = !$checkProjectMembership;
         $projectMember = null;
 
         if ($status) {
@@ -125,16 +124,6 @@ class ProjectMemberController extends Controller
             'status' => $status,
             'message' => $status ? 'Project member deleted' : 'Error deleting project member',
         ]);
-    }
-
-    public function checkProjectOwnership($projectId, $username)
-    {
-        $check = DB::table('projects')
-            ->where('project_id', $projectId)
-            ->where('username', $username)
-            ->first();
-
-        return $check;
     }
 
     public function checkProjectMembership($projectId, $username)
