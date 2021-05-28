@@ -16,11 +16,11 @@ class CreateProjectMembersTable extends Migration
         Schema::create('project_members', function (Blueprint $table) {
             $table->string('member_id', 12)->unique();
             $table->uuid('project_id');
-            $table->foreign('project_id')->references('project_id')->on('projects');
+            $table->foreign('project_id')->references('project_id')->on('projects')->onDelete('cascade');
             $table->string('division_id', 12)->nullable();
-            $table->foreign('division_id')->references('division_id')->on('project_divisions');
+            $table->foreign('division_id')->references('division_id')->on('project_divisions')->onDelete('cascade');
             $table->string('username', 16);
-            $table->foreign('username')->references('username')->on('users');
+            $table->foreign('username')->references('username')->on('users')->onDelete('cascade');
             $table->tinyInteger('permission')->nullable();
             $table->timestamps();
         });

@@ -16,7 +16,7 @@ class CreateProjectDivisionsTable extends Migration
         Schema::create('project_divisions', function (Blueprint $table) {
             $table->string('division_id', 12)->unique();
             $table->uuid('project_id');
-            $table->foreign('project_id')->references('project_id')->on('projects');
+            $table->foreign('project_id')->references('project_id')->on('projects')->onDelete('cascade');
             $table->string('division_name', 25);
             $table->string('division_desc', 300)->nullable();
             $table->timestamps();

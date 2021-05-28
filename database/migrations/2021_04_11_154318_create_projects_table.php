@@ -18,7 +18,7 @@ class CreateProjectsTable extends Migration
             $table->string('project_name', 50);
             $table->string('project_desc', 300)->nullable();
             $table->string('username', 16);
-            $table->foreign('username')->references('username')->on('users');
+            $table->foreign('username')->references('username')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class CreateProgressListsTable extends Migration
         Schema::create('progress_lists', function (Blueprint $table) {
             $table->string('list_id', 12)->unique();
             $table->string('division_id', 12);
-            $table->foreign('division_id')->references('division_id')->on('project_divisions');
+            $table->foreign('division_id')->references('division_id')->on('project_divisions')->onDelete('cascade');
             $table->string('list_name', 25);
             $table->integer('order');
             $table->timestamps();

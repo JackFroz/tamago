@@ -16,7 +16,7 @@ class CreateCardsTable extends Migration
         Schema::create('cards', function (Blueprint $table) {
             $table->string('card_id', 12)->unique();
             $table->string('list_id', 12);
-            $table->foreign('list_id')->references('list_id')->on('progress_lists');
+            $table->foreign('list_id')->references('list_id')->on('progress_lists')->onDelete('cascade');
             $table->string('card_name', 50);
             $table->string('card_desc', 300)->nullable();
             $table->dateTime('card_deadline')->nullable();
