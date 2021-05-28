@@ -91,28 +91,10 @@ class UserController extends Controller
         ]);
     }
 
-    public function changeFirstName(Request $request)
+    public function changeName(Request $request)
     {
-        $changeFirstName = $request->validate([
+        $changeName = $request->validate([
             'first_name' => 'string|min:1|max:25',
-        ]);
-
-        $user = $request->user();
-
-        $success = DB::table('users')
-            ->where('email', $user->email)
-            ->update([
-                'first_name' => $changeFirstName['first_name'],
-            ]);
-
-        return response()->json([
-            'success' => $success,
-        ]);
-    }
-
-    public function changeLastName(Request $request)
-    {
-        $changeLastName = $request->validate([
             'last_name' => 'string|min:1|max:25',
         ]);
 
@@ -121,26 +103,26 @@ class UserController extends Controller
         $success = DB::table('users')
             ->where('email', $user->email)
             ->update([
-                'last_name' => $changeLastName['last_name'],
+                'first_name' => $changeName['first_name'],
+                'last_name' => $changeName['last_name'],
             ]);
 
         return response()->json([
-            'success' => (bool)$success,
+            'success' => $success,
         ]);
     }
 
     public function projects(User $user)
     {
-        $owned = $user->projects()->orderBy('project_name')->get();
-        $guest = DB::table('projects')
-            ->leftJoin('project_members', 'projects.username', '=', 'project_members.username')
+        $projects = DB::table('projects')
+            ->leftJoin('project_members', 'project_members.project_id', '=', 'projects.project_id')
             ->where('project_members.username', $user->username)
+            ->orWhere('projects.username', $user->username)
             ->select('projects.*')
             ->get();
 
         return response()->json([
-            'owned' => $owned,
-            'guest' => $guest,
+            'projects' => $projects,
         ]);
     }
 
