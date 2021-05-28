@@ -7,6 +7,7 @@
         <meta name="csrf-token" content="{{csrf_token()}}">
         <title>Tamago</title>
         <link href=" {{ mix('css/app.css') }}" rel="stylesheet">
+        <link rel="icon" href="../images/logo-tamago.png">
     </head>
     <body>
         <div id="app">
