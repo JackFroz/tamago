@@ -40,6 +40,7 @@ class CardMemberController extends Controller
         $cardMember = CardMember::create([
             'card_member_id' => Str::random(12),
             'card_id' => $request->card_id,
+            'username' => $request->username,
             'member_id' => $request->member_id,
         ]);
 
@@ -81,7 +82,7 @@ class CardMemberController extends Controller
     public function update(Request $request, CardMember $cardMember)
     {
         $status = $cardMember->update($request->only(['card_id']));
-    
+
         return response()->json([
             'status' => $status,
             'message' => $status ? 'Card member updated' : 'Error updating card member',
@@ -102,5 +103,10 @@ class CardMemberController extends Controller
             'status' => $status,
             'message' => $status ? 'Card member deleted' : 'Error deleting card member'
         ]);
+    }
+
+    public function user(CardMember $cardMember)
+    {
+        return response()->json($cardMember->user()->first());
     }
 }
