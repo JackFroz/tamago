@@ -2,11 +2,18 @@
   <div>
     <CreateProjectForm
       v-if="showComponentCreateProject === 'create-project-form'"
+      v-bind:user="user"
+      @updateShowComponentProjectManagement="
+        updateShowComponentProjectManagement
+      "
       @updateShowComponentCreateProject="updateShowComponentCreateProject"
       @updateProjectId="updateProjectId"
       @updateProjects="updateProjects"
     />
     <CreateProjectSuccess
+      @updateShowComponentProjectManagement="
+        updateShowComponentProjectManagement
+      "
       v-if="showComponentCreateProject === 'create-project-success'"
       v-bind:projectId="projectId"
     />
@@ -27,6 +34,7 @@ export default {
       showComponentCreateProject: "create-project-form",
     };
   },
+  props: ["user"],
   methods: {
     updateShowComponentCreateProject(componentName) {
       this.showComponentCreateProject = componentName;
@@ -35,9 +43,12 @@ export default {
       this.projectId = projectId;
       console.log(this.projectId);
     },
-    updateProjects() {
-      this.$emit("updateProjects");
+    updateProjects(projects) {
+      this.$emit("updateProjects", projects);
     },
+    updateShowComponentProjectManagement(componentName) {
+      this.$emit("updateShowComponentProjectManagement", componentName);
+    }
   },
 };
 </script>

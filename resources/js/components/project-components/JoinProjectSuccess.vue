@@ -13,7 +13,7 @@
           </div>
           <p>Project ID : {{ projectId }}</p>
         </div>
-        <button @click="done" type="submit" class="btn-join-success">
+        <button @click="done" type="submit" class="btn-join">
           <p>Done</p>
         </button>
       </div>
@@ -33,7 +33,7 @@ export default {
   props: ["projectId"],
   methods: {
     done() {
-      this.$router.go();
+      this.$emit("updateShowComponentProjectManagement", "project-card");
     },
   },
 };

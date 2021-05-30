@@ -21,9 +21,9 @@
       <button type="submit" class="btn-join">
         <p>Join</p>
       </button>
-      <!-- <button @click="backToHome" type="button" class="btn-create">
-        <p>Cancel</p>
-      </button> -->
+      <button @click="backToHome" type="button" class="btn-close">
+        <p>Close</p>
+      </button>
     </form>
   </div>
 </template>
@@ -42,9 +42,10 @@ export default {
       token: localStorage.getItem("token"),
     };
   },
+  props: ["user"],
   methods: {
     backToHome() {
-      this.$router.go();
+      this.$emit("updateShowComponentProjectManagement", "project-card");
     },
     joinProject() {
       axios
@@ -52,13 +53,25 @@ export default {
           headers: { Authorization: "Bearer " + this.token },
         })
         .then((response) => {
-          let projectId = response.data.projectId;
-          this.$emit("updateProjectId", projectId);
-          this.$emit("updateProjects");
-          this.$emit("updateShowComponentJoinProject", "join-project-success");
+          if (response.data.status) {
+            let projectId = response.data.projectId;
+            this.$emit("updateProjectId", projectId);
+            this.getProjects(this.user.id);
+          } else {
+            this.message = "You already the member of this project!";
+          }
+        });
+    },
+    getProjects(id) {
+      axios
+        .get(`api/user/${id}/projects`, {
+          headers: { Authorization: "Bearer " + this.token },
         })
-        .catch(() => {
-          this.message = "Failed to add you to this project!";
+        .then((response) => {
+          let projects = response.data.projects;
+
+          this.$emit("updateProjects", projects);
+          this.$emit("updateShowComponentJoinProject", "join-project-success");
         });
     },
   },

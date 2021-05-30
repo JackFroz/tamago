@@ -33,7 +33,7 @@ export default {
   props: ["projectId"],
   methods: {
     done() {
-      this.$router.go();
+      this.$emit("updateShowComponentProjectManagement", "project-card");
     },
   },
 };

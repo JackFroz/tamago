@@ -132,9 +132,16 @@ export default {
           }
         )
         .then((response) => {
-          this.messageDivision = response.data.status
-            ? "Member added to division"
-            : "Failed to add member to division!";
+          if (!response.data.status)
+            this.messageDivision = "Failed to assign division!";
+          else {
+            this.$emit("updateProjectMembers");
+            this.messageDivision = "Division assigned!";
+            var that = this;
+            setTimeout(function() {
+              that.messageDivision = "";
+            }, 5000);
+          }
         });
     },
     updateProjectDetail() {
@@ -145,7 +152,14 @@ export default {
         .then((response) => {
           if (!response.data.status)
             this.messageProject = "Failed to edit project!";
-          else this.$router.go();
+          else {
+            this.$emit("updateProjectDetail");
+            this.messageProject = "Project detail updated!";
+            var that = this;
+            setTimeout(function() {
+              that.messageProject = "";
+            }, 5000);
+          }
         });
     },
   },

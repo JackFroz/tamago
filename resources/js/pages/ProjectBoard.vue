@@ -15,6 +15,7 @@
           @updateShowComponentProjectBoard="updateShowComponentProjectBoard"
           v-bind:project="project"
           v-bind:ownership="ownership"
+          v-bind:memberOfDivisionName="memberOfDivisionName"
         />
         <DivisionCard
           @updateDivision="updateDivision"
@@ -26,10 +27,13 @@
         />
         <CreateDivision
           @updateShowComponentProjectBoard="updateShowComponentProjectBoard"
+          @updateDivisionCards="updateDivisionCards"
           v-if="showComponentProjectBoard === 'create-division'"
           v-bind:project="project"
         />
         <EditProject
+          @updateProjectDetail="updateProjectDetail"
+          @updateProjectMembers="updateProjectMembers"
           @updateShowComponentProjectBoard="updateShowComponentProjectBoard"
           v-if="showComponentProjectBoard === 'edit-project'"
           v-bind:project="project"
@@ -38,6 +42,7 @@
         />
         <EditDivision
           @updateShowComponentProjectBoard="updateShowComponentProjectBoard"
+          @updateDivisionCards="updateDivisionCards"
           v-if="showComponentProjectBoard === 'edit-division'"
           v-bind:project="project"
           v-bind:division="division"
@@ -72,6 +77,8 @@ export default {
       project: [],
       divisions: [],
       members: [],
+      memberOfDivisionId: "",
+      memberOfDivisionName: "",
       division: [],
       projectId: this.$route.params.id,
       token: localStorage.getItem("token"),
@@ -87,6 +94,7 @@ export default {
           this.project = response.data;
           this.ownership =
             this.project.username === this.username ? true : false;
+          this.getMembers();
         });
     },
     getDivisions() {
@@ -95,7 +103,11 @@ export default {
           headers: { Authorization: "Bearer " + this.token },
         })
         .then((response) => {
-          this.divisions = response.data;
+          response.data.forEach((division) => {
+            if (division.division_id === this.memberOfDivisionId)
+              this.memberOfDivisionName = division.division_name;
+            this.divisions.push(division);
+          });
         });
     },
     getMembers() {
@@ -104,7 +116,14 @@ export default {
           headers: { Authorization: "Bearer " + this.token },
         })
         .then((response) => {
-          this.members = response.data;
+          response.data.forEach((member) => {
+            if (member.username !== this.project.username)
+              this.members.push(member);
+
+            if (member.username === this.username && member.division_id !== null)
+              this.memberOfDivisionId = member.division_id;
+          });
+          this.getDivisions();
         });
     },
     currentUser() {
@@ -125,12 +144,22 @@ export default {
     updateDivision(division) {
       this.division = division;
     },
+    updateProjectMembers() {
+      this.members = [];
+      this.divisions = [];
+      this.getMembers();
+    },
+    updateProjectDetail() {
+      this.getProject();
+    },
+    updateDivisionCards() {
+      this.divisions = [];
+      this.getDivisions();
+    },
   },
   created() {
     this.currentUser();
     this.getProject();
-    this.getDivisions();
-    this.getMembers();
   },
 };
 </script>

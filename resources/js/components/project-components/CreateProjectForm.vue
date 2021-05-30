@@ -29,9 +29,9 @@
       <button type="submit" class="btn-create">
         <p>Create</p>
       </button>
-      <!-- <button @click="backToHome" type="button" class="btn-create">
-        <p>Cancel</p>
-      </button> -->
+      <button @click="backToHome" type="button" class="btn-close">
+        <p>Close</p>
+      </button>
     </form>
   </div>
 </template>
@@ -50,10 +50,10 @@ export default {
       token: localStorage.getItem("token"),
     };
   },
-  props: ["projectId"],
+  props: ["user"],
   methods: {
     backToHome() {
-      this.$router.go();
+      this.$emit("updateShowComponentProjectManagement", "project-card");
     },
     createProject() {
       axios
@@ -61,11 +61,20 @@ export default {
           headers: { Authorization: "Bearer " + this.token },
         })
         .then((response) => {
-          console.log(response.data);
           let projectId = response.data.projectId;
-
           this.$emit("updateProjectId", projectId);
-          this.$emit("updateProjects");
+          this.getProjects(this.user.id);
+        });
+    },
+    getProjects(id) {
+      axios
+        .get(`api/user/${id}/projects`, {
+          headers: { Authorization: "Bearer " + this.token },
+        })
+        .then((response) => {
+          let projects = response.data.projects;
+
+          this.$emit("updateProjects", projects);
           this.$emit(
             "updateShowComponentCreateProject",
             "create-project-success"

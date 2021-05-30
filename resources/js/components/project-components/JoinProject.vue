@@ -2,11 +2,19 @@
   <div>
     <JoinProjectForm
       v-if="showComponentJoinProject === 'join-project-form'"
+      v-bind:user="user"
+      @updateShowComponentProjectManagement="
+        updateShowComponentProjectManagement
+      "
       @updateShowComponentJoinProject="updateShowComponentJoinProject"
       @updateProjectId="updateProjectId"
+      @updateProjects="updateProjects"
     />
     <JoinProjectSuccess
       v-if="showComponentJoinProject === 'join-project-success'"
+      @updateShowComponentProjectManagement="
+        updateShowComponentProjectManagement
+      "
       v-bind:projectId="projectId"
     />
   </div>
@@ -26,13 +34,20 @@ export default {
       showComponentJoinProject: "join-project-form",
     };
   },
+  props: ["user"],
   methods: {
     updateShowComponentJoinProject(componentName) {
       this.showComponentJoinProject = componentName;
     },
+    updateShowComponentProjectManagement(componentName) {
+      this.$emit("updateShowComponentProjectManagement", componentName)
+    },
     updateProjectId(projectId) {
       this.projectId = projectId;
     },
+    updateProjects(project) {
+      this.$emit("updateProjects", project)
+    }
   },
 };
 </script>

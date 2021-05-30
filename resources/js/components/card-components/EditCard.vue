@@ -23,23 +23,31 @@
           v-model="cardForm.card_desc"
         />
       </div>
-      <br />
-      <button
-        @click="addCard"
-        type="submit"
-        class="btn-submit"
-        style="float: right"
-      >
-        <p>Save</p>
-      </button>
-      <!-- <button
+      <div class="form-group">
+        <input
+          type="date"
+          class="form-control"
+          id="task-title"
+          v-model="cardForm.card_deadline"
+        />
+        <br />
+        <button
+          @click="addCard"
+          type="submit"
+          class="btn-submit"
+          style="float: right"
+        >
+          <p>Save</p>
+        </button>
+        <button
         @click="backToLists"
         type="submit"
-        class="btn-submit"
+        class="btn-close"
         style="float: right"
       >
         <p>Close</p>
-      </button> -->
+      </button>
+      </div>
     </div>
   </div>
 </template>
@@ -60,6 +68,7 @@ export default {
   methods: {
     backToLists() {
       this.$emit("updateShowComponentCardManagement", "card");
+      console.log(this.cardForm.card_deadline);
     },
     addCard() {
       axios
@@ -67,7 +76,8 @@ export default {
           headers: { Authorization: "Bearer " + this.token },
         })
         .then(() => {
-          this.$router.go();
+          this.$emit("updateLists");
+          this.$emit("updateShowComponentCardManagement", "card");
         });
     },
   },

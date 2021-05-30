@@ -1,5 +1,5 @@
 <template>
-  <div class="content-edit-project">
+  <div class="content-add-member">
     <div class="row">
       <div class="col-1">
         <div class="edit-logo">
@@ -8,11 +8,9 @@
       </div>
       <div class="col-4">
         <div class="form-create">
-          <br />
-          <br />
-          <div class="assign-role">
-            <h4>Assign Card Member {{ clickedCard.card_name }}</h4>
-            <p>{{ message }}</p>
+          <div class="assign-member">
+            <h4>Assign Card Member to "{{ clickedCard.card_name }}"</h4>
+            <p>{{ messageAssign }}</p>
 
             <div
               class="row"
@@ -22,7 +20,7 @@
               <div class="col-7">
                 <p>{{ nonMember.username }}</p>
               </div>
-              <div class="col-5">
+              <div class="col-3">
                 <button
                   @click="
                     assignCardMember(
@@ -31,9 +29,9 @@
                       nonMember.username
                     )
                   "
-                  class="btn-profile"
+                  class="btn-edit"
                 >
-                  <p>Add To Card Member</p>
+                  <p>Add</p>
                 </button>
               </div>
             </div>
@@ -41,7 +39,9 @@
             <br />
             <br />
 
-            <h4>Card Member {{ clickedCard.card_name }}</h4>
+            <h4>Card Members of "{{ clickedCard.card_name }}"</h4>
+            <p>{{ messageRemove }}</p>
+
             <div
               class="row"
               v-for="member in clickedCardMembers"
@@ -50,19 +50,19 @@
               <div class="col-7">
                 <p>{{ member.username }}</p>
               </div>
-              <div class="col-5">
+              <div class="col-3">
                 <button
                   @click="removeCardMember(member.card_member_id)"
-                  class="btn-profile"
+                  class="btn-edit"
                 >
-                  <p>Remove Card Member</p>
+                  <p>Remove</p>
                 </button>
               </div>
             </div>
           </div>
 
-          <button @click="backToDivisionCards" class="btn-profile">
-            <p>Exit</p>
+          <button @click="backToLists" class="btn-profile">
+            <p>Close</p>
           </button>
 
         </div>
@@ -77,7 +77,8 @@ import RocketImg from "../../../images/rocket.png";
 export default {
   data() {
     return {
-      message: "",
+      messageAssign: "",
+      messageRemove: "",
       RocketImg: RocketImg,
       token: localStorage.getItem("token"),
     };
@@ -86,12 +87,11 @@ export default {
     "clickedCardMembers",
     "clickedCardNonMembers",
     "clickedCard",
-    "divisionMembers",
     "project",
     "isOwnerTagged",
   ],
   methods: {
-    backToDivisionCards() {
+    backToLists() {
       this.$emit("updateShowComponentCardManagement", "card");
     },
     assignCardMember(cardId, memberId, username) {
@@ -105,8 +105,18 @@ export default {
         )
         .then((response) => {
           if (response.data.status) {
-            this.message = "Card member added";
-            this.$emit("updateLists");
+            this.$emit("updateClickedCardMembers", this.clickedCard);
+            this.messageAssign = "Card member added!";
+            var that = this;
+            setTimeout(function() {
+              that.messageAssign = "";
+            }, 5000);
+          } else {
+            this.messageAssign = "Failed to add card member!";
+            var that = this;
+            setTimeout(function() {
+              that.messageAssign = "";
+            }, 5000);
           }
         });
     },
@@ -120,7 +130,20 @@ export default {
           }
         )
         .then((response) => {
-          this.message = "Card member added!";
+          if (response.data.status) {
+            this.$emit("updateClickedCardMembers", this.clickedCard);
+            this.messageRemove= "Card member removed!";
+            var that = this;
+            setTimeout(function() {
+              that.messageRemove = "";
+            }, 5000);
+          } else {
+            this.messageRemove = "Failed to remove card member!";
+            var that = this;
+            setTimeout(function() {
+              that.messageRemove = "";
+            }, 5000);
+          }
         });
     },
   },

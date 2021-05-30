@@ -5,14 +5,14 @@
       <!--Header-->
       <div class="fixed-top judul-page">
         <p class="top-bar">
-          <router-link :to="{ name: 'home' }"> Home </router-link>
+          <router-link :to="{ name: 'home' }"> Home </router-link> >>
           <router-link
             :to="{
               name: 'project-board',
               params: { id: projectId },
             }"
           >
-          >> {{ project.project_name }}
+            {{ project.project_name }}
           </router-link>
           >> {{ division.division_name }}
         </p>
@@ -21,7 +21,9 @@
         v-bind:divisionMembers="divisionMembers"
         v-bind:lists="lists"
         v-bind:project="project"
+        v-bind:canEdit="canEdit"
         @updateLists="updateLists"
+        @updateDivisionMembers="updateDivisionMembers"
       />
     </div>
   </div>
@@ -40,16 +42,28 @@ export default {
   data() {
     return {
       divisionId: this.$route.params.id,
+      currentUsername: "",
       projectId: "",
       project: [],
       division: [],
       lists: [],
       divisionMembers: [],
       projectOwner: [],
+      canEdit: false,
       token: localStorage.getItem("token"),
     };
   },
   methods: {
+    currentUser() {
+      axios
+        .get("api/user", {
+          headers: { Authorization: "Bearer " + this.token },
+        })
+        .then((response) => {
+          this.currentUsername = response.data.user.username;
+          this.getProject();
+        });
+    },
     getProject() {
       axios
         .get(`api/project-division/${this.divisionId}/project`, {
@@ -105,8 +119,9 @@ export default {
           headers: { Authorization: "Bearer " + this.token },
         })
         .then((response) => {
-          response.data.forEach(member => {
+          response.data.forEach((member) => {
             this.divisionMembers.push(member);
+            if (member.username === this.currentUsername) this.canEdit = true; 
           });
         });
     },
@@ -116,21 +131,25 @@ export default {
           headers: { Authorization: "Bearer " + this.token },
         })
         .then((response) => {
+          if (this.currentUsername === response.data.username) this.canEdit = true;
           this.divisionMembers.push(response.data);
         });
     },
     updateLists() {
+      this.lists = [];
       this.getLists();
     },
+    updateDivisionMembers() {
+      this.divisionMembers = [];
+      this.getProjectOwner(); 
+      this.getDivisionMembers();
+    }
   },
   created() {
-    this.getProject();
+    this.currentUser();
     this.getDivision();
     this.getLists();
     this.getDivisionMembers();
-    console.log(this.lists.cards);
-    console.log(this.lists.divisionMembers);
-    if (!this.division) this.$router.replace({ path: "home" });
   },
 };
 </script>

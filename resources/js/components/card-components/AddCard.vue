@@ -1,10 +1,9 @@
 <template>
   <div class="task-card-container">
     <div class="task-card-top">
-      <p>Add New Task ({{ clickedList.list_name }})</p>
+      <p>Add New Card to "{{ clickedList.list_name }}"</p>
     </div>
     <div class="task-card">
-      <h4>Project Task</h4>
       <div class="form-group">
         <input
           type="text"
@@ -19,12 +18,19 @@
           type="text"
           class="form-control"
           id="task-title"
-          placeholder="Input Description of Project Task"
+          placeholder="Input Description of Task"
           v-model="cardForm.card_desc"
         />
       </div>
+      <div class="form-group">
+        <input
+          type="date"
+          class="form-control"
+          id="task-title"
+          v-model="cardForm.card_deadline"
+        />
+      </div>
       <br />
-      <h4>Add to Card</h4>
 
       <button
         @click="addCard"
@@ -32,16 +38,16 @@
         class="btn-submit"
         style="float: right"
       >
-        <p>Create</p>
+        <p>Add</p>
       </button>
-      <!-- <button
+      <button
         @click="backToLists"
         type="submit"
         class="btn-submit"
         style="float: right"
       >
         <p>Close</p>
-      </button> -->
+      </button>
     </div>
   </div>
 </template>
@@ -71,7 +77,8 @@ export default {
           headers: { Authorization: "Bearer " + this.token },
         })
         .then(() => {
-          this.$router.go();
+          this.$emit("updateLists");
+          this.$emit("updateShowComponentCardManagement", "card");
         });
     },
   },

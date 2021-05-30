@@ -21,9 +21,20 @@
     </div>
     <CreateProject
       v-if="showComponentProjectManagement === 'create-project'"
+      v-bind:user="user"
       @updateProjects="updateProjects"
+      @updateShowComponentProjectManagement="
+        updateShowComponentProjectManagement
+      "
     />
-    <JoinProject v-if="showComponentProjectManagement === 'join-project'" />
+    <JoinProject
+      v-if="showComponentProjectManagement === 'join-project'"
+      v-bind:user="user"
+      @updateProjects="updateProjects"
+      @updateShowComponentProjectManagement="
+        updateShowComponentProjectManagement
+      "
+    />
     <ProjectCard
       v-if="showComponentProjectManagement === 'project-card'"
       v-bind:projects="projects"
@@ -43,7 +54,7 @@ export default {
     JoinProject,
     ProjectCard,
   },
-  props: ["projects"],
+  props: ["projects", "user"],
   data() {
     return {
       showComponentProjectManagement: "project-card",
@@ -64,8 +75,11 @@ export default {
           ? "join-project"
           : "project-card";
     },
-    updateProjects() {
-      this.$emit("updateProjects");
+    updateShowComponentProjectManagement(componentName) {
+      this.showComponentProjectManagement = componentName;
+    },
+    updateProjects(projects) {
+      this.$emit("updateProjects", projects);
     },
   },
 };

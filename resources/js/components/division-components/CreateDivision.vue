@@ -21,9 +21,9 @@
         <button @click="createDivision" type="button" class="btn-create">
           <p>Create</p>
         </button>
-        <!-- <button @click="backToDivisionCards" type="button" class="btn-create">
-          <p>Cancel</p>
-        </button> -->
+        <button @click="backToDivisionCards" type="button" class="btn-close">
+          <p>Close</p>
+        </button>
       </div>
     </div>
     <!-- End Sidebar -->
@@ -64,7 +64,9 @@ export default {
           this.createLists(divisionId, "Complete", 3);
           if (!response.data.status)
             this.message = "Failed to create division!";
-          else this.$router.go();
+          else {
+            this.$emit("updateDivisionCards")
+            this.$emit("updateShowComponentProjectBoard", "division-card")};
         });
     },
     createLists(divisionId, listName, order) {
@@ -75,15 +77,6 @@ export default {
           headers: { Authorization: "Bearer " + this.token },
         }
       );
-    },
-    updateDivisions() {
-      axios
-        .get(`api/project/${this.project.project_id}/project-divisions`, {
-          headers: { Authorization: "Bearer " + this.token },
-        })
-        .then((response) => {
-          this.divisions = response.data;
-        });
     },
   },
 };

@@ -39,7 +39,7 @@
             type="button"
             class="btn-profile"
           >
-            <p>Exit</p>
+            <p>Close</p>
           </button>
           <button @click="deleteDivision" type="button" class="btn-profile">
             <p>Delete</p>
@@ -82,7 +82,14 @@ export default {
         )
         .then((response) => {
           if (!response.data.status) this.message = "Failed to edit division!";
-          else this.$router.go();
+          else {
+            this.$emit("updateDivisionCards");
+            this.message = "Division detail updated!";
+            var that = this;
+            setTimeout(function() {
+              that.message = "";
+            }, 5000);
+          }
         });
     },
     deleteDivision() {
@@ -95,9 +102,16 @@ export default {
           }
         )
         .then((response) => {
-          if (!response.data.status)
+          if (!response.data.status) {
             this.message = "Failed to delete division!";
-          else this.$router.go();
+            var that = this;
+            setTimeout(function() {
+              that.message = "";
+            }, 5000);
+          } else {
+            this.$emit("updateDivisionCards");
+            this.$emit("updateShowComponentProjectBoard", "division-card");
+          }
         });
     },
   },

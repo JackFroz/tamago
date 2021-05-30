@@ -14,6 +14,9 @@
           <p>{{ project.project_desc }}</p>
         </div>
         <br />
+        <p v-if="memberOfDivisionName !== ''">Assigned to</p>
+        <p v-if="memberOfDivisionName !== ''">"{{ memberOfDivisionName }}"</p>
+        <br />
         <button v-if="ownership" @click="showCreateDivision" class="btn-create-div">
           <p><i class="fa fa-plus" aria-hidden="true"></i>  Create a New Division Board</p>    
         </button>
@@ -30,7 +33,7 @@
 
 <script>
 export default {
-  props: ["project", "ownership"],
+  props: ["project", "ownership", "memberOfDivisionName"],
   methods: {
     showCreateDivision() {
       this.$emit("updateShowComponentProjectBoard", "create-division")
