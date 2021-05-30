@@ -36,6 +36,7 @@
             id="firstname"
             placeholder="Enter your first name"
             v-model="registerForm.first_name"
+            required
           />
         </div>
         <div class="form-group">
@@ -46,16 +47,18 @@
             id="lastname"
             placeholder="Enter your last name"
             v-model="registerForm.last_name"
+            required
           />
         </div>
         <div class="form-group">
           <label for="email">Email Address</label>
           <input
-            type="text"
+            type="email"
             class="form-control"
             id="emailaddress"
             placeholder="Enter your email address"
             v-model="registerForm.email"
+            required
           />
         </div>
         <div class="form-group">
@@ -66,6 +69,8 @@
             id="username"
             placeholder="Enter your username"
             v-model="registerForm.username"
+            minlength="5"
+            required
           />
         </div>
         <div class="form-group">
@@ -76,6 +81,8 @@
             id="password"
             placeholder="Enter your password"
             v-model="registerForm.password"
+            minlength="8"
+            required
           />
         </div>
         <div class="form-group">
@@ -86,6 +93,8 @@
             id="confirmpass"
             placeholder="Confirm your password"
             v-model="registerForm.confirm_password"
+            minlength="8"
+            required
           />
         </div>
 
@@ -118,7 +127,9 @@ export default {
   },
   methods: {
     handleRegister() {
-      axios
+      if(this.checkPasswordColumns()){
+        this.message = "Please wait...";
+         axios
         .post("api/register", this.registerForm)
         .then(() => {
           this.$router.push("login");
@@ -126,7 +137,16 @@ export default {
         .catch(() => {
           this.message = "Please check your input!";
         });
+      }
+      else{
+        this.message = "Password and Confirm Password column do not match!"
+      }
+     
     },
+    checkPasswordColumns() {
+      if(this.registerForm.password === this.registerForm.confirm_password) return true;
+      else false;
+    }
   },
 };
 </script>
