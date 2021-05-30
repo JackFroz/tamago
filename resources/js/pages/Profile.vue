@@ -18,7 +18,6 @@
                 <img style="float: center" :src="ProfileImg" alt="" />
               </div>
             </div>
-            
           </div>
           <div class="form-profile">
             <p v-html="message"></p>
@@ -181,10 +180,11 @@ export default {
         .post("api/change-password", this.passwordForm, {
           headers: { Authorization: "Bearer " + this.token },
         })
-        .then((response) => {
-          this.message = response.data.success
-            ? "Password changed!"
-            : "Minimum length of password is 8 characters!";
+        .then(() => {
+          this.message = "Password changed!";
+        })
+        .catch(() => {
+          this.message = "Minimum length of password is 8 characters!";
         });
     },
     saveChanges() {
