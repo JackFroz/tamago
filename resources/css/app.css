@@ -20,6 +20,24 @@
     margin-left: 650px;
 }
 
+.container .get-started .nav-link {
+    margin-right: 10px;
+    width: 178px;
+    height: 44px;
+    background: #31A2A4;
+    border-radius: 10px;
+    border-width: 0px;
+}
+
+.container .get-started .nav-link p {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 2%;
+    font-weight: 500;
+    font-size: 20px;
+    color: #FFFFFF !important;
+    text-align: center;
+}
+
 .btn-tamago {
     margin-right: 10px;
     width: 178px;
@@ -343,6 +361,18 @@ section {
     color: #31A2A4 !important;
 }
 
+.top-bar-static {
+    width:fit-content;
+    height: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    color: #31A2A4 !important;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
 .form-login .link p {
     color: #31A2A4;
 }
@@ -397,11 +427,12 @@ section {
     color: #000000;
 }
 
-.name-foto .rounded-circle {
+.name-foto img {
     height: 126px;
     width: 126px;
     border: 1px;
-    padding-top: 50%;
+    margin-top: 50%;   
+    margin-left: 18%;
 }
 
 .content-profile .form-profile {
@@ -454,7 +485,7 @@ section {
 .content-join {
     position: absolute;
     width: 733px;
-    height: 261px;
+    height: 290px;
     left: 254px;
     top: 210px;
 
@@ -507,7 +538,7 @@ section {
 .content-join-success {
     position: absolute;
     width: 800px;
-    height: 320px;
+    height: 400px;
     left: 254px;
     top: 210px;
 
@@ -530,11 +561,11 @@ section {
 } 
 
 .content-join-success .form-join-success {
+  
     position: absolute;
-    width: 450px;
-    height: 500px;
+    width: 420px;
+    height: 750px;
     left: 300px;
-    top: 20px;
     padding: 30px;
 }
 
@@ -558,7 +589,7 @@ section {
 
 .content-join-success .form-group-success p  {
     font-family: 'Poppins', sans-serif;
-    padding-top: 10%;
+    padding-top: 20px;
     font-size: 18px;
     font-weight: 600;
     color: #921E5E;
@@ -602,22 +633,22 @@ section {
     text-align: center;
 }
 
-.btn-join-success {
+.form-join-success btn-join {
     position:absolute;
-    left: 70%;
+    left: 80%;
     width: 150px;
     height: 44px;
     background: #921E5E;
     border-radius: 10px;
     border-width: 0px;
-    margin-top: 120px;
+    margin-top: 20px;
 }
 
-.btn-join-success p {
+.form-join-success btn-join p {
     font-family: 'Poppins',sans-serif;
     padding-top: 4%;
     font-weight: 500;
-    font-size: 19px;
+    font-size: 20px;
     color: #FFFFFF !important;
     text-align: center;
 }
@@ -700,7 +731,7 @@ section {
 
 .content-create .form-group-success p  {
     font-family: 'Poppins', sans-serif;
-    padding-top: 22%;
+    padding-top: 20px;
     font-size: 18px;
     font-weight: 600;
     color: #921E5E;
@@ -736,6 +767,26 @@ section {
 }
 
 .btn-create p {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 5%;
+    font-weight: 400;
+    font-size: 20px;
+    color: #FFFFFF !important;
+    text-align: center;
+}
+
+.btn-close {
+    position:absolute;
+    left: 17%;
+    width: 150px;
+    height: 44px;
+    background: #921E5E;
+    border-radius: 10px;
+    border-width: 0px;
+    margin-top: 10px;
+}
+
+.btn-close p {
     font-family: 'Poppins', sans-serif;
     padding-top: 5%;
     font-weight: 400;
@@ -881,7 +932,6 @@ section {
     margin-right: 20px;
     left: 480px;
     top: 90px;
-    background: #D0853F;
     width: 820px;
 }
 
@@ -892,6 +942,12 @@ section {
     box-sizing: border-box;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
+}
+
+.divisi-card-container .project-card-div i {
+    padding-left: 10px;
+    padding-bottom: 10px;
+    color: #921E5E;
 }
 
 .divisi-card-container .project-card-div  img {
@@ -1056,7 +1112,26 @@ section {
     font-size: 20px;
     color: #FFFFFF !important;
     text-align: center;
-    
+}
+
+.task-card-container .btn-card-close {
+    margin-left: 90%;
+    width: 150px;
+    height: 44px;
+    background: #921E5E;
+    border-radius: 10px;
+    border-width: 0px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.task-card-container .btn-card-close p {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 5%;
+    font-weight: 400;
+    font-size: 20px;
+    color: #FFFFFF !important;
+    text-align: center;
 }
 
 .task-card-container .addition .addition-button {
@@ -1140,6 +1215,105 @@ section {
     margin-top: 10px;
 }
 
+.content-attachment {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    left: 280px;
+    top: 90px;
+    padding-right: 30px;
+
+    background: #FFFFFF;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.content-attachment h4 {
+    padding-top: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #921E5E;
+}
+
+.content-attachment .edit-logo {
+    position: absolute;
+    width: 200px;
+    left: 5%;
+    top: 20%;
+}
+
+.content-attachment .edit-logo img {
+    margin-top: 50px;
+    margin-left: 50px;
+    width: 200px;
+    height: 200px;
+}
+
+.content-attachment .form-create {
+    width: 420px;
+    height: fit-content;
+    margin-left: 230px;
+    padding: 20px;
+}
+
+.content-attachment .form-create p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #921E5E;
+}
+
+.content-attachment a {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #006eff;
+}
+
+.content-attachment .form-create h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #921E5E;
+}
+
+.content-attachment .form-group {
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+.content-attachment .btn-profile {
+    
+    margin-left: 230px;
+    width: 150px;
+    height: 44px;
+    background: #A77590;
+    border-radius: 10px;
+    border-width: 0px;
+    margin-top: 10px;
+}
+
+.assign-member .col-7 {
+    padding-top: 10px;
+}
+
+.assign-member .col-3 .btn-edit {
+    width: 100px;
+    height: 30px;
+    background: #A77590;
+    border-radius: 10px;
+    border-width: 0px;
+}
+
+.assign-member .col-3 .btn-edit p {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 4%;
+    font-size: 14px;
+    color: #FFFFFF !important;
+    text-align: center;
+}
+
 .assign-role .col-3 {
     padding-top: 10px;
 }
@@ -1191,3 +1365,62 @@ section {
     padding-bottom: 10px;
 }
 
+.content-add-member {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    left: 260px;
+    top: 90px;
+    padding-right: 30px;
+
+    background: #FFFFFF;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.content-add-member .edit-logo {
+    position: absolute;
+    width: 200px;
+    left: 5%;
+    top: 10%;
+}
+
+.content-add-member .edit-logo img {
+    margin-top: 20px;
+    margin-left: 50px;
+    width: 200px;
+    height: 200px;
+}
+
+.content-add-member .form-create {
+    width: 420px;
+    height: fit-content;
+    margin-left: 230px;
+    padding: 20px;
+}
+
+.content-add-member .form-create p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #921E5E;
+}
+
+.content-add-member .form-create h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #921E5E;
+}
+
+
+.content-add-member .btn-profile {
+    
+    margin-left: 230px;
+    width: 150px;
+    height: 44px;
+    background: #A77590;
+    border-radius: 10px;
+    border-width: 0px;
+    margin-top: 10px;
+}
