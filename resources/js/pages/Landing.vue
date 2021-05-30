@@ -12,9 +12,11 @@
               The best organizational task manager platform in Indonesia
             </p>
             <br />
-            <button href="" class="btn-tamago">
-              <p>Get Started!</p>
-            </button>
+            <div class="get-started">
+              <router-link :to="{ name: 'register' }" class="nav-link"
+                ><p>Get Started!</p></router-link
+              >
+            </div>
           </div>
           <div class="col-5">
             <img style="float: right" :src="FrameLp1" alt="" />
