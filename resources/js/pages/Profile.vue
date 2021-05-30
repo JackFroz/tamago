@@ -4,7 +4,7 @@
     <div class="main">
       <!--Header-->
       <div class="fixed-top judul-page">
-        <p class="top-bar">
+        <p class="top-bar-static">
           Profile
         </p>
       </div>
@@ -13,7 +13,12 @@
         <div class="content-profile">
           <div class="name-foto">
             <p>{{ user.first_name }} {{ user.last_name }}</p>
-            <img class="mx-auto d-block rounded-circle" src="" alt="" />
+            <div class="row">
+              <div class="col-12">
+                <img style="float: center" :src="ProfileImg" alt="" />
+              </div>
+            </div>
+            
           </div>
           <div class="form-profile">
             <p v-html="message"></p>
@@ -87,6 +92,7 @@
 
 <script>
 import Sidenav from "../components/Sidenav.vue";
+import ProfileImg from "../../images/default-user.png";
 
 export default {
   components: {
@@ -95,6 +101,7 @@ export default {
 
   data() {
     return {
+      ProfileImg: ProfileImg,
       message: "",
       user: [],
       profileForm: {
@@ -154,11 +161,19 @@ export default {
           headers: { Authorization: "Bearer " + this.token },
         })
         .then((response) => {
-          this.message = response.data.success
-            ? "Profile updated!"
-            : "Failed updating profile!";
-          this.user.first_name = this.profileForm.first_name;
-          this.user.last_name = this.profileForm.last_name;
+          if (response.data.success) {
+            this.user.first_name = this.profileForm.first_name;
+            this.user.last_name = this.profileForm.last_name;
+            var that = this;
+            setTimeout(function() {
+              that.message = "Profile updated!";
+            }, 5000);
+          } else {
+            var that = this;
+            setTimeout(function() {
+              that.message = "Failed updating profile!";
+            }, 5000);
+          }
         });
     },
     changePassword() {
