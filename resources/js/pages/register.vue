@@ -144,7 +144,7 @@ export default {
         });
       }
       else{
-        this.message = "Password and Confirm Password column do not match!"
+        this.message = "Password and Confirm Password columns do not match!"
       }
      
     },
