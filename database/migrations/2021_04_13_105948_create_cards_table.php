@@ -19,7 +19,7 @@ class CreateCardsTable extends Migration
             $table->foreign('list_id')->references('list_id')->on('progress_lists')->onDelete('cascade');
             $table->string('card_name', 50);
             $table->string('card_desc', 300)->nullable();
-            $table->dateTime('card_deadline')->nullable();
+            $table->date('card_deadline')->nullable();
             $table->integer('order');
             $table->timestamps();
         });

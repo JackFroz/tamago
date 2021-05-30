@@ -25,6 +25,7 @@
           </div>
           <Draggable
             :options="dragOptions"
+            :disabled="!canEdit"
             element="div"
             @end="changeOrder"
             v-model="list.cards"
@@ -47,17 +48,21 @@
                   </div>
                   <div class="task-card-footer">
                     <i
-                      class="fa fa-calendar-check-o"
-                      aria-hidden="true"
-                      type="button"
-                    ></i>
-                    <i
+                      v-if="canEdit"
                       @click="addCardMember(card)"
                       class="fa fa-tags"
                       aria-hidden="true"
                       type="button"
                     ></i>
                     <i
+                      v-if="canEdit"
+                      @click="addCardAttachment(card)"
+                      class="fa fa-paperclip"
+                      aria-hidden="true"
+                      type="button"
+                    ></i>
+                    <i
+                      v-if="canEdit"
                       @click="deleteCard(card.card_id, cardIndex, listIndex)"
                       class="fa fa-trash"
                       aria-hidden="true"
@@ -80,7 +85,7 @@ export default {
   components: {
     Draggable,
   },
-  props: ["divisionId", "lists"],
+  props: ["divisionId", "lists", "canEdit"],
   data() {
     return {
       reactiveLists: this.lists,
@@ -90,8 +95,14 @@ export default {
 
   methods: {
     addCard(clickedList) {
+      if (this.canEdit === false) return;
       this.$emit("updateClickedList", clickedList);
       this.$emit("updateShowComponentCardManagement", "add-card");
+    },
+    addCardAttachment(clickedCard) {
+      this.$emit("updateClickedCard", clickedCard);
+      this.$emit("updateClickedCardAttachments", clickedCard);
+      this.$emit("updateShowComponentCardManagement", "add-card-attachment");
     },
     addCardMember(clickedCard) {
       this.$emit("updateClickedCard", clickedCard);
@@ -99,6 +110,7 @@ export default {
       this.$emit("updateShowComponentCardManagement", "add-card-member");
     },
     editCard(clickedCard) {
+      if (this.canEdit === false) return;
       this.$emit("updateClickedCard", clickedCard);
       this.$emit("updateShowComponentCardManagement", "edit-card");
     },
