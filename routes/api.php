@@ -54,8 +54,12 @@ Route::middleware('auth:sanctum')->group(function () {
     //card endpoints
     Route::resource('/card', 'Api\CardController');
     Route::get('/card/{card}/card-members', 'Api\CardController@cardMembers');
+    Route::get('/card/{card}/attachments', 'Api\CardController@attachments');
 
-    //card-member endpoint
+    //card-member endpoints
     Route::resource('/card-member', 'Api\CardMemberController');
     Route::get('/card-member/{cardMember}/user', 'Api\CardMemberController@user');
+
+    //attachment endpoints
+    Route::resource('/attachment', 'Api\AttachmentController');
 });
