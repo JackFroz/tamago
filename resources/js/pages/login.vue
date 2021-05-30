@@ -28,11 +28,12 @@
         <div class="form-group">
           <label for="email">Email Address</label>
           <input
-            type="text"
+            type="email"
             class="form-control"
             id="emailaddress"
             placeholder="Enter your email address"
             v-model="loginForm.email"
+            required
           />
         </div>
         <div class="form-group">
@@ -43,11 +44,9 @@
             id="password"
             placeholder="Enter your password"
             v-model="loginForm.password"
+            required
           />
         </div>
-        <a href="">
-          <p>Forgot Password?</p>
-        </a>
         <div class="centre-login">
           <button type="submit" class="btn-tamago">Login</button>
         </div>
@@ -72,6 +71,7 @@ export default {
   },
   methods: {
     login() {
+      this.message = "Please wait..."
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
           .post("api/login", this.loginForm)
