@@ -50,7 +50,7 @@ class UserController extends Controller
     {
         $registerInfo = $request->validate([
             'email' => 'required|email|unique:users|max:320',
-            'username' => 'required|unique:users',
+            'username' => 'required|min:5|unique:users',
             'first_name' => 'required|string|max:25',
             'last_name' => 'required|string|max:25',
             'password' => 'required|min:8',
@@ -117,7 +117,6 @@ class UserController extends Controller
         $projects = DB::table('projects')
             ->leftJoin('project_members', 'project_members.project_id', '=', 'projects.project_id')
             ->where('project_members.username', $user->username)
-            ->orWhere('projects.username', $user->username)
             ->select('projects.*')
             ->get();
 

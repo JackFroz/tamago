@@ -64,7 +64,7 @@ class ProjectMemberController extends Controller
             return response()->json([
                 'status' => (bool)$projectMember,
                 'projectId' => $projectId,
-            ], 403);
+            ]);
         }
 
         

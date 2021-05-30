@@ -93,8 +93,8 @@ class CardController extends Controller
         ]));
 
         return response()->json([
-            'status' => $card,
-            'message' => $card ? 'Card updated' : 'Error creating card',
+            'status' => (bool)$status,
+            'message' => $status ? 'Card updated' : 'Error updating card',
         ]);
     }
 
@@ -109,13 +109,18 @@ class CardController extends Controller
         $status = $card->delete();
 
         return response()->json([
-            'card' => $card,
-            'message' => $card ? 'Card deleted' : 'Error deleting card',
+            'status' => (bool)$status,
+            'message' => $status ? 'Card deleted' : 'Error deleting card',
         ]);
     }
 
     public function cardMembers(Card $card)
     {
         return response()->json($card->cardMembers()->get());
+    }
+
+    public function attachments(Card $card)
+    {
+        return response()->json($card->attachments()->get());
     }
 }
