@@ -67,6 +67,7 @@
                   class="form-control"
                   id="newpassword"
                   v-model="passwordForm.new_password"
+                  maxlength="25"
                 />
               </div>
               <div class="form-group">
@@ -76,6 +77,7 @@
                   class="form-control"
                   id="confirmpass"
                   v-model="passwordForm.repeat_new_password"
+                  maxlength="25"
                 />
               </div>
               <button v-if="isDisabled" type="submit" class="btn-profile">
@@ -150,7 +152,8 @@ export default {
         this.passwordForm.old_password !== "" &&
         this.passwordForm.repeat_new_password !== "" &&
         this.passwordForm.new_password ===
-          this.passwordForm.repeat_new_password;
+          this.passwordForm.repeat_new_password
+          && this.passwordForm.new_password.length >= 8;
 
       return isPasswordColumnsChanged;
     },
@@ -184,7 +187,7 @@ export default {
           this.message = "Password changed!";
         })
         .catch(() => {
-          this.message = "Minimum length of password is 8 characters!";
+          this.message = "Wrong old password!";
         });
     },
     saveChanges() {
