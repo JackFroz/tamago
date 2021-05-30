@@ -3178,7 +3178,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.message = "Please check your input!";
         });
       } else {
-        this.message = "Password and Confirm Password column doesn't match!";
+        this.message = "Password and Confirm Password column do not match!";
       }
     },
     checkPasswordColumns: function checkPasswordColumns() {
