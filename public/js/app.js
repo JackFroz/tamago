@@ -120,7 +120,9 @@ __webpack_require__.r(__webpack_exports__);
         headers: {
           Authorization: "Bearer " + this.token
         }
-      }).then(function (response) {
+      }).then(function () {
+        localStorage.removeItem("token");
+
         _this.$router.push("login");
       });
     }
@@ -140,6 +142,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -214,10 +222,166 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.token
         }
       }).then(function () {
-        _this.$router.go();
+        _this.$emit("updateLists");
+
+        _this.$emit("updateShowComponentCardManagement", "card");
       });
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/card-components/AddCardAttachment.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/card-components/AddCardAttachment.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _images_rocket_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../images/rocket.png */ "./resources/images/rocket.png");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      RocketImg: _images_rocket_png__WEBPACK_IMPORTED_MODULE_0__.default,
+      messageAssign: "",
+      messageRemove: "",
+      attachmentForm: {
+        attachment_name: "",
+        attachment_url: "",
+        card_id: this.clickedCard.card_id
+      },
+      token: localStorage.getItem("token")
+    };
+  },
+  methods: {
+    backToLists: function backToLists() {
+      this.$emit("updateShowComponentCardManagement", "card");
+    },
+    addCardAttachment: function addCardAttachment() {
+      var _this = this;
+
+      axios.post("api/attachment", this.attachmentForm, {
+        headers: {
+          Authorization: "Bearer " + this.token
+        }
+      }).then(function (response) {
+        if (response.data.status) {
+          _this.$emit("updateClickedCardAttachments", _this.clickedCard);
+
+          _this.messageAssign = "Attachment added!";
+          var that = _this;
+          setTimeout(function () {
+            that.messageAssign = "";
+          }, 5000);
+        } else {
+          _this.messageAssign = "Failed to add attachment!";
+          var that = _this;
+          setTimeout(function () {
+            that.messageAssign = "";
+          }, 5000);
+        }
+      });
+    },
+    removeCardAttachment: function removeCardAttachment(attachmentId) {
+      var _this2 = this;
+
+      axios.post("api/attachment/".concat(attachmentId), {
+        _method: "delete"
+      }, {
+        headers: {
+          Authorization: "Bearer " + this.token
+        }
+      }).then(function (response) {
+        if (response.data.status) {
+          _this2.$emit("updateClickedCardAttachments", _this2.clickedCard);
+
+          _this2.messageRemove = "Attachment removed!";
+          var that = _this2;
+          setTimeout(function () {
+            that.messageRemove = "";
+          }, 5000);
+        } else {
+          _this2.messageRemove = "Failed to remove attachment!";
+          var that = _this2;
+          setTimeout(function () {
+            that.messageRemove = "";
+          }, 5000);
+        }
+      });
+    }
+  },
+  props: ["clickedCard", "clickedCardAttachments"]
 });
 
 /***/ }),
@@ -311,14 +475,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      message: "",
+      messageAssign: "",
+      messageRemove: "",
       RocketImg: _images_rocket_png__WEBPACK_IMPORTED_MODULE_0__.default,
       token: localStorage.getItem("token")
     };
   },
-  props: ["clickedCardMembers", "clickedCardNonMembers", "clickedCard", "divisionMembers", "project", "isOwnerTagged"],
+  props: ["clickedCardMembers", "clickedCardNonMembers", "clickedCard", "project", "isOwnerTagged"],
   methods: {
-    backToDivisionCards: function backToDivisionCards() {
+    backToLists: function backToLists() {
       this.$emit("updateShowComponentCardManagement", "card");
     },
     assignCardMember: function assignCardMember(cardId, memberId, username) {
@@ -334,9 +499,19 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         if (response.data.status) {
-          _this.message = "Card member added";
+          _this.$emit("updateClickedCardMembers", _this.clickedCard);
 
-          _this.$emit("updateLists");
+          _this.messageAssign = "Card member added!";
+          var that = _this;
+          setTimeout(function () {
+            that.messageAssign = "";
+          }, 5000);
+        } else {
+          _this.messageAssign = "Failed to add card member!";
+          var that = _this;
+          setTimeout(function () {
+            that.messageAssign = "";
+          }, 5000);
         }
       });
     },
@@ -350,7 +525,21 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
-        _this2.message = "Card member added!";
+        if (response.data.status) {
+          _this2.$emit("updateClickedCardMembers", _this2.clickedCard);
+
+          _this2.messageRemove = "Card member removed!";
+          var that = _this2;
+          setTimeout(function () {
+            that.messageRemove = "";
+          }, 5000);
+        } else {
+          _this2.messageRemove = "Failed to remove card member!";
+          var that = _this2;
+          setTimeout(function () {
+            that.messageRemove = "";
+          }, 5000);
+        }
       });
     }
   }
@@ -447,12 +636,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     Draggable: (vuedraggable__WEBPACK_IMPORTED_MODULE_0___default())
   },
-  props: ["divisionId", "lists"],
+  props: ["divisionId", "lists", "canEdit"],
   data: function data() {
     return {
       reactiveLists: this.lists,
@@ -461,8 +655,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addCard: function addCard(clickedList) {
+      if (this.canEdit === false) return;
       this.$emit("updateClickedList", clickedList);
       this.$emit("updateShowComponentCardManagement", "add-card");
+    },
+    addCardAttachment: function addCardAttachment(clickedCard) {
+      this.$emit("updateClickedCard", clickedCard);
+      this.$emit("updateClickedCardAttachments", clickedCard);
+      this.$emit("updateShowComponentCardManagement", "add-card-attachment");
     },
     addCardMember: function addCardMember(clickedCard) {
       this.$emit("updateClickedCard", clickedCard);
@@ -470,6 +670,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit("updateShowComponentCardManagement", "add-card-member");
     },
     editCard: function editCard(clickedCard) {
+      if (this.canEdit === false) return;
       this.$emit("updateClickedCard", clickedCard);
       this.$emit("updateShowComponentCardManagement", "edit-card");
     },
@@ -536,8 +737,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Card_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Card.vue */ "./resources/js/components/card-components/Card.vue");
 /* harmony import */ var _AddCard_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddCard.vue */ "./resources/js/components/card-components/AddCard.vue");
-/* harmony import */ var _AddCardMember_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AddCardMember.vue */ "./resources/js/components/card-components/AddCardMember.vue");
-/* harmony import */ var _EditCard_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EditCard.vue */ "./resources/js/components/card-components/EditCard.vue");
+/* harmony import */ var _AddCardAttachment_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AddCardAttachment.vue */ "./resources/js/components/card-components/AddCardAttachment.vue");
+/* harmony import */ var _AddCardMember_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AddCardMember.vue */ "./resources/js/components/card-components/AddCardMember.vue");
+/* harmony import */ var _EditCard_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EditCard.vue */ "./resources/js/components/card-components/EditCard.vue");
 //
 //
 //
@@ -573,6 +775,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -581,8 +793,9 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Card: _Card_vue__WEBPACK_IMPORTED_MODULE_0__.default,
     AddCard: _AddCard_vue__WEBPACK_IMPORTED_MODULE_1__.default,
-    AddCardMember: _AddCardMember_vue__WEBPACK_IMPORTED_MODULE_2__.default,
-    EditCard: _EditCard_vue__WEBPACK_IMPORTED_MODULE_3__.default
+    AddCardAttachment: _AddCardAttachment_vue__WEBPACK_IMPORTED_MODULE_2__.default,
+    AddCardMember: _AddCardMember_vue__WEBPACK_IMPORTED_MODULE_3__.default,
+    EditCard: _EditCard_vue__WEBPACK_IMPORTED_MODULE_4__.default
   },
   data: function data() {
     return {
@@ -590,11 +803,12 @@ __webpack_require__.r(__webpack_exports__);
       clickedCard: [],
       clickedCardMembers: [],
       clickedCardNonMembers: [],
+      clickedCardAttachments: [],
       showComponentCardManagement: "card",
       token: localStorage.getItem("token")
     };
   },
-  props: ["divisionId", "project", "lists", "divisionMembers"],
+  props: ["divisionId", "project", "lists", "divisionMembers", "canEdit"],
   methods: {
     updateShowComponentCardManagement: function updateShowComponentCardManagement(componentName) {
       this.showComponentCardManagement = componentName;
@@ -608,6 +822,9 @@ __webpack_require__.r(__webpack_exports__);
     updateClickedCardMembers: function updateClickedCardMembers(card) {
       this.getCardMembers(card.card_id);
     },
+    updateClickedCardAttachments: function updateClickedCardAttachments(card) {
+      this.getAttachments(card.card_id);
+    },
     updateLists: function updateLists() {
       this.$emit("updateLists");
     },
@@ -620,17 +837,35 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this.clickedCardMembers = response.data;
-        _this.clickedCardNonMembers = _this.divisionMembers;
+        _this.clickedCardNonMembers = [];
+        console.log("card-member", _this.clickedCardMembers);
 
-        _this.clickedCardNonMembers.forEach(function (nonMember, indexNonMember) {
-          _this.clickedCardMembers.forEach(function (member) {
-            if (nonMember.member_id === member.member_id) _this.clickedCardNonMembers[indexNonMember] = null;
+        _this.$emit("updateDivisionMembers");
+
+        var temp = _this.divisionMembers;
+        console.log("division-member", _this.divisionMembers);
+
+        _this.divisionMembers.forEach(function (divMem, index) {
+          _this.clickedCardMembers.forEach(function (mem) {
+            if (divMem.username === mem.username) temp[index] = null;
           });
         });
 
-        _this.clickedCardNonMembers = _this.clickedCardNonMembers.filter(function (obj) {
-          return obj;
+        temp.forEach(function (member) {
+          if (member !== null) _this.clickedCardNonMembers.push(member);
         });
+        console.log("non-card-member", _this.clickedCardNonMembers);
+      });
+    },
+    getAttachments: function getAttachments(cardId) {
+      var _this2 = this;
+
+      axios.get("api/card/".concat(cardId, "/attachments"), {
+        headers: {
+          Authorization: "Bearer " + this.token
+        }
+      }).then(function (response) {
+        _this2.clickedCardAttachments = response.data;
       });
     }
   }
@@ -695,6 +930,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -710,6 +953,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     backToLists: function backToLists() {
       this.$emit("updateShowComponentCardManagement", "card");
+      console.log(this.cardForm.card_deadline);
     },
     addCard: function addCard() {
       var _this = this;
@@ -719,7 +963,9 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.token
         }
       }).then(function () {
-        _this.$router.go();
+        _this.$emit("updateLists");
+
+        _this.$emit("updateShowComponentCardManagement", "card");
       });
     }
   },
@@ -809,7 +1055,12 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.createLists(divisionId, "Complete", 3);
 
-        if (!response.data.status) _this.message = "Failed to create division!";else _this.$router.go();
+        if (!response.data.status) _this.message = "Failed to create division!";else {
+          _this.$emit("updateDivisionCards");
+
+          _this.$emit("updateShowComponentProjectBoard", "division-card");
+        }
+        ;
       });
     },
     createLists: function createLists(divisionId, listName, order) {
@@ -821,17 +1072,6 @@ __webpack_require__.r(__webpack_exports__);
         headers: {
           Authorization: "Bearer " + this.token
         }
-      });
-    },
-    updateDivisions: function updateDivisions() {
-      var _this2 = this;
-
-      axios.get("api/project/".concat(this.project.project_id, "/project-divisions"), {
-        headers: {
-          Authorization: "Bearer " + this.token
-        }
-      }).then(function (response) {
-        _this2.divisions = response.data;
       });
     }
   }
@@ -1007,7 +1247,15 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
-        if (!response.data.status) _this.message = "Failed to edit division!";else _this.$router.go();
+        if (!response.data.status) _this.message = "Failed to edit division!";else {
+          _this.$emit("updateDivisionCards");
+
+          _this.message = "Division detail updated!";
+          var that = _this;
+          setTimeout(function () {
+            that.message = "";
+          }, 5000);
+        }
       });
     },
     deleteDivision: function deleteDivision() {
@@ -1020,7 +1268,17 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
-        if (!response.data.status) _this2.message = "Failed to delete division!";else _this2.$router.go();
+        if (!response.data.status) {
+          _this2.message = "Failed to delete division!";
+          var that = _this2;
+          setTimeout(function () {
+            that.message = "";
+          }, 5000);
+        } else {
+          _this2.$emit("updateDivisionCards");
+
+          _this2.$emit("updateShowComponentProjectBoard", "division-card");
+        }
       });
     }
   }
@@ -1055,6 +1313,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1068,6 +1333,7 @@ __webpack_require__.r(__webpack_exports__);
       showComponentCreateProject: "create-project-form"
     };
   },
+  props: ["user"],
   methods: {
     updateShowComponentCreateProject: function updateShowComponentCreateProject(componentName) {
       this.showComponentCreateProject = componentName;
@@ -1076,8 +1342,11 @@ __webpack_require__.r(__webpack_exports__);
       this.projectId = projectId;
       console.log(this.projectId);
     },
-    updateProjects: function updateProjects() {
-      this.$emit("updateProjects");
+    updateProjects: function updateProjects(projects) {
+      this.$emit("updateProjects", projects);
+    },
+    updateShowComponentProjectManagement: function updateShowComponentProjectManagement(componentName) {
+      this.$emit("updateShowComponentProjectManagement", componentName);
     }
   }
 });
@@ -1146,10 +1415,10 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem("token")
     };
   },
-  props: ["projectId"],
+  props: ["user"],
   methods: {
     backToHome: function backToHome() {
-      this.$router.go();
+      this.$emit("updateShowComponentProjectManagement", "project-card");
     },
     createProject: function createProject() {
       var _this = this;
@@ -1159,14 +1428,26 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
-        console.log(response.data);
         var projectId = response.data.projectId;
 
         _this.$emit("updateProjectId", projectId);
 
-        _this.$emit("updateProjects");
+        _this.getProjects(_this.user.id);
+      });
+    },
+    getProjects: function getProjects(id) {
+      var _this2 = this;
 
-        _this.$emit("updateShowComponentCreateProject", "create-project-success");
+      axios.get("api/user/".concat(id, "/projects"), {
+        headers: {
+          Authorization: "Bearer " + this.token
+        }
+      }).then(function (response) {
+        var projects = response.data.projects;
+
+        _this2.$emit("updateProjects", projects);
+
+        _this2.$emit("updateShowComponentCreateProject", "create-project-success");
       });
     }
   }
@@ -1219,7 +1500,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ["projectId"],
   methods: {
     done: function done() {
-      this.$router.go();
+      this.$emit("updateShowComponentProjectManagement", "project-card");
     }
   }
 });
@@ -1370,7 +1651,15 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
-        _this.messageDivision = response.data.status ? "Member added to division" : "Failed to add member to division!";
+        if (!response.data.status) _this.messageDivision = "Failed to assign division!";else {
+          _this.$emit("updateProjectMembers");
+
+          _this.messageDivision = "Division assigned!";
+          var that = _this;
+          setTimeout(function () {
+            that.messageDivision = "";
+          }, 5000);
+        }
       });
     },
     updateProjectDetail: function updateProjectDetail() {
@@ -1381,7 +1670,15 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
-        if (!response.data.status) _this2.messageProject = "Failed to edit project!";else _this2.$router.go();
+        if (!response.data.status) _this2.messageProject = "Failed to edit project!";else {
+          _this2.$emit("updateProjectDetail");
+
+          _this2.messageProject = "Project detail updated!";
+          var that = _this2;
+          setTimeout(function () {
+            that.messageProject = "";
+          }, 5000);
+        }
       });
     }
   }
@@ -1415,6 +1712,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1428,12 +1733,19 @@ __webpack_require__.r(__webpack_exports__);
       showComponentJoinProject: "join-project-form"
     };
   },
+  props: ["user"],
   methods: {
     updateShowComponentJoinProject: function updateShowComponentJoinProject(componentName) {
       this.showComponentJoinProject = componentName;
     },
+    updateShowComponentProjectManagement: function updateShowComponentProjectManagement(componentName) {
+      this.$emit("updateShowComponentProjectManagement", componentName);
+    },
     updateProjectId: function updateProjectId(projectId) {
       this.projectId = projectId;
+    },
+    updateProjects: function updateProjects(project) {
+      this.$emit("updateProjects", project);
     }
   }
 });
@@ -1494,9 +1806,10 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem("token")
     };
   },
+  props: ["user"],
   methods: {
     backToHome: function backToHome() {
-      this.$router.go();
+      this.$emit("updateShowComponentProjectManagement", "project-card");
     },
     joinProject: function joinProject() {
       var _this = this;
@@ -1506,15 +1819,30 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
-        var projectId = response.data.projectId;
+        if (response.data.status) {
+          var projectId = response.data.projectId;
 
-        _this.$emit("updateProjectId", projectId);
+          _this.$emit("updateProjectId", projectId);
 
-        _this.$emit("updateProjects");
+          _this.getProjects(_this.user.id);
+        } else {
+          _this.message = "You already the member of this project!";
+        }
+      });
+    },
+    getProjects: function getProjects(id) {
+      var _this2 = this;
 
-        _this.$emit("updateShowComponentJoinProject", "join-project-success");
-      })["catch"](function () {
-        _this.message = "Failed to add you to this project!";
+      axios.get("api/user/".concat(id, "/projects"), {
+        headers: {
+          Authorization: "Bearer " + this.token
+        }
+      }).then(function (response) {
+        var projects = response.data.projects;
+
+        _this2.$emit("updateProjects", projects);
+
+        _this2.$emit("updateShowComponentJoinProject", "join-project-success");
       });
     }
   }
@@ -1567,7 +1895,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ["projectId"],
   methods: {
     done: function done() {
-      this.$router.go();
+      this.$emit("updateShowComponentProjectManagement", "project-card");
     }
   }
 });
@@ -1669,8 +1997,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["project", "ownership"],
+  props: ["project", "ownership", "memberOfDivisionName"],
   methods: {
     showCreateDivision: function showCreateDivision() {
       this.$emit("updateShowComponentProjectBoard", "create-division");
@@ -1730,6 +2061,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // @ is an alias to /src
 
 
@@ -1740,7 +2082,7 @@ __webpack_require__.r(__webpack_exports__);
     JoinProject: _JoinProject_vue__WEBPACK_IMPORTED_MODULE_1__.default,
     ProjectCard: _ProjectCard_vue__WEBPACK_IMPORTED_MODULE_2__.default
   },
-  props: ["projects"],
+  props: ["projects", "user"],
   data: function data() {
     return {
       showComponentProjectManagement: "project-card",
@@ -1755,8 +2097,11 @@ __webpack_require__.r(__webpack_exports__);
     showJoinProject: function showJoinProject() {
       this.showComponentProjectManagement = this.showComponentProjectManagement !== "join-project" ? "join-project" : "project-card";
     },
-    updateProjects: function updateProjects() {
-      this.$emit("updateProjects");
+    updateShowComponentProjectManagement: function updateShowComponentProjectManagement(componentName) {
+      this.showComponentProjectManagement = componentName;
+    },
+    updateProjects: function updateProjects(projects) {
+      this.$emit("updateProjects", projects);
     }
   }
 });
@@ -1805,6 +2150,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 // @ is an alias to /src
 
 
@@ -1816,43 +2163,58 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       divisionId: this.$route.params.id,
+      currentUsername: "",
       projectId: "",
       project: [],
       division: [],
       lists: [],
       divisionMembers: [],
       projectOwner: [],
+      canEdit: false,
       token: localStorage.getItem("token")
     };
   },
   methods: {
-    getProject: function getProject() {
+    currentUser: function currentUser() {
       var _this = this;
+
+      axios.get("api/user", {
+        headers: {
+          Authorization: "Bearer " + this.token
+        }
+      }).then(function (response) {
+        _this.currentUsername = response.data.user.username;
+
+        _this.getProject();
+      });
+    },
+    getProject: function getProject() {
+      var _this2 = this;
 
       axios.get("api/project-division/".concat(this.divisionId, "/project"), {
         headers: {
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
-        _this.project = response.data;
-        _this.projectId = _this.project.project_id;
+        _this2.project = response.data;
+        _this2.projectId = _this2.project.project_id;
 
-        _this.getProjectOwner();
+        _this2.getProjectOwner();
       });
     },
     getDivision: function getDivision() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get("api/project-division/".concat(this.divisionId), {
         headers: {
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
-        _this2.division = response.data;
+        _this3.division = response.data;
       });
     },
     getLists: function getLists() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get("api/project-division/".concat(this.divisionId, "/progress-lists"), {
         headers: {
@@ -1860,7 +2222,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         response.data.forEach(function (data) {
-          _this3.lists.push({
+          _this4.lists.push({
             list_id: data.list_id,
             division_id: data.division_id,
             list_name: data.list_name,
@@ -1868,17 +2230,17 @@ __webpack_require__.r(__webpack_exports__);
             cards: []
           });
 
-          _this3.getCards();
+          _this4.getCards();
         });
       });
     },
     getCards: function getCards() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.lists.map(function (list) {
         axios.get("api/progress-list/".concat(list.list_id, "/cards"), {
           headers: {
-            Authorization: "Bearer " + _this4.token
+            Authorization: "Bearer " + _this5.token
           }
         }).then(function (response) {
           list.cards = response.data;
@@ -1886,7 +2248,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getDivisionMembers: function getDivisionMembers() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get("api/project-division/".concat(this.divisionId, "/project-members"), {
         headers: {
@@ -1894,35 +2256,40 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         response.data.forEach(function (member) {
-          _this5.divisionMembers.push(member);
+          _this6.divisionMembers.push(member);
+
+          if (member.username === _this6.currentUsername) _this6.canEdit = true;
         });
       });
     },
     getProjectOwner: function getProjectOwner() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.get("api/project/".concat(this.projectId, "/project-owner"), {
         headers: {
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
-        _this6.divisionMembers.push(response.data);
+        if (_this7.currentUsername === response.data.username) _this7.canEdit = true;
+
+        _this7.divisionMembers.push(response.data);
       });
     },
     updateLists: function updateLists() {
+      this.lists = [];
       this.getLists();
+    },
+    updateDivisionMembers: function updateDivisionMembers() {
+      this.divisionMembers = [];
+      this.getProjectOwner();
+      this.getDivisionMembers();
     }
   },
   created: function created() {
-    this.getProject();
+    this.currentUser();
     this.getDivision();
     this.getLists();
     this.getDivisionMembers();
-    console.log(this.lists.cards);
-    console.log(this.lists.divisionMembers);
-    if (!this.division) this.$router.replace({
-      path: "home"
-    });
   }
 });
 
@@ -1956,6 +2323,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 // @ is an alias to /src
 
 
@@ -1967,6 +2338,7 @@ __webpack_require__.r(__webpack_exports__);
   props: [],
   data: function data() {
     return {
+      user: [],
       projects: [],
       token: localStorage.getItem("token")
     };
@@ -1975,28 +2347,30 @@ __webpack_require__.r(__webpack_exports__);
     requestProjects: function requestProjects() {
       var _this = this;
 
-      axios.get("http://localhost/api/user", {
+      axios.get("api/user", {
         headers: {
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
+        _this.user = response.data.user;
+
         _this.getProjects(response.data.user.id);
       });
     },
     getProjects: function getProjects(id) {
       var _this2 = this;
 
-      axios.get("http://localhost/api/user/".concat(id, "/projects"), {
+      axios.get("api/user/".concat(id, "/projects"), {
         headers: {
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
         _this2.projects = response.data.projects;
       });
+    },
+    updateProjects: function updateProjects(projects) {
+      this.projects = projects;
     }
-  },
-  updateProjects: function updateProjects() {
-    this.getProjects();
   },
   created: function created() {
     this.requestProjects();
@@ -2024,6 +2398,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_orang_1_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../images/orang-1.png */ "./resources/images/orang-1.png");
 /* harmony import */ var _images_orang_2_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../images/orang-2.png */ "./resources/images/orang-2.png");
 /* harmony import */ var _images_orang_3_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../images/orang-3.png */ "./resources/images/orang-3.png");
+//
+//
 //
 //
 //
@@ -2231,7 +2607,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2248,6 +2623,7 @@ __webpack_require__.r(__webpack_exports__);
     login: function login() {
       var _this = this;
 
+      this.message = "Please wait...";
       axios.get("/sanctum/csrf-cookie").then(function (response) {
         axios.post("api/login", _this.loginForm).then(function (response) {
           localStorage.setItem("token", response.data.token);
@@ -2275,6 +2651,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_Sidenav_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Sidenav.vue */ "./resources/js/components/Sidenav.vue");
+/* harmony import */ var _images_default_user_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../images/default-user.png */ "./resources/images/default-user.png");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2363,12 +2745,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     Sidenav: _components_Sidenav_vue__WEBPACK_IMPORTED_MODULE_0__.default
   },
   data: function data() {
     return {
+      ProfileImg: _images_default_user_png__WEBPACK_IMPORTED_MODULE_1__.default,
       message: "",
       user: [],
       profileForm: {
@@ -2420,9 +2804,19 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
-        _this2.message = response.data.success ? "Profile updated!" : "Failed updating profile!";
-        _this2.user.first_name = _this2.profileForm.first_name;
-        _this2.user.last_name = _this2.profileForm.last_name;
+        if (response.data.success) {
+          _this2.user.first_name = _this2.profileForm.first_name;
+          _this2.user.last_name = _this2.profileForm.last_name;
+          var that = _this2;
+          setTimeout(function () {
+            that.message = "Profile updated!";
+          }, 5000);
+        } else {
+          var that = _this2;
+          setTimeout(function () {
+            that.message = "Failed updating profile!";
+          }, 5000);
+        }
       });
     },
     changePassword: function changePassword() {
@@ -2514,6 +2908,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2537,6 +2936,8 @@ __webpack_require__.r(__webpack_exports__);
       project: [],
       divisions: [],
       members: [],
+      memberOfDivisionId: "",
+      memberOfDivisionName: "",
       division: [],
       projectId: this.$route.params.id,
       token: localStorage.getItem("token")
@@ -2553,6 +2954,8 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this.project = response.data;
         _this.ownership = _this.project.username === _this.username ? true : false;
+
+        _this.getMembers();
       });
     },
     getDivisions: function getDivisions() {
@@ -2563,7 +2966,11 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
-        _this2.divisions = response.data;
+        response.data.forEach(function (division) {
+          if (division.division_id === _this2.memberOfDivisionId) _this2.memberOfDivisionName = division.division_name;
+
+          _this2.divisions.push(division);
+        });
       });
     },
     getMembers: function getMembers() {
@@ -2574,7 +2981,12 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.token
         }
       }).then(function (response) {
-        _this3.members = response.data;
+        response.data.forEach(function (member) {
+          if (member.username !== _this3.project.username) _this3.members.push(member);
+          if (member.username === _this3.username && member.division_id !== null) _this3.memberOfDivisionId = member.division_id;
+        });
+
+        _this3.getDivisions();
       });
     },
     currentUser: function currentUser() {
@@ -2593,13 +3005,23 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateDivision: function updateDivision(division) {
       this.division = division;
+    },
+    updateProjectMembers: function updateProjectMembers() {
+      this.members = [];
+      this.divisions = [];
+      this.getMembers();
+    },
+    updateProjectDetail: function updateProjectDetail() {
+      this.getProject();
+    },
+    updateDivisionCards: function updateDivisionCards() {
+      this.divisions = [];
+      this.getDivisions();
     }
   },
   created: function created() {
     this.currentUser();
     this.getProject();
-    this.getDivisions();
-    this.getMembers();
   }
 });
 
@@ -2619,6 +3041,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_logo_tamago_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../images/logo-tamago.png */ "./resources/images/logo-tamago.png");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2739,11 +3170,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     handleRegister: function handleRegister() {
       var _this = this;
 
-      axios.post("api/register", this.registerForm).then(function () {
-        _this.$router.push("login");
-      })["catch"](function () {
-        _this.message = "Please check your input!";
-      });
+      if (this.checkPasswordColumns()) {
+        this.message = "Please wait...";
+        axios.post("api/register", this.registerForm).then(function () {
+          _this.$router.push("login");
+        })["catch"](function () {
+          _this.message = "Please check your input!";
+        });
+      } else {
+        this.message = "Password and Confirm Password column doesn't match!";
+      }
+    },
+    checkPasswordColumns: function checkPasswordColumns() {
+      if (this.registerForm.password === this.registerForm.confirm_password) return true;else false;
     }
   }
 });
@@ -2780,39 +3219,69 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vue_router__WEBPACK_IMPORTED_MODULE
 
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
-  mode: 'history',
+  mode: "history",
   routes: [{
-    path: '/',
-    name: 'landing',
+    path: "/",
+    name: "landing",
     component: _pages_Landing__WEBPACK_IMPORTED_MODULE_3__.default
   }, {
-    path: '/login',
-    name: 'login',
+    path: "/login",
+    name: "login",
     component: _pages_Login__WEBPACK_IMPORTED_MODULE_4__.default
   }, {
-    path: '/register',
-    name: 'register',
+    path: "/register",
+    name: "register",
     component: _pages_Register__WEBPACK_IMPORTED_MODULE_5__.default
   }, {
-    path: '/home',
-    name: 'home',
-    component: _pages_Home__WEBPACK_IMPORTED_MODULE_6__.default
+    path: "/home",
+    name: "home",
+    component: _pages_Home__WEBPACK_IMPORTED_MODULE_6__.default,
+    meta: {
+      requiresAuth: true
+    }
   }, {
-    path: '/profile',
-    name: 'profile',
-    component: _pages_Profile__WEBPACK_IMPORTED_MODULE_7__.default
+    path: "/profile",
+    name: "profile",
+    component: _pages_Profile__WEBPACK_IMPORTED_MODULE_7__.default,
+    meta: {
+      requiresAuth: true
+    }
   }, {
-    path: '/project/:id',
-    name: 'project-board',
-    component: _pages_ProjectBoard__WEBPACK_IMPORTED_MODULE_8__.default
+    path: "/project/:id",
+    name: "project-board",
+    component: _pages_ProjectBoard__WEBPACK_IMPORTED_MODULE_8__.default,
+    meta: {
+      requiresAuth: true
+    }
   }, {
-    path: '/division/:id',
-    name: 'division-board',
-    component: _pages_DivisionBoard__WEBPACK_IMPORTED_MODULE_9__.default
+    path: "/division/:id",
+    name: "division-board",
+    component: _pages_DivisionBoard__WEBPACK_IMPORTED_MODULE_9__.default,
+    meta: {
+      requiresAuth: true
+    }
   }]
 });
+router.beforeEach(function (to, from, next) {
+  var token = localStorage.getItem("token");
+  var requiresAuth = to.matched.some(function (record) {
+    return record.meta.requiresAuth;
+  });
+
+  if (requiresAuth) {
+    axios.get("api/user", {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    }).then(function () {
+      next();
+    })["catch"](function () {
+      next("login");
+    });
+  } else next();
+});
 var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
-  el: '#app',
+  el: "#app",
   components: {
     App: _pages_App__WEBPACK_IMPORTED_MODULE_2__.default
   },
@@ -3567,7 +4036,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".container .logo {\r\n    max-width: 300px;\r\n    max-height: 300px;\r\n}\r\n\r\n.container .row h1{\r\n    font-weight: 700;\r\n    font-size: 46px;\r\n    font-family: 'Poppins', sans-serif;\r\n    color: #323575;\r\n}\r\n\r\n.container .row p {\r\n    font-weight: 50;\r\n    font-size: 20px;\r\n    font-family: 'Poppins', sans-serif;\r\n}\r\n\r\n.container .navbar-nav {\r\n    margin-left: 650px;\r\n}\r\n\r\n.btn-tamago {\r\n    margin-right: 10px;\r\n    width: 178px;\r\n    height: 44px;\r\n    background: #31A2A4;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n}\r\n\r\n.btn-tamago p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 4%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.btn-tamago:hover {\r\n    background-color: #147475;\r\n}\r\n\r\n.btn-tamago-1 {\r\n    margin-right: 30px;\r\n    min-width: 150px;\r\n    max-height: 50px;\r\n    background: #31A2A4;\r\n    border-radius: 20px;\r\n    border-width: 0px;\r\n}\r\n\r\n.btn-tamago-1 p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 7%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.btn-tamago-1:hover {\r\n    background-color: #147475;\r\n}\r\n\r\nsection {\r\n    padding-top: 70px;\r\n}\r\n\r\n.section-top img {\r\n    position: absolute;\r\n    width: 750px;\r\n    top: -170px;\r\n    left: -70px;\r\n    \r\n}\r\n\r\n.section-mid img {\r\n    width: 400px;\r\n}\r\n\r\n.section-mid .container .row .title {\r\n    padding-top: 20%;\r\n    color: #921E5E;\r\n}\r\n\r\n.section-bot {\r\n    background: #EAFDFE;\r\n}\r\n\r\n.section-bot img {\r\n    min-height: 165px;\r\n    max-width: 165px;\r\n}\r\n\r\n.section-bot p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-style: normal;\r\n    font-weight: 500;\r\n    font-size: 24px;\r\n    line-height: 36px;\r\n\r\n    color: #2A3D5B;\r\n}\r\n\r\n.container-login {\r\n    height: fit-content;\r\n    margin-top: 2%;\r\n    margin-bottom: 10%;\r\n    margin-right: 35%;\r\n    margin-left: 35%;\r\n    padding: 20px;\r\n    border-radius: 10px;\r\n    border: 1px solid #C4C4C4;\r\n    box-shadow: 4px 4px 10px 4px rgba(0, 0, 0, 0.25);\r\n}\r\n\r\n\r\n.container-login .form-login h1 {\r\n    text-align: center;\r\n    font-family: 'Poppins', sans-serif ;\r\n    color: #31A2A4;\r\n    font-weight: 500px;\r\n    \r\n}\r\n\r\n.container-login .form-login h2 {\r\n    text-align: center;\r\n    font-family: 'Poppins', sans-serif ;\r\n    margin-bottom: 30px;\r\n}\r\n\r\n.container-login .form-login .form-group {\r\n    font-family: 'Poppins', sans-serif ;\r\n    margin-top: 10px;\r\n}\r\n\r\n.centre-login {\r\n    margin-left: 30%;\r\n}\r\n\r\n.sidenav {\r\n    height: 100%;\r\n    width: 226px;\r\n    position: fixed;\r\n    z-index: 1;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: #ffffff;\r\n    overflow-x: hidden;\r\n    padding-top: 20px;\r\n    border-right: 1px solid #c4c4c4;\r\n}\r\n\r\n.sidenav a {\r\n    padding-left: 75px;\r\n    padding-top: 15px;\r\n    padding-bottom: 30px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 20px;\r\n    color: #000000;\r\n    display: block;\r\n}\r\n\r\n.sidenav .navbar-brand {\r\n    padding-top: 0px;\r\n    padding-bottom: 40px;\r\n    padding-left: 0px;\r\n    margin-left: 20px;\r\n}\r\n\r\n.sidenav img {\r\n    max-height: 200px;\r\n    max-width: 200px;\r\n}\r\n\r\n.sidenav i {\r\n    margin-right: 15px;\r\n}\r\n\r\n.sidenav a:hover {\r\n    color: #D0853F;\r\n}\r\n\r\n.sidenav button:hover {\r\n    color: red;\r\n}\r\n\r\n.main {\r\n    margin-left: 216px;\r\n    /* Same as the width of the sidenav */\r\n    font-size: 28px;\r\n    /* Increased text to enable scrolling */\r\n}\r\n\r\n.fixed-top {\r\n    margin-left: 226px !important;\r\n}\r\n\r\n.judul-page {\r\n    height: 65px;\r\n    background: #FFFFFF;\r\n    border-bottom: 1px solid #c4c4c4;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.judul-page a {\r\n    color: #31A2A4;\r\n    text-decoration: none;\r\n    padding-top: 50px;\r\n    padding-left: 27px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 24px;\r\n    line-height: 65px;\r\n    font-weight: 500px;\r\n}\r\n\r\n.content-home-bg {\r\n    margin-top: 65px;\r\n    height: 1000px;\r\n    background: #DFF3F3;\r\n}\r\n\r\n.content-home-bg .content-home {\r\n    padding-top: 23px;\r\n    margin-left: 40px;\r\n}\r\n\r\n.content-home .title-home {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-weight: bold;\r\n    font-size: 20px;\r\n    line-height: 30px;\r\n}\r\n\r\n.home-menu .btn-tamago {\r\n    margin-right: 10px;\r\n    width: 198px;\r\n    height: 39px;\r\n    background: #921E5E;\r\n    border-radius: 8px;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n}\r\n\r\n.home-menu .btn-tamago p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-weight: 500;\r\n    font-size: 14px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.home-menu .btn-tamago:hover {\r\n    background-color: #770d47;\r\n}\r\n\r\n.home-menu .btn-tamago2 {\r\n    margin-right: 10px;\r\n    position: absolute;\r\n    width: 198px;\r\n    height: 39px;\r\n    left: 480px;\r\n    top: 142px;\r\n    background: #FFFFFF;\r\n    border-radius: 8px;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n}\r\n\r\n\r\n.home-menu .btn-tamago2 p {\r\n    padding-top: 5px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-weight: 500;\r\n    font-size: 14px;\r\n    color: #000000 !important;\r\n    text-align: center;\r\n}\r\n\r\n.nav-text {\r\n    padding-top: 17px;\r\n    padding-right: 10px;\r\n    font-size: 20;\r\n    color: #828282;\r\n    font-family: 'Poppins', sans-serif;\r\n}\r\n\r\n.btn-nav-signup {\r\n    margin-right: 10px;\r\n    width: 127px;\r\n    height: 44px;\r\n    background: #31A2A4;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));\r\n}\r\n\r\n\r\n.btn-nav-signup p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 4%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.btn-nav-signup:hover {\r\n    background-color: #147475;\r\n}\r\n\r\n.btn-nav-login {\r\n    margin-right: 10px;\r\n    width: 127px;\r\n    height: 44px;\r\n    background: rgba(81, 207, 209, 0.58);\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n}\r\n\r\n\r\n.btn-nav-login p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 4%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.btn-nav-login:hover {\r\n    background-color: #147475;\r\n}\r\n\r\n.top-bar {\r\n    width:fit-content;\r\n    height: 30px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-style: normal;\r\n    font-weight: bold;\r\n    font-size: 20px;\r\n    color: #31A2A4 !important;\r\n}\r\n\r\n.form-login .link p {\r\n    color: #31A2A4;\r\n}\r\n\r\n.active {\r\n    background: #31A2A4;\r\n    border-radius: 8px;\r\n}\r\n\r\n.content-profile {\r\n    position: absolute;\r\n    width: 713px;\r\n    height: 780px;\r\n    left: 253px;\r\n    top: 92px;\r\n\r\n    background: #FFFFFF;\r\n    border: 1px solid rgba(175, 175, 175, 0.5);\r\n    box-sizing: border-box;\r\n    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);\r\n    border-radius: 5px;\r\n}\r\n\r\n.content-profile .name-foto {\r\n    position: absolute;\r\n    width: 196px;\r\n    height: 247px;\r\n    left: 30px;\r\n    top: 30px;\r\n\r\n    background: #FFFFFF;\r\n    border: 2px solid rgba(175, 175, 175, 0.5);\r\n    box-sizing: border-box;\r\n    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);\r\n    border-radius: 5px;\r\n}\r\n\r\n.content-profile .name-foto p {\r\n    position: absolute;\r\n    width: 111px;\r\n    height: 54px;\r\n    left: 40px;\r\n    top: 20px;\r\n\r\n    font-family: 'Poppins', sans-serif;\r\n    font-style: normal;\r\n    font-weight: 600;\r\n    font-size: 18px;\r\n    line-height: 27px;\r\n    text-align: center;\r\n\r\n    color: #000000;\r\n}\r\n\r\n.name-foto .rounded-circle {\r\n    height: 126px;\r\n    width: 126px;\r\n    border: 1px;\r\n    padding-top: 50%;\r\n}\r\n\r\n.content-profile .form-profile {\r\n    position: absolute;\r\n    width: 420px;\r\n    height: 650px;\r\n    left: 250px;\r\n    top: 10px;\r\n    padding: 20px;\r\n}\r\n.content-profile .form-profile .form-group {\r\n    margin-top: 0px;\r\n}\r\n.content-profile .form-profile p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 16px;\r\n}\r\n\r\n.content-profile .form-login h4 {\r\n    margin-top: 30px;\r\n}\r\n\r\n.content-profile .form-login .btn-profile {\r\n    position:absolute;\r\n    left: 60%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #A77590;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n}\r\n\r\n.btn-profile p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 4%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.background img {\r\n    position: absolute;\r\n    width: 1440px;\r\n    height: 558px;\r\n    top: 210px;\r\n}\r\n\r\n.content-join {\r\n    position: absolute;\r\n    width: 733px;\r\n    height: 261px;\r\n    left: 254px;\r\n    top: 210px;\r\n\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.content-join .join-logo {\r\n    position: absolute;\r\n    width: 200px;\r\n    height: 200px;\r\n    left: 5%;\r\n    top: 10%;\r\n}\r\n\r\n.content-join .join-logo img {\r\n    width: 200px;\r\n    height: 200px;\r\n}\r\n\r\n.content-join .form-join {\r\n    position: absolute;\r\n    width: 420px;\r\n    height: 650px;\r\n    left: 250px;\r\n    top: 10px;\r\n    padding: 20px;\r\n}\r\n\r\n.content-join .form-join h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 24px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-join .form-group {\r\n    padding-top: 10px;\r\n    padding-left: 20px;\r\n}\r\n\r\n.content-join .form-join p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-join-success {\r\n    position: absolute;\r\n    width: 800px;\r\n    height: 320px;\r\n    left: 254px;\r\n    top: 210px;\r\n\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.content-join-success .join-logo-success {\r\n    position: absolute;\r\n    width: 200px;\r\n    height: 200px;\r\n    left: 7%;\r\n    top: 18%;\r\n}\r\n\r\n.content-join-success .join-logo-success img {\r\n    width: 200px;\r\n    height: 200px;\r\n} \r\n\r\n.content-join-success .form-join-success {\r\n    position: absolute;\r\n    width: 450px;\r\n    height: 500px;\r\n    left: 300px;\r\n    top: 20px;\r\n    padding: 30px;\r\n}\r\n\r\n.content-join-success .form-join-success h4 {\r\n    font-family: 'Poppins',sans-serif;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-join-success .form-group-success {\r\n    width: 220px;\r\n    height: fit-content;\r\n    background: #ffffff;\r\n    border: 1px solid rgba(175, 175, 175, 0.5);\r\n    box-sizing: border-box;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n    padding-bottom: 10px;\r\n}\r\n\r\n.content-join-success .form-group-success p  {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 10%;\r\n    font-size: 18px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n    text-align: center;\r\n}\r\n\r\n.content-join-success .form-group-success-top  {\r\n    width: 219px;\r\n    height: 40px;\r\n    background: #921E5E;\r\n    box-sizing: border-box;\r\n    border-radius: 8px 8px 0px 0px;\r\n}\r\n\r\n.content-join-success .form-group-success-top p  {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 2%;\r\n    font-size: 20px;\r\n    font-weight: 500;\r\n    color: #ffffff;\r\n    text-align: center;\r\n}\r\n\r\n.btn-join {\r\n    position:absolute;\r\n    left: 60%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #921E5E;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n}\r\n\r\n.btn-join p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 4%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.btn-join-success {\r\n    position:absolute;\r\n    left: 70%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #921E5E;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 120px;\r\n}\r\n\r\n.btn-join-success p {\r\n    font-family: 'Poppins',sans-serif;\r\n    padding-top: 4%;\r\n    font-weight: 500;\r\n    font-size: 19px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n.content-create {\r\n    position: absolute;\r\n    width: 733px;\r\n    height: 350px;\r\n    left: 254px;\r\n    top: 210px;\r\n\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.content-create .create-logo {\r\n    position: absolute;\r\n    width: 200px;\r\n    height: 200px;\r\n    left: 5%;\r\n    top: 20%;\r\n}\r\n\r\n.content-create .create-logo img {\r\n    width: 200px;\r\n    height: 200px;\r\n}\r\n\r\n.content-create .form-create {\r\n    position: absolute;\r\n    width: 420px;\r\n    height: 650px;\r\n    left: 250px;\r\n    top: 10px;\r\n    padding: 20px;\r\n}\r\n\r\n.content-create .form-create p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-create .form-create h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 24px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-create .form-group {\r\n    padding-top: 10px;\r\n    padding-left: 20px;\r\n}\r\n\r\n.content-create .form-create-success {\r\n    width: 420px;\r\n    height: 650px;\r\n    padding: 20px;\r\n}\r\n\r\n.content-create .form-create-success h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 28px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-create .form-group-success {\r\n    width: 220px;\r\n    height: fit-content;\r\n    background: #ffffff;\r\n    border: 1px solid rgba(175, 175, 175, 0.5);\r\n    box-sizing: border-box;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n    padding-bottom: 10px;\r\n}\r\n\r\n.content-create .form-group-success p  {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 22%;\r\n    font-size: 18px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n    text-align: center;\r\n}\r\n\r\n.content-create .form-group-success-top  {\r\n    width: 219px;\r\n    height: 40px;\r\n    background: #921E5E;\r\n    box-sizing: border-box;\r\n    border-radius: 8px 8px 0px 0px;\r\n}\r\n\r\n.content-create .form-group-success-top p  {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 2%;\r\n    font-size: 20px;\r\n    font-weight: 500;\r\n    color: #ffffff;\r\n    text-align: center;\r\n}\r\n\r\n.btn-create {\r\n    position:absolute;\r\n    left: 60%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #921E5E;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n}\r\n\r\n.btn-create p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 5%;\r\n    font-weight: 400;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.btn-create-success {\r\n    position:absolute;\r\n    left: 55%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #921E5E;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 140px;\r\n}\r\n\r\n.btn-create-success p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 5%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.detail-project {\r\n    margin-top: 65px;\r\n    width: 230px;\r\n    height: fit-content;\r\n    background: #31A2A4;\r\n    padding-bottom: 30px;\r\n}\r\n\r\n.content-detail-project {\r\n    padding-top: 23px;\r\n    margin-left: 20px;\r\n}\r\n\r\n.content-detail-project p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 18px;\r\n    color: #FFFFFF;\r\n}\r\n\r\n.content-detail-project .id-project {\r\n    padding-left: 10px;\r\n    padding-top: 10px;\r\n    width: 194px;\r\n    height: fit-content;\r\n    background: #FFFFFF;\r\n    border: 1px solid #C4C4C4;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n}\r\n\r\n.content-detail-project .id-project p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 18px;\r\n    color: #31A2A4;\r\n}\r\n\r\n.content-detail-project .desc-project {\r\n    padding-left: 10px;\r\n    padding-top: 10px;\r\n    width: 194px;\r\n    height: fit-content;\r\n    background: #FFFFFF;\r\n    border: 1px solid #C4C4C4;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n}\r\n\r\n.content-detail-project .desc-project p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 14px;\r\n    color: #31A2A4;\r\n}\r\n\r\n.project-card-container {\r\n    position: absolute;\r\n    width: 80%;\r\n    height: 700px;\r\n    left: 254px;\r\n    top: 210px;\r\n    \r\n}\r\n\r\n.project-card-container .project-card {\r\n    height: fit-content;\r\n    background: #ffffff;\r\n    border: 1px solid rgba(175, 175, 175, 0.5);\r\n    box-sizing: border-box;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n}\r\n\r\n.project-card-container .project-card  p  {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-left: 20px;\r\n    padding-right: 10px;\r\n    font-size: 14px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n    \r\n}\r\n\r\n.project-card-container .project-card-top   {\r\n    background: #921E5E;\r\n    border-radius: 8px 8px 0px 0px;\r\n}\r\n\r\n.project-card-container .project-card-top p  {\r\n    padding-top: 10px;\r\n    padding-bottom: 10px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 17px;\r\n    font-weight: 500;\r\n    color: #ffffff;\r\n    text-align: center;\r\n}\r\n\r\n.content-detail-project .btn-create-div {\r\n    width: 194px;\r\n    height: 45px;\r\n    background: #FFFFFF;\r\n    border: 1px solid #C4C4C4;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n}\r\n\r\n.content-detail-project .btn-create-div p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-weight: normal;\r\n    font-size: 14px;\r\n    color: #31A2A4;\r\n}\r\n\r\n.divisi-card-container {\r\n    position: absolute;\r\n    margin-right: 20px;\r\n    left: 480px;\r\n    top: 90px;\r\n    background: #D0853F;\r\n    width: 820px;\r\n}\r\n\r\n.divisi-card-container .project-card-div {\r\n    height: fit-content;\r\n    background: #ffffff;\r\n    border: 1px solid rgba(175, 175, 175, 0.5);\r\n    box-sizing: border-box;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n}\r\n\r\n.divisi-card-container .project-card-div  img {\r\n    padding-left: 32px;\r\n}\r\n\r\n.divisi-card-container .project-card-div-top   {\r\n    background: #921E5E;\r\n    border-radius: 8px 8px 0px 0px;\r\n}\r\n\r\n.divisi-card-container .project-card-div-top p  {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 10px;\r\n    font-size: 17px;\r\n    font-weight: 500;\r\n    color: #ffffff;\r\n    text-align: center;\r\n}\r\n\r\n.create-div .content-create {\r\n    position: absolute;\r\n    width: 680px;\r\n    height: 250px;\r\n    left: 500px;\r\n    top: 80px;\r\n\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.create-div .content-create .create-logo {\r\n    position: absolute;\r\n    width: 200px;\r\n    height: 200px;\r\n    left: 5%;\r\n    top: 10%;\r\n}\r\n\r\n.create-div .content-create .create-logo img {\r\n    width: 200px;\r\n    height: 200px;\r\n}\r\n\r\n.create-div .content-create .form-create {\r\n    position: absolute;\r\n    width: 420px;\r\n    height: 650px;\r\n    left: 250px;\r\n    top: 10px;\r\n    padding: 20px;\r\n}\r\n\r\n.create-div .content-create .form-create p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n}\r\n\r\n.create-div .content-create .form-create h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 24px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.create-div .content-create .form-group {\r\n    padding-top: 10px;\r\n    padding-left: 20px;\r\n}\r\n\r\n.task-board-container {\r\n        margin-left: 40px;\r\n        margin-right: 40px;\r\n}\r\n\r\n.task-board-container .task-board-top {\r\n    margin-top: 100px;\r\n    background: #921E5E;\r\n    border-radius: 8px 8px 8px 8px;\r\n}\r\n\r\n.task-board-container .task-board-top p {\r\n    padding-top: 10px;\r\n    padding-bottom: 10px;\r\n    padding-left: 20px;\r\n    padding-right: 20px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 17px;\r\n    font-weight: 500;\r\n    color: #ffffff;\r\n    text-align: left;\r\n}\r\n\r\n.task-board-container .task-board-top i {\r\n    padding-top: 2%;\r\n}\r\n\r\n.task-card-container {\r\n    position: absolute;\r\n    width: 620px;\r\n    height: fit-content;\r\n    left: 255px;\r\n    top: 120px;\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.task-card-container .task-card-top   {\r\n    background: #921E5E;\r\n    border-radius: 8px 8px 0px 0px;\r\n}\r\n\r\n.task-card-container .task-card-top p  {\r\n    padding-top: 10px;\r\n    padding-bottom: 10px;\r\n    padding-left: 20px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 17px;\r\n    font-weight: 500;\r\n    color: #ffffff;\r\n    text-align: left;\r\n}\r\n\r\n.task-card-container .task-card {\r\n    padding-left: 30px;\r\n    padding-top: 10px;\r\n    padding-right: 30px;\r\n}\r\n\r\n.task-card-container .task-card h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-weight: 600;   \r\n    font-size: 16px;\r\n    line-height: 24px;\r\n    \r\n    color: #921E5E;\r\n}\r\n\r\n.task-card-container .addition {\r\n    width: 80%;\r\n} \r\n\r\n.task-card-container .btn-submit {\r\n    margin-left: 100%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #921E5E;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n    margin-bottom: 20px;\r\n}\r\n\r\n.task-card-container .btn-submit p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 5%;\r\n    font-weight: 400;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n    \r\n}\r\n\r\n.task-card-container .addition .addition-button {\r\n    background: #921E5E;\r\n    border-radius: 8px 8px 8px 8px;\r\n}\r\n\r\n.task-card-container .addition .addition-button p {\r\n    padding-top: 10px;\r\n    padding-bottom: 10px;\r\n    padding-left: 20px;\r\n    padding-right: 20px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 14px;\r\n\r\n    color: #ffffff;\r\n    text-align: left;\r\n}\r\n\r\n.content-edit-project {\r\n    position: absolute;\r\n    width: fit-content;\r\n    height: fit-content;\r\n    left: 480px;\r\n    top: 90px;\r\n    padding-right: 30px;\r\n\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.content-edit-project .edit-logo {\r\n    position: absolute;\r\n    width: 200px;\r\n    left: 5%;\r\n    top: 20%;\r\n}\r\n\r\n.content-edit-project .edit-logo img {\r\n    margin-top: 50px;\r\n    margin-left: 50px;\r\n    width: 200px;\r\n    height: 200px;\r\n}\r\n\r\n.content-edit-project .form-create {\r\n    width: 420px;\r\n    height: fit-content;\r\n    margin-left: 230px;\r\n    padding: 20px;\r\n}\r\n\r\n.content-edit-project .form-create p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-edit-project .form-create h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 24px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-edit-project .form-group {\r\n    padding-top: 10px;\r\n    padding-left: 20px;\r\n}\r\n\r\n.content-edit-project .btn-profile {\r\n    \r\n    margin-left: 230px;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #A77590;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n}\r\n\r\n.assign-role .col-3 {\r\n    padding-top: 10px;\r\n}\r\n\r\n.assign-role .col-4 .btn-edit {\r\n    width: 100px;\r\n    height: 30px;\r\n    background: #A77590;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n}\r\n\r\n.assign-role .col-4 .btn-edit  p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 4%;\r\n    font-size: 14px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.assign-role select {\r\n    font-size: 18px;\r\n    font-family: 'Poppins', sans-serif;\r\n    color: #921E5E;\r\n}\r\n\r\n.divtask-card-container {\r\n    height: fit-content;\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n    margin-bottom: 20px;\r\n}\r\n\r\n.divtask-card-container p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 10px;\r\n    padding-left: 20px;\r\n    padding-bottom: 20px;\r\n    padding-right: 20px;\r\n    font-size: 16px;\r\n    line-height: 18px;\r\n    color: #000000;\r\n}\r\n\r\n.task-card-footer i {\r\n    padding-left: 10px;\r\n    color: #921E5E;\r\n    padding-bottom: 10px;\r\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".container .logo {\r\n    max-width: 300px;\r\n    max-height: 300px;\r\n}\r\n\r\n.container .row h1{\r\n    font-weight: 700;\r\n    font-size: 46px;\r\n    font-family: 'Poppins', sans-serif;\r\n    color: #323575;\r\n}\r\n\r\n.container .row p {\r\n    font-weight: 50;\r\n    font-size: 20px;\r\n    font-family: 'Poppins', sans-serif;\r\n}\r\n\r\n.container .navbar-nav {\r\n    margin-left: 650px;\r\n}\r\n\r\n.container .get-started .nav-link {\r\n    margin-right: 10px;\r\n    width: 178px;\r\n    height: 44px;\r\n    background: #31A2A4;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n}\r\n\r\n.container .get-started .nav-link p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 2%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.btn-tamago {\r\n    margin-right: 10px;\r\n    width: 178px;\r\n    height: 44px;\r\n    background: #31A2A4;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n}\r\n\r\n.btn-tamago p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 4%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.btn-tamago:hover {\r\n    background-color: #147475;\r\n}\r\n\r\n.btn-tamago-1 {\r\n    margin-right: 30px;\r\n    min-width: 150px;\r\n    max-height: 50px;\r\n    background: #31A2A4;\r\n    border-radius: 20px;\r\n    border-width: 0px;\r\n}\r\n\r\n.btn-tamago-1 p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 7%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.btn-tamago-1:hover {\r\n    background-color: #147475;\r\n}\r\n\r\nsection {\r\n    padding-top: 70px;\r\n}\r\n\r\n.section-top img {\r\n    position: absolute;\r\n    width: 750px;\r\n    top: -170px;\r\n    left: -70px;\r\n    \r\n}\r\n\r\n.section-mid img {\r\n    width: 400px;\r\n}\r\n\r\n.section-mid .container .row .title {\r\n    padding-top: 20%;\r\n    color: #921E5E;\r\n}\r\n\r\n.section-bot {\r\n    background: #EAFDFE;\r\n}\r\n\r\n.section-bot img {\r\n    min-height: 165px;\r\n    max-width: 165px;\r\n}\r\n\r\n.section-bot p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-style: normal;\r\n    font-weight: 500;\r\n    font-size: 24px;\r\n    line-height: 36px;\r\n\r\n    color: #2A3D5B;\r\n}\r\n\r\n.container-login {\r\n    height: fit-content;\r\n    margin-top: 2%;\r\n    margin-bottom: 10%;\r\n    margin-right: 35%;\r\n    margin-left: 35%;\r\n    padding: 20px;\r\n    border-radius: 10px;\r\n    border: 1px solid #C4C4C4;\r\n    box-shadow: 4px 4px 10px 4px rgba(0, 0, 0, 0.25);\r\n}\r\n\r\n\r\n.container-login .form-login h1 {\r\n    text-align: center;\r\n    font-family: 'Poppins', sans-serif ;\r\n    color: #31A2A4;\r\n    font-weight: 500px;\r\n    \r\n}\r\n\r\n.container-login .form-login h2 {\r\n    text-align: center;\r\n    font-family: 'Poppins', sans-serif ;\r\n    margin-bottom: 30px;\r\n}\r\n\r\n.container-login .form-login .form-group {\r\n    font-family: 'Poppins', sans-serif ;\r\n    margin-top: 10px;\r\n}\r\n\r\n.centre-login {\r\n    margin-left: 30%;\r\n}\r\n\r\n.sidenav {\r\n    height: 100%;\r\n    width: 226px;\r\n    position: fixed;\r\n    z-index: 1;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: #ffffff;\r\n    overflow-x: hidden;\r\n    padding-top: 20px;\r\n    border-right: 1px solid #c4c4c4;\r\n}\r\n\r\n.sidenav a {\r\n    padding-left: 75px;\r\n    padding-top: 15px;\r\n    padding-bottom: 30px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 20px;\r\n    color: #000000;\r\n    display: block;\r\n}\r\n\r\n.sidenav .navbar-brand {\r\n    padding-top: 0px;\r\n    padding-bottom: 40px;\r\n    padding-left: 0px;\r\n    margin-left: 20px;\r\n}\r\n\r\n.sidenav img {\r\n    max-height: 200px;\r\n    max-width: 200px;\r\n}\r\n\r\n.sidenav i {\r\n    margin-right: 15px;\r\n}\r\n\r\n.sidenav a:hover {\r\n    color: #D0853F;\r\n}\r\n\r\n.sidenav button:hover {\r\n    color: red;\r\n}\r\n\r\n.main {\r\n    margin-left: 216px;\r\n    /* Same as the width of the sidenav */\r\n    font-size: 28px;\r\n    /* Increased text to enable scrolling */\r\n}\r\n\r\n.fixed-top {\r\n    margin-left: 226px !important;\r\n}\r\n\r\n.judul-page {\r\n    height: 65px;\r\n    background: #FFFFFF;\r\n    border-bottom: 1px solid #c4c4c4;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.judul-page a {\r\n    color: #31A2A4;\r\n    text-decoration: none;\r\n    padding-top: 50px;\r\n    padding-left: 27px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 24px;\r\n    line-height: 65px;\r\n    font-weight: 500px;\r\n}\r\n\r\n.content-home-bg {\r\n    margin-top: 65px;\r\n    height: 1000px;\r\n    background: #DFF3F3;\r\n}\r\n\r\n.content-home-bg .content-home {\r\n    padding-top: 23px;\r\n    margin-left: 40px;\r\n}\r\n\r\n.content-home .title-home {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-weight: bold;\r\n    font-size: 20px;\r\n    line-height: 30px;\r\n}\r\n\r\n.home-menu .btn-tamago {\r\n    margin-right: 10px;\r\n    width: 198px;\r\n    height: 39px;\r\n    background: #921E5E;\r\n    border-radius: 8px;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n}\r\n\r\n.home-menu .btn-tamago p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-weight: 500;\r\n    font-size: 14px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.home-menu .btn-tamago:hover {\r\n    background-color: #770d47;\r\n}\r\n\r\n.home-menu .btn-tamago2 {\r\n    margin-right: 10px;\r\n    position: absolute;\r\n    width: 198px;\r\n    height: 39px;\r\n    left: 480px;\r\n    top: 142px;\r\n    background: #FFFFFF;\r\n    border-radius: 8px;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n}\r\n\r\n\r\n.home-menu .btn-tamago2 p {\r\n    padding-top: 5px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-weight: 500;\r\n    font-size: 14px;\r\n    color: #000000 !important;\r\n    text-align: center;\r\n}\r\n\r\n.nav-text {\r\n    padding-top: 17px;\r\n    padding-right: 10px;\r\n    font-size: 20;\r\n    color: #828282;\r\n    font-family: 'Poppins', sans-serif;\r\n}\r\n\r\n.btn-nav-signup {\r\n    margin-right: 10px;\r\n    width: 127px;\r\n    height: 44px;\r\n    background: #31A2A4;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));\r\n}\r\n\r\n\r\n.btn-nav-signup p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 4%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.btn-nav-signup:hover {\r\n    background-color: #147475;\r\n}\r\n\r\n.btn-nav-login {\r\n    margin-right: 10px;\r\n    width: 127px;\r\n    height: 44px;\r\n    background: rgba(81, 207, 209, 0.58);\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n}\r\n\r\n\r\n.btn-nav-login p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 4%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.btn-nav-login:hover {\r\n    background-color: #147475;\r\n}\r\n\r\n.top-bar {\r\n    width:fit-content;\r\n    height: 30px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-style: normal;\r\n    font-weight: bold;\r\n    font-size: 20px;\r\n    color: #31A2A4 !important;\r\n}\r\n\r\n.top-bar-static {\r\n    width:fit-content;\r\n    height: 30px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-style: normal;\r\n    font-weight: bold;\r\n    font-size: 20px;\r\n    color: #31A2A4 !important;\r\n    padding-top: 20px;\r\n    padding-left: 20px;\r\n}\r\n\r\n.form-login .link p {\r\n    color: #31A2A4;\r\n}\r\n\r\n.active {\r\n    background: #31A2A4;\r\n    border-radius: 8px;\r\n}\r\n\r\n.content-profile {\r\n    position: absolute;\r\n    width: 713px;\r\n    height: 780px;\r\n    left: 253px;\r\n    top: 92px;\r\n\r\n    background: #FFFFFF;\r\n    border: 1px solid rgba(175, 175, 175, 0.5);\r\n    box-sizing: border-box;\r\n    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);\r\n    border-radius: 5px;\r\n}\r\n\r\n.content-profile .name-foto {\r\n    position: absolute;\r\n    width: 196px;\r\n    height: 247px;\r\n    left: 30px;\r\n    top: 30px;\r\n\r\n    background: #FFFFFF;\r\n    border: 2px solid rgba(175, 175, 175, 0.5);\r\n    box-sizing: border-box;\r\n    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);\r\n    border-radius: 5px;\r\n}\r\n\r\n.content-profile .name-foto p {\r\n    position: absolute;\r\n    width: 111px;\r\n    height: 54px;\r\n    left: 40px;\r\n    top: 20px;\r\n\r\n    font-family: 'Poppins', sans-serif;\r\n    font-style: normal;\r\n    font-weight: 600;\r\n    font-size: 18px;\r\n    line-height: 27px;\r\n    text-align: center;\r\n\r\n    color: #000000;\r\n}\r\n\r\n.name-foto img {\r\n    height: 126px;\r\n    width: 126px;\r\n    border: 1px;\r\n    margin-top: 50%;   \r\n    margin-left: 18%;\r\n}\r\n\r\n.content-profile .form-profile {\r\n    position: absolute;\r\n    width: 420px;\r\n    height: 650px;\r\n    left: 250px;\r\n    top: 10px;\r\n    padding: 20px;\r\n}\r\n.content-profile .form-profile .form-group {\r\n    margin-top: 0px;\r\n}\r\n.content-profile .form-profile p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 16px;\r\n}\r\n\r\n.content-profile .form-login h4 {\r\n    margin-top: 30px;\r\n}\r\n\r\n.content-profile .form-login .btn-profile {\r\n    position:absolute;\r\n    left: 60%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #A77590;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n}\r\n\r\n.btn-profile p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 4%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.background img {\r\n    position: absolute;\r\n    width: 1440px;\r\n    height: 558px;\r\n    top: 210px;\r\n}\r\n\r\n.content-join {\r\n    position: absolute;\r\n    width: 733px;\r\n    height: 290px;\r\n    left: 254px;\r\n    top: 210px;\r\n\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.content-join .join-logo {\r\n    position: absolute;\r\n    width: 200px;\r\n    height: 200px;\r\n    left: 5%;\r\n    top: 10%;\r\n}\r\n\r\n.content-join .join-logo img {\r\n    width: 200px;\r\n    height: 200px;\r\n}\r\n\r\n.content-join .form-join {\r\n    position: absolute;\r\n    width: 420px;\r\n    height: 650px;\r\n    left: 250px;\r\n    top: 10px;\r\n    padding: 20px;\r\n}\r\n\r\n.content-join .form-join h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 24px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-join .form-group {\r\n    padding-top: 10px;\r\n    padding-left: 20px;\r\n}\r\n\r\n.content-join .form-join p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-join-success {\r\n    position: absolute;\r\n    width: 800px;\r\n    height: 400px;\r\n    left: 254px;\r\n    top: 210px;\r\n\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.content-join-success .join-logo-success {\r\n    position: absolute;\r\n    width: 200px;\r\n    height: 200px;\r\n    left: 7%;\r\n    top: 18%;\r\n}\r\n\r\n.content-join-success .join-logo-success img {\r\n    width: 200px;\r\n    height: 200px;\r\n} \r\n\r\n.content-join-success .form-join-success {\r\n  \r\n    position: absolute;\r\n    width: 420px;\r\n    height: 750px;\r\n    left: 300px;\r\n    padding: 30px;\r\n}\r\n\r\n.content-join-success .form-join-success h4 {\r\n    font-family: 'Poppins',sans-serif;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-join-success .form-group-success {\r\n    width: 220px;\r\n    height: fit-content;\r\n    background: #ffffff;\r\n    border: 1px solid rgba(175, 175, 175, 0.5);\r\n    box-sizing: border-box;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n    padding-bottom: 10px;\r\n}\r\n\r\n.content-join-success .form-group-success p  {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 20px;\r\n    font-size: 18px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n    text-align: center;\r\n}\r\n\r\n.content-join-success .form-group-success-top  {\r\n    width: 219px;\r\n    height: 40px;\r\n    background: #921E5E;\r\n    box-sizing: border-box;\r\n    border-radius: 8px 8px 0px 0px;\r\n}\r\n\r\n.content-join-success .form-group-success-top p  {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 2%;\r\n    font-size: 20px;\r\n    font-weight: 500;\r\n    color: #ffffff;\r\n    text-align: center;\r\n}\r\n\r\n.btn-join {\r\n    position:absolute;\r\n    left: 60%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #921E5E;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n}\r\n\r\n.btn-join p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 4%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.form-join-success btn-join {\r\n    position:absolute;\r\n    left: 80%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #921E5E;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 20px;\r\n}\r\n\r\n.form-join-success btn-join p {\r\n    font-family: 'Poppins',sans-serif;\r\n    padding-top: 4%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n.content-create {\r\n    position: absolute;\r\n    width: 733px;\r\n    height: 350px;\r\n    left: 254px;\r\n    top: 210px;\r\n\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.content-create .create-logo {\r\n    position: absolute;\r\n    width: 200px;\r\n    height: 200px;\r\n    left: 5%;\r\n    top: 20%;\r\n}\r\n\r\n.content-create .create-logo img {\r\n    width: 200px;\r\n    height: 200px;\r\n}\r\n\r\n.content-create .form-create {\r\n    position: absolute;\r\n    width: 420px;\r\n    height: 650px;\r\n    left: 250px;\r\n    top: 10px;\r\n    padding: 20px;\r\n}\r\n\r\n.content-create .form-create p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-create .form-create h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 24px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-create .form-group {\r\n    padding-top: 10px;\r\n    padding-left: 20px;\r\n}\r\n\r\n.content-create .form-create-success {\r\n    width: 420px;\r\n    height: 650px;\r\n    padding: 20px;\r\n}\r\n\r\n.content-create .form-create-success h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 28px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-create .form-group-success {\r\n    width: 220px;\r\n    height: fit-content;\r\n    background: #ffffff;\r\n    border: 1px solid rgba(175, 175, 175, 0.5);\r\n    box-sizing: border-box;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n    padding-bottom: 10px;\r\n}\r\n\r\n.content-create .form-group-success p  {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 20px;\r\n    font-size: 18px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n    text-align: center;\r\n}\r\n\r\n.content-create .form-group-success-top  {\r\n    width: 219px;\r\n    height: 40px;\r\n    background: #921E5E;\r\n    box-sizing: border-box;\r\n    border-radius: 8px 8px 0px 0px;\r\n}\r\n\r\n.content-create .form-group-success-top p  {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 2%;\r\n    font-size: 20px;\r\n    font-weight: 500;\r\n    color: #ffffff;\r\n    text-align: center;\r\n}\r\n\r\n.btn-create {\r\n    position:absolute;\r\n    left: 60%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #921E5E;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n}\r\n\r\n.btn-create p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 5%;\r\n    font-weight: 400;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.btn-close {\r\n    position:absolute;\r\n    left: 17%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #921E5E;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n}\r\n\r\n.btn-close p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 5%;\r\n    font-weight: 400;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.btn-create-success {\r\n    position:absolute;\r\n    left: 55%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #921E5E;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 140px;\r\n}\r\n\r\n.btn-create-success p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 5%;\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.detail-project {\r\n    margin-top: 65px;\r\n    width: 230px;\r\n    height: fit-content;\r\n    background: #31A2A4;\r\n    padding-bottom: 30px;\r\n}\r\n\r\n.content-detail-project {\r\n    padding-top: 23px;\r\n    margin-left: 20px;\r\n}\r\n\r\n.content-detail-project p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 18px;\r\n    color: #FFFFFF;\r\n}\r\n\r\n.content-detail-project .id-project {\r\n    padding-left: 10px;\r\n    padding-top: 10px;\r\n    width: 194px;\r\n    height: fit-content;\r\n    background: #FFFFFF;\r\n    border: 1px solid #C4C4C4;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n}\r\n\r\n.content-detail-project .id-project p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 18px;\r\n    color: #31A2A4;\r\n}\r\n\r\n.content-detail-project .desc-project {\r\n    padding-left: 10px;\r\n    padding-top: 10px;\r\n    width: 194px;\r\n    height: fit-content;\r\n    background: #FFFFFF;\r\n    border: 1px solid #C4C4C4;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n}\r\n\r\n.content-detail-project .desc-project p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 14px;\r\n    color: #31A2A4;\r\n}\r\n\r\n.project-card-container {\r\n    position: absolute;\r\n    width: 80%;\r\n    height: 700px;\r\n    left: 254px;\r\n    top: 210px;\r\n    \r\n}\r\n\r\n.project-card-container .project-card {\r\n    height: fit-content;\r\n    background: #ffffff;\r\n    border: 1px solid rgba(175, 175, 175, 0.5);\r\n    box-sizing: border-box;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n}\r\n\r\n.project-card-container .project-card  p  {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-left: 20px;\r\n    padding-right: 10px;\r\n    font-size: 14px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n    \r\n}\r\n\r\n.project-card-container .project-card-top   {\r\n    background: #921E5E;\r\n    border-radius: 8px 8px 0px 0px;\r\n}\r\n\r\n.project-card-container .project-card-top p  {\r\n    padding-top: 10px;\r\n    padding-bottom: 10px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 17px;\r\n    font-weight: 500;\r\n    color: #ffffff;\r\n    text-align: center;\r\n}\r\n\r\n.content-detail-project .btn-create-div {\r\n    width: 194px;\r\n    height: 45px;\r\n    background: #FFFFFF;\r\n    border: 1px solid #C4C4C4;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n}\r\n\r\n.content-detail-project .btn-create-div p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-weight: normal;\r\n    font-size: 14px;\r\n    color: #31A2A4;\r\n}\r\n\r\n.divisi-card-container {\r\n    position: absolute;\r\n    margin-right: 20px;\r\n    left: 480px;\r\n    top: 90px;\r\n    width: 820px;\r\n}\r\n\r\n.divisi-card-container .project-card-div {\r\n    height: fit-content;\r\n    background: #ffffff;\r\n    border: 1px solid rgba(175, 175, 175, 0.5);\r\n    box-sizing: border-box;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 8px;\r\n}\r\n\r\n.divisi-card-container .project-card-div i {\r\n    padding-left: 10px;\r\n    padding-bottom: 10px;\r\n    color: #921E5E;\r\n}\r\n\r\n.divisi-card-container .project-card-div  img {\r\n    padding-left: 32px;\r\n}\r\n\r\n.divisi-card-container .project-card-div-top   {\r\n    background: #921E5E;\r\n    border-radius: 8px 8px 0px 0px;\r\n}\r\n\r\n.divisi-card-container .project-card-div-top p  {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 10px;\r\n    font-size: 17px;\r\n    font-weight: 500;\r\n    color: #ffffff;\r\n    text-align: center;\r\n}\r\n\r\n.create-div .content-create {\r\n    position: absolute;\r\n    width: 680px;\r\n    height: 250px;\r\n    left: 500px;\r\n    top: 80px;\r\n\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.create-div .content-create .create-logo {\r\n    position: absolute;\r\n    width: 200px;\r\n    height: 200px;\r\n    left: 5%;\r\n    top: 10%;\r\n}\r\n\r\n.create-div .content-create .create-logo img {\r\n    width: 200px;\r\n    height: 200px;\r\n}\r\n\r\n.create-div .content-create .form-create {\r\n    position: absolute;\r\n    width: 420px;\r\n    height: 650px;\r\n    left: 250px;\r\n    top: 10px;\r\n    padding: 20px;\r\n}\r\n\r\n.create-div .content-create .form-create p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n}\r\n\r\n.create-div .content-create .form-create h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 24px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.create-div .content-create .form-group {\r\n    padding-top: 10px;\r\n    padding-left: 20px;\r\n}\r\n\r\n.task-board-container {\r\n        margin-left: 40px;\r\n        margin-right: 40px;\r\n}\r\n\r\n.task-board-container .task-board-top {\r\n    margin-top: 100px;\r\n    background: #921E5E;\r\n    border-radius: 8px 8px 8px 8px;\r\n}\r\n\r\n.task-board-container .task-board-top p {\r\n    padding-top: 10px;\r\n    padding-bottom: 10px;\r\n    padding-left: 20px;\r\n    padding-right: 20px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 17px;\r\n    font-weight: 500;\r\n    color: #ffffff;\r\n    text-align: left;\r\n}\r\n\r\n.task-board-container .task-board-top i {\r\n    padding-top: 2%;\r\n}\r\n\r\n.task-card-container {\r\n    position: absolute;\r\n    width: 620px;\r\n    height: fit-content;\r\n    left: 255px;\r\n    top: 120px;\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.task-card-container .task-card-top   {\r\n    background: #921E5E;\r\n    border-radius: 8px 8px 0px 0px;\r\n}\r\n\r\n.task-card-container .task-card-top p  {\r\n    padding-top: 10px;\r\n    padding-bottom: 10px;\r\n    padding-left: 20px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 17px;\r\n    font-weight: 500;\r\n    color: #ffffff;\r\n    text-align: left;\r\n}\r\n\r\n.task-card-container .task-card {\r\n    padding-left: 30px;\r\n    padding-top: 10px;\r\n    padding-right: 30px;\r\n}\r\n\r\n.task-card-container .task-card h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-weight: 600;   \r\n    font-size: 16px;\r\n    line-height: 24px;\r\n    \r\n    color: #921E5E;\r\n}\r\n\r\n.task-card-container .addition {\r\n    width: 80%;\r\n} \r\n\r\n.task-card-container .btn-submit {\r\n    margin-left: 100%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #921E5E;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n    margin-bottom: 20px;\r\n}\r\n\r\n.task-card-container .btn-submit p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 5%;\r\n    font-weight: 400;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.task-card-container .btn-card-close {\r\n    margin-left: 90%;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #921E5E;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n    margin-bottom: 20px;\r\n}\r\n\r\n.task-card-container .btn-card-close p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 5%;\r\n    font-weight: 400;\r\n    font-size: 20px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.task-card-container .addition .addition-button {\r\n    background: #921E5E;\r\n    border-radius: 8px 8px 8px 8px;\r\n}\r\n\r\n.task-card-container .addition .addition-button p {\r\n    padding-top: 10px;\r\n    padding-bottom: 10px;\r\n    padding-left: 20px;\r\n    padding-right: 20px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 14px;\r\n\r\n    color: #ffffff;\r\n    text-align: left;\r\n}\r\n\r\n.content-edit-project {\r\n    position: absolute;\r\n    width: fit-content;\r\n    height: fit-content;\r\n    left: 480px;\r\n    top: 90px;\r\n    padding-right: 30px;\r\n\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.content-edit-project .edit-logo {\r\n    position: absolute;\r\n    width: 200px;\r\n    left: 5%;\r\n    top: 20%;\r\n}\r\n\r\n.content-edit-project .edit-logo img {\r\n    margin-top: 50px;\r\n    margin-left: 50px;\r\n    width: 200px;\r\n    height: 200px;\r\n}\r\n\r\n.content-edit-project .form-create {\r\n    width: 420px;\r\n    height: fit-content;\r\n    margin-left: 230px;\r\n    padding: 20px;\r\n}\r\n\r\n.content-edit-project .form-create p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-edit-project .form-create h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 24px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-edit-project .form-group {\r\n    padding-top: 10px;\r\n    padding-left: 20px;\r\n}\r\n\r\n.content-edit-project .btn-profile {\r\n    \r\n    margin-left: 230px;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #A77590;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n}\r\n\r\n.content-attachment {\r\n    position: absolute;\r\n    width: fit-content;\r\n    height: fit-content;\r\n    left: 280px;\r\n    top: 90px;\r\n    padding-right: 30px;\r\n\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.content-attachment h4 {\r\n    padding-top: 20px;\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 24px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-attachment .edit-logo {\r\n    position: absolute;\r\n    width: 200px;\r\n    left: 5%;\r\n    top: 20%;\r\n}\r\n\r\n.content-attachment .edit-logo img {\r\n    margin-top: 50px;\r\n    margin-left: 50px;\r\n    width: 200px;\r\n    height: 200px;\r\n}\r\n\r\n.content-attachment .form-create {\r\n    width: 420px;\r\n    height: fit-content;\r\n    margin-left: 230px;\r\n    padding: 20px;\r\n}\r\n\r\n.content-attachment .form-create p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-attachment a {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    color: #006eff;\r\n}\r\n\r\n.content-attachment .form-create h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 24px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-attachment .form-group {\r\n    padding-top: 10px;\r\n    padding-left: 20px;\r\n}\r\n\r\n.content-attachment .btn-profile {\r\n    \r\n    margin-left: 230px;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #A77590;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n}\r\n\r\n.assign-member .col-7 {\r\n    padding-top: 10px;\r\n}\r\n\r\n.assign-member .col-3 .btn-edit {\r\n    width: 100px;\r\n    height: 30px;\r\n    background: #A77590;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n}\r\n\r\n.assign-member .col-3 .btn-edit p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 4%;\r\n    font-size: 14px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.assign-role .col-3 {\r\n    padding-top: 10px;\r\n}\r\n\r\n.assign-role .col-4 .btn-edit {\r\n    width: 100px;\r\n    height: 30px;\r\n    background: #A77590;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n}\r\n\r\n.assign-role .col-4 .btn-edit  p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 4%;\r\n    font-size: 14px;\r\n    color: #FFFFFF !important;\r\n    text-align: center;\r\n}\r\n\r\n.assign-role select {\r\n    font-size: 18px;\r\n    font-family: 'Poppins', sans-serif;\r\n    color: #921E5E;\r\n}\r\n\r\n.divtask-card-container {\r\n    height: fit-content;\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n    margin-bottom: 20px;\r\n}\r\n\r\n.divtask-card-container p {\r\n    font-family: 'Poppins', sans-serif;\r\n    padding-top: 10px;\r\n    padding-left: 20px;\r\n    padding-bottom: 20px;\r\n    padding-right: 20px;\r\n    font-size: 16px;\r\n    line-height: 18px;\r\n    color: #000000;\r\n}\r\n\r\n.task-card-footer i {\r\n    padding-left: 10px;\r\n    color: #921E5E;\r\n    padding-bottom: 10px;\r\n}\r\n\r\n.content-add-member {\r\n    position: absolute;\r\n    width: fit-content;\r\n    height: fit-content;\r\n    left: 260px;\r\n    top: 90px;\r\n    padding-right: 30px;\r\n\r\n    background: #FFFFFF;\r\n    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);\r\n    border-radius: 10px;\r\n}\r\n\r\n.content-add-member .edit-logo {\r\n    position: absolute;\r\n    width: 200px;\r\n    left: 5%;\r\n    top: 10%;\r\n}\r\n\r\n.content-add-member .edit-logo img {\r\n    margin-top: 20px;\r\n    margin-left: 50px;\r\n    width: 200px;\r\n    height: 200px;\r\n}\r\n\r\n.content-add-member .form-create {\r\n    width: 420px;\r\n    height: fit-content;\r\n    margin-left: 230px;\r\n    padding: 20px;\r\n}\r\n\r\n.content-add-member .form-create p {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    color: #921E5E;\r\n}\r\n\r\n.content-add-member .form-create h4 {\r\n    font-family: 'Poppins', sans-serif;\r\n    font-size: 24px;\r\n    font-weight: 700;\r\n    color: #921E5E;\r\n}\r\n\r\n\r\n.content-add-member .btn-profile {\r\n    \r\n    margin-left: 230px;\r\n    width: 150px;\r\n    height: 44px;\r\n    background: #A77590;\r\n    border-radius: 10px;\r\n    border-width: 0px;\r\n    margin-top: 10px;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3647,6 +4116,21 @@ module.exports = function (cssWithMappingToString) {
 
   return list;
 };
+
+/***/ }),
+
+/***/ "./resources/images/default-user.png":
+/*!*******************************************!*\
+  !*** ./resources/images/default-user.png ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/default-user.png?511f24d6c6487c5e0b0142a99f73cdb6");
 
 /***/ }),
 
@@ -7653,6 +8137,45 @@ component.options.__file = "resources/js/components/card-components/AddCard.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/card-components/AddCardAttachment.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/card-components/AddCardAttachment.vue ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _AddCardAttachment_vue_vue_type_template_id_329dbd46___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddCardAttachment.vue?vue&type=template&id=329dbd46& */ "./resources/js/components/card-components/AddCardAttachment.vue?vue&type=template&id=329dbd46&");
+/* harmony import */ var _AddCardAttachment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddCardAttachment.vue?vue&type=script&lang=js& */ "./resources/js/components/card-components/AddCardAttachment.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _AddCardAttachment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _AddCardAttachment_vue_vue_type_template_id_329dbd46___WEBPACK_IMPORTED_MODULE_0__.render,
+  _AddCardAttachment_vue_vue_type_template_id_329dbd46___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/card-components/AddCardAttachment.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/card-components/AddCardMember.vue":
 /*!*******************************************************************!*\
   !*** ./resources/js/components/card-components/AddCardMember.vue ***!
@@ -8722,6 +9245,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/card-components/AddCardAttachment.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/card-components/AddCardAttachment.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCardAttachment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AddCardAttachment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/card-components/AddCardAttachment.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCardAttachment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/card-components/AddCardMember.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************!*\
   !*** ./resources/js/components/card-components/AddCardMember.vue?vue&type=script&lang=js& ***!
@@ -9153,6 +9692,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCard_vue_vue_type_template_id_34387fcc___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCard_vue_vue_type_template_id_34387fcc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AddCard.vue?vue&type=template&id=34387fcc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/card-components/AddCard.vue?vue&type=template&id=34387fcc&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/card-components/AddCardAttachment.vue?vue&type=template&id=329dbd46&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/card-components/AddCardAttachment.vue?vue&type=template&id=329dbd46& ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCardAttachment_vue_vue_type_template_id_329dbd46___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCardAttachment_vue_vue_type_template_id_329dbd46___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCardAttachment_vue_vue_type_template_id_329dbd46___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AddCardAttachment.vue?vue&type=template&id=329dbd46& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/card-components/AddCardAttachment.vue?vue&type=template&id=329dbd46&");
 
 
 /***/ }),
@@ -10234,13 +10790,11 @@ var render = function() {
   return _c("div", { staticClass: "task-card-container" }, [
     _c("div", { staticClass: "task-card-top" }, [
       _c("p", [
-        _vm._v("Add New Task (" + _vm._s(_vm.clickedList.list_name) + ")")
+        _vm._v('Add New Card to "' + _vm._s(_vm.clickedList.list_name) + '"')
       ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "task-card" }, [
-      _c("h4", [_vm._v("Project Task")]),
-      _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
         _c("input", {
           directives: [
@@ -10283,7 +10837,7 @@ var render = function() {
           attrs: {
             type: "text",
             id: "task-title",
-            placeholder: "Input Description of Project Task"
+            placeholder: "Input Description of Task"
           },
           domProps: { value: _vm.cardForm.card_desc },
           on: {
@@ -10297,9 +10851,31 @@ var render = function() {
         })
       ]),
       _vm._v(" "),
-      _c("br"),
+      _c("div", { staticClass: "form-group" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.cardForm.card_deadline,
+              expression: "cardForm.card_deadline"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "date", id: "task-title" },
+          domProps: { value: _vm.cardForm.card_deadline },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.cardForm, "card_deadline", $event.target.value)
+            }
+          }
+        })
+      ]),
       _vm._v(" "),
-      _c("h4", [_vm._v("Add to Card")]),
+      _c("br"),
       _vm._v(" "),
       _c(
         "button",
@@ -10309,8 +10885,190 @@ var render = function() {
           attrs: { type: "submit" },
           on: { click: _vm.addCard }
         },
-        [_c("p", [_vm._v("Create")])]
+        [_c("p", [_vm._v("Add")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn-submit",
+          staticStyle: { float: "right" },
+          attrs: { type: "submit" },
+          on: { click: _vm.backToLists }
+        },
+        [_c("p", [_vm._v("Close")])]
       )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/card-components/AddCardAttachment.vue?vue&type=template&id=329dbd46&":
+/*!*********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/card-components/AddCardAttachment.vue?vue&type=template&id=329dbd46& ***!
+  \*********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "content-attachment" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-1" }, [
+        _c("div", { staticClass: "edit-logo" }, [
+          _c("img", {
+            staticStyle: { float: "center" },
+            attrs: { src: _vm.RocketImg, alt: "" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-7" }, [
+        _c("h4", [
+          _vm._v(
+            'Add URL Attachment to "' + _vm._s(_vm.clickedCard.card_name) + '"'
+          )
+        ]),
+        _vm._v(" "),
+        _c("h4", [_vm._v(_vm._s(_vm.messageAssign))]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-create" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.attachmentForm.attachment_name,
+                expression: "attachmentForm.attachment_name"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              id: "task-title",
+              placeholder: "Input URL name"
+            },
+            domProps: { value: _vm.attachmentForm.attachment_name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.attachmentForm,
+                  "attachment_name",
+                  $event.target.value
+                )
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.attachmentForm.attachment_url,
+                expression: "attachmentForm.attachment_url"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", id: "task-title", placeholder: "Input URL" },
+            domProps: { value: _vm.attachmentForm.attachment_url },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.attachmentForm,
+                  "attachment_url",
+                  $event.target.value
+                )
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn-profile",
+              on: { click: _vm.addCardAttachment }
+            },
+            [_c("p", [_vm._v("Add")])]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "btn-profile", on: { click: _vm.backToLists } },
+            [_c("p", [_vm._v("Close")])]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group" },
+          [
+            _c("br"),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("h4", [
+              _vm._v(
+                'Attachments of "' + _vm._s(_vm.clickedCard.card_name) + '"'
+              )
+            ]),
+            _vm._v(" "),
+            _c("h4", [_vm._v(_vm._s(_vm.messageRemove))]),
+            _vm._v(" "),
+            _vm._l(_vm.clickedCardAttachments, function(attachment) {
+              return _c(
+                "div",
+                { key: attachment.attachment_id, staticClass: "row" },
+                [
+                  _c("div", { staticClass: "col-7" }, [
+                    _c("a", { attrs: { href: attachment.attachment_url } }, [
+                      _vm._v(_vm._s(attachment.attachment_name))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-3" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn-profile",
+                        on: {
+                          click: function($event) {
+                            return _vm.removeCardAttachment(
+                              attachment.attachment_id
+                            )
+                          }
+                        }
+                      },
+                      [_c("p", [_vm._v("Remove")])]
+                    )
+                  ])
+                ]
+              )
+            })
+          ],
+          2
+        )
+      ])
     ])
   ])
 }
@@ -10337,7 +11095,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "content-edit-project" }, [
+  return _c("div", { staticClass: "content-add-member" }, [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-1" }, [
         _c("div", { staticClass: "edit-logo" }, [
@@ -10350,21 +11108,19 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "col-4" }, [
         _c("div", { staticClass: "form-create" }, [
-          _c("br"),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
           _c(
             "div",
-            { staticClass: "assign-role" },
+            { staticClass: "assign-member" },
             [
               _c("h4", [
                 _vm._v(
-                  "Assign Card Member " + _vm._s(_vm.clickedCard.card_name)
+                  'Assign Card Member to "' +
+                    _vm._s(_vm.clickedCard.card_name) +
+                    '"'
                 )
               ]),
               _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(_vm.message))]),
+              _c("p", [_vm._v(_vm._s(_vm.messageAssign))]),
               _vm._v(" "),
               _vm._l(_vm.clickedCardNonMembers, function(nonMember) {
                 return _c(
@@ -10375,11 +11131,11 @@ var render = function() {
                       _c("p", [_vm._v(_vm._s(nonMember.username))])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-5" }, [
+                    _c("div", { staticClass: "col-3" }, [
                       _c(
                         "button",
                         {
-                          staticClass: "btn-profile",
+                          staticClass: "btn-edit",
                           on: {
                             click: function($event) {
                               return _vm.assignCardMember(
@@ -10390,7 +11146,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_c("p", [_vm._v("Add To Card Member")])]
+                        [_c("p", [_vm._v("Add")])]
                       )
                     ])
                   ]
@@ -10402,8 +11158,12 @@ var render = function() {
               _c("br"),
               _vm._v(" "),
               _c("h4", [
-                _vm._v("Card Member " + _vm._s(_vm.clickedCard.card_name))
+                _vm._v(
+                  'Card Members of "' + _vm._s(_vm.clickedCard.card_name) + '"'
+                )
               ]),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(_vm.messageRemove))]),
               _vm._v(" "),
               _vm._l(_vm.clickedCardMembers, function(member) {
                 return _c(
@@ -10414,18 +11174,18 @@ var render = function() {
                       _c("p", [_vm._v(_vm._s(member.username))])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-5" }, [
+                    _c("div", { staticClass: "col-3" }, [
                       _c(
                         "button",
                         {
-                          staticClass: "btn-profile",
+                          staticClass: "btn-edit",
                           on: {
                             click: function($event) {
                               return _vm.removeCardMember(member.card_member_id)
                             }
                           }
                         },
-                        [_c("p", [_vm._v("Remove Card Member")])]
+                        [_c("p", [_vm._v("Remove")])]
                       )
                     ])
                   ]
@@ -10437,11 +11197,8 @@ var render = function() {
           _vm._v(" "),
           _c(
             "button",
-            {
-              staticClass: "btn-profile",
-              on: { click: _vm.backToDivisionCards }
-            },
-            [_c("p", [_vm._v("Exit")])]
+            { staticClass: "btn-profile", on: { click: _vm.backToLists } },
+            [_c("p", [_vm._v("Close")])]
           )
         ])
       ])
@@ -10514,7 +11271,11 @@ var render = function() {
               _c(
                 "Draggable",
                 {
-                  attrs: { options: _vm.dragOptions, element: "div" },
+                  attrs: {
+                    options: _vm.dragOptions,
+                    disabled: !_vm.canEdit,
+                    element: "div"
+                  },
                   on: { end: _vm.changeOrder },
                   model: {
                     value: list.cards,
@@ -10560,43 +11321,54 @@ var render = function() {
                               ),
                               _vm._v(" "),
                               _c("div", { staticClass: "task-card-footer" }, [
-                                _c("i", {
-                                  staticClass: "fa fa-calendar-check-o",
-                                  attrs: {
-                                    "aria-hidden": "true",
-                                    type: "button"
-                                  }
-                                }),
+                                _vm.canEdit
+                                  ? _c("i", {
+                                      staticClass: "fa fa-tags",
+                                      attrs: {
+                                        "aria-hidden": "true",
+                                        type: "button"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.addCardMember(card)
+                                        }
+                                      }
+                                    })
+                                  : _vm._e(),
                                 _vm._v(" "),
-                                _c("i", {
-                                  staticClass: "fa fa-tags",
-                                  attrs: {
-                                    "aria-hidden": "true",
-                                    type: "button"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.addCardMember(card)
-                                    }
-                                  }
-                                }),
+                                _vm.canEdit
+                                  ? _c("i", {
+                                      staticClass: "fa fa-paperclip",
+                                      attrs: {
+                                        "aria-hidden": "true",
+                                        type: "button"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.addCardAttachment(card)
+                                        }
+                                      }
+                                    })
+                                  : _vm._e(),
                                 _vm._v(" "),
-                                _c("i", {
-                                  staticClass: "fa fa-trash",
-                                  attrs: {
-                                    "aria-hidden": "true",
-                                    type: "button"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleteCard(
-                                        card.card_id,
-                                        cardIndex,
-                                        listIndex
-                                      )
-                                    }
-                                  }
-                                })
+                                _vm.canEdit
+                                  ? _c("i", {
+                                      staticClass: "fa fa-trash",
+                                      attrs: {
+                                        "aria-hidden": "true",
+                                        type: "button"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleteCard(
+                                            card.card_id,
+                                            cardIndex,
+                                            listIndex
+                                          )
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ])
                             ]
                           )
@@ -10645,12 +11417,16 @@ var render = function() {
     [
       _vm.showComponentCardManagement === "card"
         ? _c("Card", {
-            attrs: { divisionId: _vm.divisionId, lists: _vm.lists },
+            attrs: {
+              divisionId: _vm.divisionId,
+              lists: _vm.lists,
+              canEdit: _vm.canEdit
+            },
             on: {
               updateClickedList: _vm.updateClickedList,
-              updateLists: _vm.updateLists,
               updateClickedCard: _vm.updateClickedCard,
               updateClickedCardMembers: _vm.updateClickedCardMembers,
+              updateClickedCardAttachments: _vm.updateClickedCardAttachments,
               updateShowComponentCardManagement:
                 _vm.updateShowComponentCardManagement
             }
@@ -10661,6 +11437,21 @@ var render = function() {
         ? _c("AddCard", {
             attrs: { clickedList: _vm.clickedList },
             on: {
+              updateLists: _vm.updateLists,
+              updateShowComponentCardManagement:
+                _vm.updateShowComponentCardManagement
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.showComponentCardManagement === "add-card-attachment"
+        ? _c("AddCardAttachment", {
+            attrs: {
+              clickedCard: _vm.clickedCard,
+              clickedCardAttachments: _vm.clickedCardAttachments
+            },
+            on: {
+              updateClickedCardAttachments: _vm.updateClickedCardAttachments,
               updateShowComponentCardManagement:
                 _vm.updateShowComponentCardManagement
             }
@@ -10671,13 +11462,12 @@ var render = function() {
         ? _c("AddCardMember", {
             attrs: {
               clickedCard: _vm.clickedCard,
-              divisionMembers: _vm.divisionMembers,
               clickedCardMembers: _vm.clickedCardMembers,
               clickedCardNonMembers: _vm.clickedCardNonMembers,
               project: _vm.project
             },
             on: {
-              updateLists: _vm.updateLists,
+              updateClickedCardMembers: _vm.updateClickedCardMembers,
               updateShowComponentCardManagement:
                 _vm.updateShowComponentCardManagement
             }
@@ -10688,6 +11478,7 @@ var render = function() {
         ? _c("EditCard", {
             attrs: { clickedCard: _vm.clickedCard },
             on: {
+              updateLists: _vm.updateLists,
               updateShowComponentCardManagement:
                 _vm.updateShowComponentCardManagement
             }
@@ -10782,18 +11573,53 @@ var render = function() {
         })
       ]),
       _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn-submit",
-          staticStyle: { float: "right" },
-          attrs: { type: "submit" },
-          on: { click: _vm.addCard }
-        },
-        [_c("p", [_vm._v("Save")])]
-      )
+      _c("div", { staticClass: "form-group" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.cardForm.card_deadline,
+              expression: "cardForm.card_deadline"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "date", id: "task-title" },
+          domProps: { value: _vm.cardForm.card_deadline },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.cardForm, "card_deadline", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn-submit",
+            staticStyle: { float: "right" },
+            attrs: { type: "submit" },
+            on: { click: _vm.addCard }
+          },
+          [_c("p", [_vm._v("Save")])]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn-close",
+            staticStyle: { float: "right" },
+            attrs: { type: "submit" },
+            on: { click: _vm.backToLists }
+          },
+          [_c("p", [_vm._v("Close")])]
+        )
+      ])
     ])
   ])
 }
@@ -10885,6 +11711,16 @@ var render = function() {
             on: { click: _vm.createDivision }
           },
           [_c("p", [_vm._v("Create")])]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn-close",
+            attrs: { type: "button" },
+            on: { click: _vm.backToDivisionCards }
+          },
+          [_c("p", [_vm._v("Close")])]
         )
       ])
     ])
@@ -11094,7 +11930,7 @@ var render = function() {
               attrs: { type: "button" },
               on: { click: _vm.backToDivisionCards }
             },
-            [_c("p", [_vm._v("Exit")])]
+            [_c("p", [_vm._v("Close")])]
           ),
           _vm._v(" "),
           _c(
@@ -11139,7 +11975,10 @@ var render = function() {
     [
       _vm.showComponentCreateProject === "create-project-form"
         ? _c("CreateProjectForm", {
+            attrs: { user: _vm.user },
             on: {
+              updateShowComponentProjectManagement:
+                _vm.updateShowComponentProjectManagement,
               updateShowComponentCreateProject:
                 _vm.updateShowComponentCreateProject,
               updateProjectId: _vm.updateProjectId,
@@ -11149,7 +11988,13 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm.showComponentCreateProject === "create-project-success"
-        ? _c("CreateProjectSuccess", { attrs: { projectId: _vm.projectId } })
+        ? _c("CreateProjectSuccess", {
+            attrs: { projectId: _vm.projectId },
+            on: {
+              updateShowComponentProjectManagement:
+                _vm.updateShowComponentProjectManagement
+            }
+          })
         : _vm._e()
     ],
     1
@@ -11265,7 +12110,17 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _vm._m(0)
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn-close",
+            attrs: { type: "button" },
+            on: { click: _vm.backToHome }
+          },
+          [_c("p", [_vm._v("Close")])]
+        )
       ]
     )
   ])
@@ -11623,16 +12478,26 @@ var render = function() {
     [
       _vm.showComponentJoinProject === "join-project-form"
         ? _c("JoinProjectForm", {
+            attrs: { user: _vm.user },
             on: {
+              updateShowComponentProjectManagement:
+                _vm.updateShowComponentProjectManagement,
               updateShowComponentJoinProject:
                 _vm.updateShowComponentJoinProject,
-              updateProjectId: _vm.updateProjectId
+              updateProjectId: _vm.updateProjectId,
+              updateProjects: _vm.updateProjects
             }
           })
         : _vm._e(),
       _vm._v(" "),
       _vm.showComponentJoinProject === "join-project-success"
-        ? _c("JoinProjectSuccess", { attrs: { projectId: _vm.projectId } })
+        ? _c("JoinProjectSuccess", {
+            attrs: { projectId: _vm.projectId },
+            on: {
+              updateShowComponentProjectManagement:
+                _vm.updateShowComponentProjectManagement
+            }
+          })
         : _vm._e()
     ],
     1
@@ -11722,7 +12587,17 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _vm._m(0)
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn-close",
+            attrs: { type: "button" },
+            on: { click: _vm.backToHome }
+          },
+          [_c("p", [_vm._v("Close")])]
+        )
       ]
     )
   ])
@@ -11782,7 +12657,7 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "btn-join-success",
+            staticClass: "btn-join",
             attrs: { type: "submit" },
             on: { click: _vm.done }
           },
@@ -11921,6 +12796,16 @@ var render = function() {
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
+        _vm.memberOfDivisionName !== ""
+          ? _c("p", [_vm._v("Assigned to")])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.memberOfDivisionName !== ""
+          ? _c("p", [_vm._v('"' + _vm._s(_vm.memberOfDivisionName) + '"')])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
         _vm.ownership
           ? _c(
               "button",
@@ -12024,11 +12909,25 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm.showComponentProjectManagement === "create-project"
-        ? _c("CreateProject", { on: { updateProjects: _vm.updateProjects } })
+        ? _c("CreateProject", {
+            attrs: { user: _vm.user },
+            on: {
+              updateProjects: _vm.updateProjects,
+              updateShowComponentProjectManagement:
+                _vm.updateShowComponentProjectManagement
+            }
+          })
         : _vm._e(),
       _vm._v(" "),
       _vm.showComponentProjectManagement === "join-project"
-        ? _c("JoinProject")
+        ? _c("JoinProject", {
+            attrs: { user: _vm.user },
+            on: {
+              updateProjects: _vm.updateProjects,
+              updateShowComponentProjectManagement:
+                _vm.updateShowComponentProjectManagement
+            }
+          })
         : _vm._e(),
       _vm._v(" "),
       _vm.showComponentProjectManagement === "project-card"
@@ -12133,7 +13032,7 @@ var render = function() {
                 _c("router-link", { attrs: { to: { name: "home" } } }, [
                   _vm._v(" Home ")
                 ]),
-                _vm._v(" "),
+                _vm._v(" >>\n        "),
                 _c(
                   "router-link",
                   {
@@ -12146,7 +13045,7 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n        >> " +
+                      "\n          " +
                         _vm._s(_vm.project.project_name) +
                         "\n        "
                     )
@@ -12166,9 +13065,13 @@ var render = function() {
             attrs: {
               divisionMembers: _vm.divisionMembers,
               lists: _vm.lists,
-              project: _vm.project
+              project: _vm.project,
+              canEdit: _vm.canEdit
             },
-            on: { updateLists: _vm.updateLists }
+            on: {
+              updateLists: _vm.updateLists,
+              updateDivisionMembers: _vm.updateDivisionMembers
+            }
           })
         ],
         1
@@ -12212,7 +13115,7 @@ var render = function() {
           _vm._m(0),
           _vm._v(" "),
           _c("ProjectManagement", {
-            attrs: { projects: _vm.projects },
+            attrs: { projects: _vm.projects, user: _vm.user },
             on: { updateProjects: _vm.updateProjects }
           })
         ],
@@ -12228,7 +13131,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "fixed-top judul-page" }, [
-      _c("p", { staticClass: "top-bar" }, [_vm._v("\n        Home\n      ")])
+      _c("p", { staticClass: "top-bar-static" }, [
+        _vm._v("\n        Home\n      ")
+      ])
     ])
   }
 ]
@@ -12263,7 +13168,40 @@ var render = function() {
       _c("section", { staticClass: "section-top" }, [
         _c("div", { staticClass: "container" }, [
           _c("div", { staticClass: "row" }, [
-            _vm._m(0),
+            _c("div", { staticClass: "col-7" }, [
+              _c("br"),
+              _c("br"),
+              _c("br"),
+              _c("br"),
+              _vm._v(" "),
+              _c("h1", { staticClass: "title" }, [
+                _vm._v("Stay organized and connected.")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text" }, [
+                _vm._v(
+                  "\n            The best organizational task manager platform in Indonesia\n          "
+                )
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "get-started" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "nav-link",
+                      attrs: { to: { name: "register" } }
+                    },
+                    [_c("p", [_vm._v("Get Started!")])]
+                  )
+                ],
+                1
+              )
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-5" }, [
               _c("img", {
@@ -12302,11 +13240,11 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _vm._m(1)
+            _vm._m(0)
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _vm._m(2),
+            _vm._m(1),
             _vm._v(" "),
             _c("div", { staticClass: "col-6" }, [
               _c("img", {
@@ -12324,7 +13262,7 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _vm._m(3)
+            _vm._m(2)
           ])
         ])
       ]),
@@ -12397,33 +13335,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-7" }, [
-      _c("br"),
-      _c("br"),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
-      _c("h1", { staticClass: "title" }, [
-        _vm._v("Stay organized and connected.")
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "text" }, [
-        _vm._v(
-          "\n            The best organizational task manager platform in Indonesia\n          "
-        )
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn-tamago", attrs: { href: "" } }, [
-        _c("p", [_vm._v("Get Started!")])
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -12564,9 +13475,10 @@ var render = function() {
               ],
               staticClass: "form-control",
               attrs: {
-                type: "text",
+                type: "email",
                 id: "emailaddress",
-                placeholder: "Enter your email address"
+                placeholder: "Enter your email address",
+                required: ""
               },
               domProps: { value: _vm.loginForm.email },
               on: {
@@ -12596,7 +13508,8 @@ var render = function() {
               attrs: {
                 type: "password",
                 id: "password",
-                placeholder: "Enter your password"
+                placeholder: "Enter your password",
+                required: ""
               },
               domProps: { value: _vm.loginForm.password },
               on: {
@@ -12610,23 +13523,13 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
-          _vm._m(1)
+          _vm._m(0)
         ]
       )
     ])
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "" } }, [
-      _c("p", [_vm._v("Forgot Password?")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -12677,10 +13580,14 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("img", {
-                staticClass: "mx-auto d-block rounded-circle",
-                attrs: { src: "", alt: "" }
-              })
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12" }, [
+                  _c("img", {
+                    staticStyle: { float: "center" },
+                    attrs: { src: _vm.ProfileImg, alt: "" }
+                  })
+                ])
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-profile" }, [
@@ -12911,7 +13818,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "fixed-top judul-page" }, [
-      _c("p", { staticClass: "top-bar" }, [_vm._v("\n        Profile\n      ")])
+      _c("p", { staticClass: "top-bar-static" }, [
+        _vm._v("\n        Profile\n      ")
+      ])
     ])
   }
 ]
@@ -12964,7 +13873,11 @@ var render = function() {
           { staticClass: "content-home-bg" },
           [
             _c("ProjectDetail", {
-              attrs: { project: _vm.project, ownership: _vm.ownership },
+              attrs: {
+                project: _vm.project,
+                ownership: _vm.ownership,
+                memberOfDivisionName: _vm.memberOfDivisionName
+              },
               on: {
                 updateShowComponentProjectBoard:
                   _vm.updateShowComponentProjectBoard
@@ -12991,7 +13904,8 @@ var render = function() {
                   attrs: { project: _vm.project },
                   on: {
                     updateShowComponentProjectBoard:
-                      _vm.updateShowComponentProjectBoard
+                      _vm.updateShowComponentProjectBoard,
+                    updateDivisionCards: _vm.updateDivisionCards
                   }
                 })
               : _vm._e(),
@@ -13004,6 +13918,8 @@ var render = function() {
                     members: _vm.members
                   },
                   on: {
+                    updateProjectDetail: _vm.updateProjectDetail,
+                    updateProjectMembers: _vm.updateProjectMembers,
                     updateShowComponentProjectBoard:
                       _vm.updateShowComponentProjectBoard
                   }
@@ -13015,7 +13931,8 @@ var render = function() {
                   attrs: { project: _vm.project, division: _vm.division },
                   on: {
                     updateShowComponentProjectBoard:
-                      _vm.updateShowComponentProjectBoard
+                      _vm.updateShowComponentProjectBoard,
+                    updateDivisionCards: _vm.updateDivisionCards
                   }
                 })
               : _vm._e()
@@ -13127,7 +14044,8 @@ var render = function() {
               attrs: {
                 type: "text",
                 id: "firstname",
-                placeholder: "Enter your first name"
+                placeholder: "Enter your first name",
+                required: ""
               },
               domProps: { value: _vm.registerForm.first_name },
               on: {
@@ -13157,7 +14075,8 @@ var render = function() {
               attrs: {
                 type: "text",
                 id: "lastname",
-                placeholder: "Enter your last name"
+                placeholder: "Enter your last name",
+                required: ""
               },
               domProps: { value: _vm.registerForm.last_name },
               on: {
@@ -13185,9 +14104,10 @@ var render = function() {
               ],
               staticClass: "form-control",
               attrs: {
-                type: "text",
+                type: "email",
                 id: "emailaddress",
-                placeholder: "Enter your email address"
+                placeholder: "Enter your email address",
+                required: ""
               },
               domProps: { value: _vm.registerForm.email },
               on: {
@@ -13217,7 +14137,9 @@ var render = function() {
               attrs: {
                 type: "text",
                 id: "username",
-                placeholder: "Enter your username"
+                placeholder: "Enter your username",
+                minlength: "5",
+                required: ""
               },
               domProps: { value: _vm.registerForm.username },
               on: {
@@ -13247,7 +14169,9 @@ var render = function() {
               attrs: {
                 type: "password",
                 id: "password",
-                placeholder: "Enter your password"
+                placeholder: "Enter your password",
+                minlength: "8",
+                required: ""
               },
               domProps: { value: _vm.registerForm.password },
               on: {
@@ -13279,7 +14203,9 @@ var render = function() {
               attrs: {
                 type: "password",
                 id: "confirmpass",
-                placeholder: "Confirm your password"
+                placeholder: "Confirm your password",
+                minlength: "8",
+                required: ""
               },
               domProps: { value: _vm.registerForm.confirm_password },
               on: {
