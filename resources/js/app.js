@@ -77,11 +77,9 @@ router.beforeEach((to, from, next) => {
         next();
       })
       .catch(() => {
-        next("login");
+        router.push({ name: "login" });
       });
-  }
-
-  else next();
+  } else next();
 });
 
 const app = new Vue({
