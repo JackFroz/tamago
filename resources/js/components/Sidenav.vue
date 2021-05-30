@@ -47,7 +47,8 @@ export default {
         .get("api/logout", {
           headers: { Authorization: "Bearer " + this.token },
         })
-        .then((response) => {
+        .then(() => {
+          localStorage.removeItem("token");
           this.$router.push("login");
         });
     },
