@@ -183,8 +183,8 @@ export default {
         })
         .then((response) => {
           this.message = response.data.success
-            ? "Profile updated!"
-            : "Failed updating profile!";
+            ? "Password changed!"
+            : "Minimum length of password is 8 characters!";
         });
     },
     saveChanges() {

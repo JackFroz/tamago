@@ -36,6 +36,7 @@
             id="firstname"
             placeholder="Enter your first name"
             v-model="registerForm.first_name"
+            maxlength="25"
             required
           />
         </div>
@@ -47,6 +48,7 @@
             id="lastname"
             placeholder="Enter your last name"
             v-model="registerForm.last_name"
+            maxlength="25"
             required
           />
         </div>
@@ -70,6 +72,7 @@
             placeholder="Enter your username"
             v-model="registerForm.username"
             minlength="5"
+            maxlength="16"
             required
           />
         </div>
@@ -82,6 +85,7 @@
             placeholder="Enter your password"
             v-model="registerForm.password"
             minlength="8"
+            maxlength="25"
             required
           />
         </div>
@@ -94,6 +98,7 @@
             placeholder="Confirm your password"
             v-model="registerForm.confirm_password"
             minlength="8"
+            maxlength="25"
             required
           />
         </div>
@@ -135,7 +140,7 @@ export default {
           this.$router.push("login");
         })
         .catch(() => {
-          this.message = "Please check your input!";
+          this.message = "Your email or username is already registered!";
         });
       }
       else{
