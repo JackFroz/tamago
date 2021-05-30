@@ -27,11 +27,16 @@ class Card extends Model
 
     public function progressList()
     {
-        return $this->belongsTo(ProgressList::class, 'list_id');
+        return $this->belongsTo(ProgressList::class, 'list_id', 'list_id');
     }
 
     public function cardMembers()
     {
         return $this->hasMany(CardMember::class, 'card_id');
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class, 'card_id');
     }
 }

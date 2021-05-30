@@ -25,7 +25,7 @@ class ProgressList extends Model
 
     public function projectDivision()
     {
-        return $this->belongsTo(ProjectDivision::class, 'division_id');
+        return $this->belongsTo(ProjectDivision::class, 'division_id', 'division_id');
     }
 
     public function cards()
