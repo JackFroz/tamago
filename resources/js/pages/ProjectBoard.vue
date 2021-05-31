@@ -133,6 +133,7 @@ export default {
         })
         .then((response) => {
           this.username = response.data.user.username;
+          this.getProject();
         });
     },
     updateShowComponentProjectBoard(componentName) {
@@ -159,7 +160,6 @@ export default {
   },
   created() {
     this.currentUser();
-    this.getProject();
   },
 };
 </script>
