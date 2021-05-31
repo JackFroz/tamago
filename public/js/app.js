@@ -2744,6 +2744,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2793,7 +2794,7 @@ __webpack_require__.r(__webpack_exports__);
       return isNameColumnsChanged;
     },
     isPasswordColumnsChanged: function isPasswordColumnsChanged() {
-      var isPasswordColumnsChanged = this.passwordForm.new_password !== "" && this.passwordForm.old_password !== "" && this.passwordForm.repeat_new_password !== "" && this.passwordForm.new_password === this.passwordForm.repeat_new_password;
+      var isPasswordColumnsChanged = this.passwordForm.new_password !== "" && this.passwordForm.old_password !== "" && this.passwordForm.repeat_new_password !== "" && this.passwordForm.new_password === this.passwordForm.repeat_new_password && this.passwordForm.new_password.length >= 8;
       return isPasswordColumnsChanged;
     },
     changeName: function changeName() {
@@ -2826,8 +2827,10 @@ __webpack_require__.r(__webpack_exports__);
         headers: {
           Authorization: "Bearer " + this.token
         }
-      }).then(function (response) {
-        _this3.message = response.data.success ? "Profile updated!" : "Failed updating profile!";
+      }).then(function () {
+        _this3.message = "Password changed!";
+      })["catch"](function () {
+        _this3.message = "Wrong old password!";
       });
     },
     saveChanges: function saveChanges() {
@@ -2998,6 +3001,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this4.username = response.data.user.username;
+
+        _this4.getProject();
       });
     },
     updateShowComponentProjectBoard: function updateShowComponentProjectBoard(componentName) {
@@ -3021,7 +3026,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.currentUser();
-    this.getProject();
   }
 });
 
@@ -3041,6 +3045,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_logo_tamago_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../images/logo-tamago.png */ "./resources/images/logo-tamago.png");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3175,10 +3184,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         axios.post("api/register", this.registerForm).then(function () {
           _this.$router.push("login");
         })["catch"](function () {
-          _this.message = "Please check your input!";
+          _this.message = "Your email or username is already registered!";
         });
       } else {
-        this.message = "Password and Confirm Password column do not match!";
+        this.message = "Password and Confirm Password columns do not match!";
       }
     },
     checkPasswordColumns: function checkPasswordColumns() {
@@ -3276,7 +3285,9 @@ router.beforeEach(function (to, from, next) {
     }).then(function () {
       next();
     })["catch"](function () {
-      next("login");
+      router.push({
+        name: "login"
+      });
     });
   } else next();
 });
@@ -13743,7 +13754,11 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "password", id: "newpassword" },
+                      attrs: {
+                        type: "password",
+                        id: "newpassword",
+                        maxlength: "25"
+                      },
                       domProps: { value: _vm.passwordForm.new_password },
                       on: {
                         input: function($event) {
@@ -13775,7 +13790,11 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "password", id: "confirmpass" },
+                      attrs: {
+                        type: "password",
+                        id: "confirmpass",
+                        maxlength: "25"
+                      },
                       domProps: { value: _vm.passwordForm.repeat_new_password },
                       on: {
                         input: function($event) {
@@ -14045,6 +14064,7 @@ var render = function() {
                 type: "text",
                 id: "firstname",
                 placeholder: "Enter your first name",
+                maxlength: "25",
                 required: ""
               },
               domProps: { value: _vm.registerForm.first_name },
@@ -14076,6 +14096,7 @@ var render = function() {
                 type: "text",
                 id: "lastname",
                 placeholder: "Enter your last name",
+                maxlength: "25",
                 required: ""
               },
               domProps: { value: _vm.registerForm.last_name },
@@ -14139,6 +14160,7 @@ var render = function() {
                 id: "username",
                 placeholder: "Enter your username",
                 minlength: "5",
+                maxlength: "16",
                 required: ""
               },
               domProps: { value: _vm.registerForm.username },
@@ -14171,6 +14193,7 @@ var render = function() {
                 id: "password",
                 placeholder: "Enter your password",
                 minlength: "8",
+                maxlength: "25",
                 required: ""
               },
               domProps: { value: _vm.registerForm.password },
@@ -14205,6 +14228,7 @@ var render = function() {
                 id: "confirmpass",
                 placeholder: "Confirm your password",
                 minlength: "8",
+                maxlength: "25",
                 required: ""
               },
               domProps: { value: _vm.registerForm.confirm_password },
