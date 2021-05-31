@@ -151,6 +151,7 @@ export default {
       this.getMembers();
     },
     updateProjectDetail() {
+      this.divisions = [];
       this.getProject();
     },
     updateDivisionCards() {
